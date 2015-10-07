@@ -1,6 +1,4 @@
 ﻿#pragma strict
-var battleFieldModel: BattleFieldModel; // BattleFieldModel.js
-var playerModel: WizardModel; // WizardModel.js
 private var app: WizardFightApplication; // WizardFightApplication.js
 private var eventCenter: EventCenter; // EventCenter.js
 
@@ -9,4 +7,8 @@ function Start () {
 	eventCenter = app.eventCenter;
 }
 function Update () {
+	if(Input.GetMouseButtonUp(0)) {
+		var mousePosition = Input.mousePosition;
+		eventCenter.CastEvent(this, 'mouseup', mousePosition);
+	}
 }

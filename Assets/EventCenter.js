@@ -1,8 +1,8 @@
 ﻿#pragma strict
 private var hearings: Array = new Array();
-function castEvent(caster: Object, type: String, data: Object) {
+function CastEvent(caster: Object, type: String, data: Object) {
 	for(var i = 0; i < hearings.length; ++i) {
-		var h: Hearing = hearings[i];
+		var h: Hearing = hearings[i] as Hearing;
 		if((caster == h.target) && (type == h.type)) {
 			var e = new SbiEvent();
 			e.target = caster;
@@ -13,10 +13,10 @@ function castEvent(caster: Object, type: String, data: Object) {
 		}
 	}
 }
-function registerListener(target: Object, type: String, listener: Object, method: Function): int {
+function RegisterListener(target: Object, type: String, listener: Object, method: Function): int {
 	var eventId: int = -1;
 	for(var i = 0; i < hearings.length; ++i) {
-		var h: Hearing = hearings[i];
+		var h: Hearing = hearings[i] as Hearing;
 		if((target == h.target) && (type == h.type) && (listener == h.listener)) {
 			eventId = i;
 		}

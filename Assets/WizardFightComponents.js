@@ -8,5 +8,9 @@ var BattleFieldView: BattleFieldView; // BattleFieldView.js
 var WizardModel: WizardModel; // WizardModel.js
 var WizardView: WizardView; // WizardView.js
 
+var RootCanvas: RootCanvas; // RootCanvas.js
+
+var PlayerController: PlayerController; // PlayerController.js
+
 //function Start () {}
 //function Update () {}
