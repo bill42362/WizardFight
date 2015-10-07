@@ -1,9 +1,10 @@
 ﻿#pragma strict
-static private var app: WizardFightApplication;
-var components: WizardFightComponents;
-var controller: WizardFightController;
-var model: WizardFightModel;
-var view: WizardFightView;
+static private var app: WizardFightApplication; // WizardFightApplication.js
+var components: WizardFightComponents; // WizardFightComponents.js
+var eventCenter: EventCenter; // EventCenter.js
+var controller: WizardFightController; // WizardFightController.js
+var model: WizardFightModel; // WizardFightModel.js
+var view: WizardFightView; // WizardFightView.js
 
 function Start () {
 	app = GetComponent(WizardFightApplication);
