@@ -13,6 +13,7 @@ var RootCanvas: RootCanvas; // RootCanvas.js
 var PlayerController: PlayerController; // PlayerController.js
 
 var SkillsController: SkillsController; // SkillsController.js
+var SkillCaster: SkillCaster; // SkillCaster.js
 var ThunderNovaCasterModel: ThunderNovaCasterModel; // ThunderNovaCasterModel.js
 var ThunderNovaCasterView: ThunderNovaCasterView; // ThunderNovaCasterView.js
 var ThunderNovaModel: ThunderNovaModel; // ThunderNovaModel.js

@@ -21,16 +21,21 @@ function Start () {
 function Update () {
 	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 	MoveCastersToOwners();
+	UpdateSkillCastersStateByTime(timestamp);
 }
 function MoveCastersToOwners() {
 	for(var i = 0; i < skillCasters.length; ++i) {
-		(skillCasters[i] as GameObject).transform.position
+		(skillCasters[i] as SkillCaster).gameObject.transform.position
 		= (skillCasterOwners[i] as GameObject).transform.position;
 	}
 }
-function AddSkillCaster(sc: GameObject, owner: GameObject): int {
+function UpdateSkillCastersStateByTime(t: double) {
+	for(var i = 0; i < skillCasters.length; ++i) {
+		(skillCasters[i] as SkillCaster).UpdateSkillStateByTime(t);
+	}
+}
+function AddSkillCaster(caster: SkillCaster, owner: GameObject): int {
 	var casterIndex = skillCasters.length;
-	var caster = Instantiate(sc);
 	skillCasters.push(caster);
 	skillCasterOwners.push(owner);
 	//var wizardIndex = System.Array.IndexOf(wizardObjectList as GameObject[], owner);
