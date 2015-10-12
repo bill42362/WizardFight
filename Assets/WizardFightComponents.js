@@ -12,5 +12,11 @@ var RootCanvas: RootCanvas; // RootCanvas.js
 
 var PlayerController: PlayerController; // PlayerController.js
 
+var SkillsController: SkillsController; // SkillsController.js
+var ThunderNovaCasterModel: ThunderNovaCasterModel; // ThunderNovaCasterModel.js
+var ThunderNovaCasterView: ThunderNovaCasterView; // ThunderNovaCasterView.js
+var ThunderNovaModel: ThunderNovaModel; // ThunderNovaModel.js
+var ThunderNovaView: ThunderNovaView; // ThunderNovaView.js
+
 //function Start () {}
 //function Update () {}
