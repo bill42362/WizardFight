@@ -32,7 +32,7 @@ function UpdateSkillStateByTime(t: double) {
 		newSkillState = SkillsController.SKILL_STATE_CHANTING;
 	}
 	if(skillState != newSkillState) {
-		eventCenter.CastEvent(this, 'skillStateChanged', newSkillState);
+		eventCenter.CastEvent(gameObject, 'skillStateChanged', newSkillState);
 		skillState = newSkillState;
 		if((SkillsController.SKILL_STATE_CHANTED) && (null != castCallback)) {
 			castCallback(t - GetStateOffsetByTime(t));

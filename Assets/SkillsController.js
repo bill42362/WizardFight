@@ -8,8 +8,8 @@ private var app: WizardFightApplication; // WizardFightApplication.js
 private var components: WizardFightComponents; // WizardFightComponents.js
 private var eventCenter: EventCenter; // EventCenter.js
 private var epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
-private var ownerDictionary = new Dictionary.<SkillCaster, GameObject>();
-private var skillCastersDictionary = new Dictionary.<GameObject, SkillCaster[]>();
+private var ownerDictionary = new Dictionary.<GameObject, GameObject>();
+private var skillCastersDictionary = new Dictionary.<GameObject, GameObject[]>();
 private var skillSwitchesDictionary = new Dictionary.<GameObject, boolean[]>();
 
 function Start () {
@@ -23,15 +23,24 @@ function Update () {
 	UpdateSkillCastersStateByTime(timestamp);
 }
 var OnSkillStateChanged = function(e: SbiEvent) {
-	//var ownerIndex: int = System.Array.IndexOf(skillCasters, e.target);
-	//Debug.Log(ownerIndex);
+	if('chanted' == e.data) {
+		var caster = e.target as GameObject;
+		caster.SetActive(false);
+		var owner = ownerDictionary[caster];
+		var casterArray = skillCastersDictionary[owner];
+		var casterIndex: int = System.Array.IndexOf(casterArray, caster);
+		var nextCasterIndex: int = casterIndex + 1;
+		if(casterArray.Length == nextCasterIndex) {
+			nextCasterIndex = 0;
+		}
+	}
 };
-function AddSkillCaster(caster: SkillCaster, owner: GameObject): int {
+function AddSkillCaster(caster: GameObject, owner: GameObject): int {
 	if(null == eventCenter) { Start(); }
 	var casterIndex: int = -1;
 	var ownerExist = skillCastersDictionary.ContainsKey(owner);
 	if(false == ownerExist) {
-		skillCastersDictionary[owner] = new SkillCaster[0];
+		skillCastersDictionary[owner] = new GameObject[0];
 		skillSwitchesDictionary[owner] = new boolean[0];
 	}
 	var skillRepeated = false;
@@ -45,7 +54,7 @@ function AddSkillCaster(caster: SkillCaster, owner: GameObject): int {
 	if(false == skillRepeated) {
 		ownerDictionary[caster] = owner;
 		casterIndex = skillCastersDictionary[owner].Length;
-		skillCastersDictionary[owner] = PushSkillCasterArray(
+		skillCastersDictionary[owner] = PushGameObjectArray(
 			skillCastersDictionary[owner], caster
 		);
 		skillSwitchesDictionary[owner] = PushBooleanArray(
@@ -59,20 +68,24 @@ private function MoveCastersToOwners() {
 	var e = ownerDictionary.GetEnumerator();
 	while(e.MoveNext()) {
 		var caster = e.Current.Key;
-		var owner = e.Current.Value;
-		caster.gameObject.transform.position = owner.gameObject.transform.position;
+		if(caster.activeSelf) {
+			var owner = e.Current.Value;
+			caster.transform.position = owner.transform.position;
+		}
 	}
 }
 private function UpdateSkillCastersStateByTime(t: double) {
 	var e = ownerDictionary.GetEnumerator();
 	while(e.MoveNext()) {
 		var caster = e.Current.Key;
-		caster.UpdateSkillStateByTime(t);
+		if(caster.activeSelf) {
+			caster.GetComponent(SkillCaster).UpdateSkillStateByTime(t);
+		}
 	}
 }
-private function PushSkillCasterArray(array: SkillCaster[], item: SkillCaster): SkillCaster[] {
+private function PushGameObjectArray(array: GameObject[], item: GameObject): GameObject[] {
 	var index = array.Length;
-	System.Array.Resize.<SkillCaster>(array, array.Length + 1);
+	System.Array.Resize.<GameObject>(array, array.Length + 1);
 	array[index] = item;
 	return array;
 }

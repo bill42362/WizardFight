@@ -23,7 +23,7 @@ function Update () {
 }
 function SetSkillCaster(s: SkillCaster) {
 	skillCaster = s;
-	skillCaster.name = 'thunderNova';
+	skillCaster.name = 'thunderNovaCaster';
 	skillCaster.SetCastingTime(castingTime);
 	skillCaster.SetAlertTime(alertTime);
 	skillCaster.SetCastCallback(Cast);
