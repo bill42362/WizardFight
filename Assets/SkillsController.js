@@ -1,8 +1,8 @@
 ﻿#pragma strict
-static var SKILL_STATE_WAITING: String = 'waiting';
-static var SKILL_STATE_CASTING: String = 'casting';
-static var SKILL_STATE_ALERTING: String = 'alerting';
 static var SKILL_STATE_CASTED: String = 'casted';
+static var SKILL_STATE_CHANTING: String = 'chanting';
+static var SKILL_STATE_ALERTING: String = 'alerting';
+static var SKILL_STATE_CHANTED: String = 'chanted';
 private var app: WizardFightApplication; // WizardFightApplication.js
 private var components: WizardFightComponents; // WizardFightComponents.js
 private var eventCenter: EventCenter; // EventCenter.js
@@ -23,18 +23,12 @@ function Update () {
 	MoveCastersToOwners();
 	UpdateSkillCastersStateByTime(timestamp);
 }
-function MoveCastersToOwners() {
-	for(var i = 0; i < skillCasters.length; ++i) {
-		(skillCasters[i] as SkillCaster).gameObject.transform.position
-		= (skillCasterOwners[i] as GameObject).transform.position;
-	}
-}
-function UpdateSkillCastersStateByTime(t: double) {
-	for(var i = 0; i < skillCasters.length; ++i) {
-		(skillCasters[i] as SkillCaster).UpdateSkillStateByTime(t);
-	}
-}
+var OnSkillStateChanged = function(e: SbiEvent) {
+	//var ownerIndex: int = System.Array.IndexOf(skillCasters, e.target);
+	//Debug.Log(ownerIndex);
+};
 function AddSkillCaster(caster: SkillCaster, owner: GameObject): int {
+	if(null == eventCenter) { Start(); }
 	var casterIndex = skillCasters.length;
 	skillCasters.push(caster);
 	skillCasterOwners.push(owner);
@@ -63,6 +57,18 @@ function AddSkillCaster(caster: SkillCaster, owner: GameObject): int {
 	if(false == skillRepeated) {
 		(wizardSkillCasterLists[wizardIndex] as Array).Push(caster);
 		(wizardSkillSwitchLists[wizardIndex] as Array).Push(true);
+		eventCenter.RegisterListener(caster, 'skillStateChanged', this, OnSkillStateChanged);
 	}
 	return casterIndex;
+}
+private function MoveCastersToOwners() {
+	for(var i = 0; i < skillCasters.length; ++i) {
+		(skillCasters[i] as SkillCaster).gameObject.transform.position
+		= (skillCasterOwners[i] as GameObject).transform.position;
+	}
+}
+private function UpdateSkillCastersStateByTime(t: double) {
+	for(var i = 0; i < skillCasters.length; ++i) {
+		(skillCasters[i] as SkillCaster).UpdateSkillStateByTime(t);
+	}
 }
