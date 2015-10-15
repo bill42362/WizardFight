@@ -1,4 +1,5 @@
 ﻿#pragma strict
+private var epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 private var app: WizardFightApplication; // WizardFightApplication.js
 private var components: WizardFightComponents; // WizardFightComponents.js
 private var eventCenter: EventCenter; // EventCenter.js
@@ -53,8 +54,11 @@ function Update () {
 	}
 }
 private function MakeAndPushPlayerSkillCasters() {
+	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 	var thunderNovaCasterModel = Instantiate(components.ThunderNovaCasterModel);
 	thunderNovaCasterModel.gameObject.AddComponent(SkillCaster);
+	thunderNovaCasterModel.UpdateSkillCaster();
+	thunderNovaCasterModel.GetComponent(SkillCaster).UpdateStartCastingTime(timestamp);
 	skillsController.AddSkillCaster(thunderNovaCasterModel.gameObject, playerController.playerModel);
 	thunderNovaCasterModel.gameObject.SetActive(true);
 	playerSkillsPushed = true;

@@ -23,15 +23,15 @@ function Update () {
 	UpdateSkillCastersStateByTime(timestamp);
 }
 var OnSkillStateChanged = function(e: SbiEvent) {
-	if('chanted' == e.data) {
+	var data: SkillStateChangeEventData = e.data as SkillStateChangeEventData;
+	if(SkillsController.SKILL_STATE_CHANTED == data.newState) {
 		var caster = e.target as GameObject;
+		caster.GetComponent(SkillCaster).CallCastCallbackByCastTime(data.time);
 		caster.SetActive(false);
-		var owner = ownerDictionary[caster];
-		var casterArray = skillCastersDictionary[owner];
-		var casterIndex: int = System.Array.IndexOf(casterArray, caster);
-		var nextCasterIndex: int = casterIndex + 1;
-		if(casterArray.Length == nextCasterIndex) {
-			nextCasterIndex = 0;
+		var nextCaster = PickNextCaster(caster);
+		if(null != nextCaster) {
+			nextCaster.GetComponent(SkillCaster).UpdateStartCastingTime(data.time);
+			nextCaster.SetActive(true);
 		}
 	}
 };
@@ -82,6 +82,29 @@ private function UpdateSkillCastersStateByTime(t: double) {
 			caster.GetComponent(SkillCaster).UpdateSkillStateByTime(t);
 		}
 	}
+}
+private function PickNextCaster(caster: GameObject): GameObject {
+	var nextCaster: GameObject;
+	caster.SetActive(false);
+	var owner = ownerDictionary[caster];
+	var casterArray: GameObject[] = skillCastersDictionary[owner];
+	var switchArray: boolean[] = skillSwitchesDictionary[owner];
+	var nextCasterIndex: int = 1 + System.Array.IndexOf(casterArray, caster);
+	if(switchArray.Length == nextCasterIndex) {
+		nextCasterIndex = 0;
+	}
+	var pickTimes: int = switchArray.Length;
+	while((false == switchArray[nextCasterIndex]) && (0 < pickTimes)) {
+		nextCasterIndex++;
+		if(switchArray.Length == nextCasterIndex) {
+			nextCasterIndex = 0;
+		}
+		pickTimes--;
+	}
+	if(true == switchArray[nextCasterIndex]) {
+		nextCaster = casterArray[nextCasterIndex];
+	}
+	return nextCaster;
 }
 private function PushGameObjectArray(array: GameObject[], item: GameObject): GameObject[] {
 	var index = array.Length;

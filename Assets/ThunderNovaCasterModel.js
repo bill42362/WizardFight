@@ -1,9 +1,8 @@
 ﻿#pragma strict
 var thunderNovaModel: ThunderNovaModel;
 var thunderNovaView: ThunderNovaView;
-var skillCaster: SkillCaster; // SkillCaster.js
-var castingTime: double = 4.0;
-var alertTime: double = 2.0;
+var castingTime: double = 4000.0;
+var alertTime: double = 2000.0;
 private var app: WizardFightApplication; // WizardFightApplication.js
 private var components: WizardFightComponents; // WizardFightComponents.js
 private var eventCenter: EventCenter; // EventCenter.js
@@ -16,14 +15,9 @@ function Start () {
 	thunderNovaView = Instantiate(components.ThunderNovaView);
 	thunderNovaView.SetModel(thunderNovaModel);
 }
-function Update () {
-	if(null != skillCaster) {
-		transform.position = skillCaster.transform.position;
-	}
-}
-function SetSkillCaster(s: SkillCaster) {
-	skillCaster = s;
-	skillCaster.name = 'thunderNovaCaster';
+function Update () { }
+function UpdateSkillCaster() {
+	var skillCaster = gameObject.GetComponent(SkillCaster);
 	skillCaster.SetCastingTime(castingTime);
 	skillCaster.SetAlertTime(alertTime);
 	skillCaster.SetCastCallback(Cast);
