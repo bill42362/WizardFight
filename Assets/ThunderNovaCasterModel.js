@@ -1,6 +1,6 @@
 ﻿#pragma strict
-var thunderNovaModel: ThunderNovaModel;
-var thunderNovaView: ThunderNovaView;
+var thunderNovaModel: ThunderNovaModel; // ThunderNovaModel.js
+var thunderNovaView: ThunderNovaView; // ThunderNovaView.js
 var castingTime: double = 4000.0;
 var alertTime: double = 2000.0;
 private var app: WizardFightApplication; // WizardFightApplication.js
@@ -25,6 +25,11 @@ function UpdateSkillCaster() {
 var Cast = function(chantedTime: double) {
 	var model = thunderNovaModel;
 	model.SetAppearTime(chantedTime);
-	model.gameObject.transform.position = transform.position;
+	var novaPosition = transform.position;
+	novaPosition.y = 0;
+	model.gameObject.transform.position = novaPosition;
 	model.gameObject.SetActive(true);
+	var view = thunderNovaView;
+	view.gameObject.transform.position = novaPosition;
+	view.gameObject.SetActive(true);
 };

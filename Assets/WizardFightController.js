@@ -61,6 +61,9 @@ private function MakeAndPushPlayerSkillCasters() {
 	thunderNovaCasterModel.GetComponent(SkillCaster).UpdateStartCastingTime(timestamp);
 	skillsController.AddSkillCaster(thunderNovaCasterModel.gameObject, playerController.playerModel);
 	thunderNovaCasterModel.gameObject.SetActive(true);
+	var thunderNovaCasterView = Instantiate(components.ThunderNovaCasterView);
+	thunderNovaCasterView.SetModel(thunderNovaCasterModel);
+	thunderNovaCasterView.gameObject.SetActive(true);
 	playerSkillsPushed = true;
 }
 var OnMouseUp = function(e: SbiEvent) {

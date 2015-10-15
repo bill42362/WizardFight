@@ -41,6 +41,7 @@ function UpdateSkillStateByTime(t: double) {
 		eventCenter.CastEvent(gameObject, 'skillStateChanged', data as Object);
 	}
 }
+function GetState(): String { return skillState; }
 function GetStateOffsetByTime(t: double): double {
 	var offset: double = 0;
 	switch(skillState) {
