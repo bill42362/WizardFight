@@ -11,6 +11,8 @@ private var epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTim
 private var ownerDictionary = new Dictionary.<GameObject, GameObject>();
 private var skillCastersDictionary = new Dictionary.<GameObject, GameObject[]>();
 private var skillSwitchesDictionary = new Dictionary.<GameObject, boolean[]>();
+private var playerGameObject: GameObject;
+private var playerSkillCasterButtons: GameObject[] = new GameObject[0];
 
 function Start () {
 	app = WizardFightApplication.Shared();
@@ -38,6 +40,9 @@ var OnSkillStateChanged = function(e: SbiEvent) {
 function AddSkillCaster(caster: GameObject, owner: GameObject): int {
 	if(null == eventCenter) { Start(); }
 	var casterIndex: int = -1;
+	if((null == playerGameObject) && ('player' == owner.name)) {
+		playerGameObject = owner;
+	}
 	var ownerExist = skillCastersDictionary.ContainsKey(owner);
 	if(false == ownerExist) {
 		skillCastersDictionary[owner] = new GameObject[0];
@@ -61,8 +66,23 @@ function AddSkillCaster(caster: GameObject, owner: GameObject): int {
 			skillSwitchesDictionary[owner], true
 		);
 		eventCenter.RegisterListener(caster, 'skillStateChanged', this, OnSkillStateChanged);
+		if(playerGameObject == owner) {
+			AddPlayerSkillCasterButton(caster);
+		}
 	}
 	return casterIndex;
+}
+private function AddPlayerSkillCasterButton(caster: GameObject) {
+	var allButtons: GameObject[] = playerSkillCasterButtons;
+	var skillIndex: int = allButtons.Length;
+	var newButton: SkillButton = Instantiate(components.SkillButton);
+	newButton.transform.parent = app.view.nguiPanel.transform;
+	allButtons = PushGameObjectArray(allButtons, newButton.gameObject);
+	for(var i = 0; i < allButtons.Length; ++i) {
+		allButtons[i].GetComponent(SkillButton).SetSkillIndex(i, allButtons.Length);
+	}
+	newButton.gameObject.SetActive(true);
+	playerSkillCasterButtons = allButtons;
 }
 private function MoveCastersToOwners() {
 	var e = ownerDictionary.GetEnumerator();
