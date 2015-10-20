@@ -21,17 +21,5 @@ function SetSkillIndex(index: int, skillsLength: int) {
 	uiNeedsLayout = true;
 }
 private function LayoutUI() {
-	var transform = gameObject.transform;
-	var boxCollider = gameObject.GetComponent(BoxCollider);
-	var defaultSize = boxCollider.size;
-	var width: float = Mathf.Min(MAX_WIDTH, Screen.width/totalSkillsAmount);
-	var height: float = width;
-	var newSize: Vector3 = new Vector3(width/defaultSize.x, height/defaultSize.y, 1);
-	var newX: float = 0.5*(Screen.width - width);
-	var newY: float = -0.5*(Screen.height - height);
-	var newCenter: Vector3 = new Vector3(newX, newY, 0);
-	gameObject.transform.localScale = newSize;
-	gameObject.transform.localPosition = newCenter;
-
 	uiNeedsLayout = false;
 }

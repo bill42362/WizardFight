@@ -1,29 +1,19 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{03DAF232-21E4-5FBA-DCAA-B2932A6ABC97}") = "WizardFight", "Assembly-CSharp.csproj", "{A741250B-CE9F-F49D-1A3D-1F7EC6F97246}"
-EndProject
-Project("{03DAF232-21E4-5FBA-DCAA-B2932A6ABC97}") = "WizardFight", "Assembly-CSharp-Editor.csproj", "{D189B76F-1AF9-CAE5-48F5-1227E3B301CA}"
-EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A741250B-CE9F-F49D-1A3D-1F7EC6F97246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A741250B-CE9F-F49D-1A3D-1F7EC6F97246}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A741250B-CE9F-F49D-1A3D-1F7EC6F97246}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A741250B-CE9F-F49D-1A3D-1F7EC6F97246}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D189B76F-1AF9-CAE5-48F5-1227E3B301CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D189B76F-1AF9-CAE5-48F5-1227E3B301CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D189B76F-1AF9-CAE5-48F5-1227E3B301CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D189B76F-1AF9-CAE5-48F5-1227E3B301CA}.Release|Any CPU.Build.0 = Release|Any CPU
+
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																											GlobalSection(MonoDevelopProperties) = preSolution
+																																																																											GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
