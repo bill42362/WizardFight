@@ -8,8 +8,6 @@ private var view: WizardFightView; // WizardFightView.js
 private var playerController: PlayerController; // PlayerController.js
 private var skillsController: SkillsController; // SkillsController.js
 private var playerSkillsPushed: boolean = false;
-private var rootCanvasMouseUpHearingId: int = -1;
-private var groundPlane = Plane(Vector3(0.0, 1.0, 0.0), Vector3(0, 0, 0));
 
 function Start () {
 	app = WizardFightApplication.Shared();
@@ -47,11 +45,6 @@ function Update () {
 	if(false == playerSkillsPushed) {
 		MakeAndPushPlayerSkillCasters();
 	}
-	if(-1 == rootCanvasMouseUpHearingId) {
-		rootCanvasMouseUpHearingId = eventCenter.RegisterListener(
-			view.rootCanvas, 'mouseup', this, OnMouseUp
-		);
-	}
 }
 private function MakeAndPushPlayerSkillCasters() {
 	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
@@ -66,12 +59,3 @@ private function MakeAndPushPlayerSkillCasters() {
 	thunderNovaCasterView.gameObject.SetActive(true);
 	playerSkillsPushed = true;
 }
-var OnMouseUp = function(e: SbiEvent) {
-	var ray: Ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-	var rayDistance: float;
-	if(groundPlane.Raycast(ray, rayDistance)) {
-		var playerTargetPosition = ray.GetPoint(rayDistance);
-		playerTargetPosition.y = 0.5;
-		playerController.SetPlayerTargetPosition(playerTargetPosition);
-	}
-};

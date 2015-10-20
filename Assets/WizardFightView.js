@@ -6,9 +6,7 @@ var rootCanvas: RootCanvas; // RootCanvas.js
 var skillsPanel: Image;
 private var app: WizardFightApplication; // WizardFightApplication.js
 
-function Start () {
+function Awake () {
 	app = WizardFightApplication.Shared();
-	rootCanvas = app.components.RootCanvas;
-}
-function Update () {
+	rootCanvas = GetComponentInChildren(RootCanvas);
 }

@@ -8,10 +8,14 @@ private var eventCenter: EventCenter; // EventCenter.js
 private var playerViewActivated: boolean = false;
 private var initPlayerPosition: Vector3 = Vector3(0, 0.5, -5);
 private var playerTargetPosition: Vector3 = Vector3(0, 0.5, -5);
+private var groundPlane: Plane = Plane(Vector3(0.0, 1.0, 0.0), Vector3(0, 0, 0));
 
-function Start () {
+function Awake () {
 	app = WizardFightApplication.Shared();
 	eventCenter = app.eventCenter;
+}
+function Start () {
+	eventCenter.RegisterListener(app.view.rootCanvas, 'mouseup', this, OnMouseUp);
 }
 function Update () {
 	if(null != playerView) {
@@ -38,6 +42,15 @@ function SetPlayerView(v: GameObject) {
 	playerView.SetActive(true);
 	playerViewActivated = true;
 }
+var OnMouseUp = function(e: SbiEvent) {
+	var ray: Ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+	var rayDistance: float;
+	if(groundPlane.Raycast(ray, rayDistance)) {
+		var playerTargetPosition = ray.GetPoint(rayDistance);
+		playerTargetPosition.y = 0.5;
+		SetPlayerTargetPosition(playerTargetPosition);
+	}
+};
 function SetPlayerTargetPosition(pos: Vector3) {
 	playerTargetPosition = pos;
 	eventCenter.CastEvent(this, 'playerTargetPositionChanged', pos);

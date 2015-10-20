@@ -2,13 +2,11 @@
 private var app: WizardFightApplication; // WizardFightApplication.js
 private var eventCenter: EventCenter; // EventCenter.js
 
-function Start () {
+function Awake () {
 	app = WizardFightApplication.Shared();
 	eventCenter = app.eventCenter;
+	GetComponent(Button).onClick.AddListener(OnClick);
 }
-function Update () {
-	if(Input.GetMouseButtonUp(0)) {
-		var mousePosition = Input.mousePosition;
-		eventCenter.CastEvent(this, 'mouseup', mousePosition);
-	}
+function OnClick() {
+	eventCenter.CastEvent(this, 'mouseup', Input.mousePosition);
 }

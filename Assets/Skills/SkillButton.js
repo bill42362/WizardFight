@@ -17,8 +17,8 @@ function Awake () {
 	image = GetComponent(Image);
 	app = WizardFightApplication.Shared();
 	eventCenter = app.eventCenter;
+	GetComponent(Button).onClick.AddListener(OnClick);
 }
-function Start () { }
 function Update () {
 	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 	if(true == uiNeedsLayout) {
@@ -33,6 +33,9 @@ function SetSkillIndex(index: int, skillsLength: int) {
 	uiNeedsLayout = true;
 }
 function SetSkillCaster(c: SkillCaster) { skillCaster = c; }
+function OnClick() {
+	Debug.Log('click');
+}
 private function LayoutUI() {
 	var text: Text = GetComponentInChildren(Text);
 	text.text = skillName;
