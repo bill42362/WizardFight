@@ -67,7 +67,7 @@ function AddSkillCaster(caster: GameObject, owner: GameObject): int {
 		);
 		eventCenter.RegisterListener(caster, 'skillStateChanged', this, OnSkillStateChanged);
 		if(playerGameObject == owner) {
-			//AddPlayerSkillCasterButton(caster);
+			AddPlayerSkillCasterButton(caster);
 		}
 	}
 	return casterIndex;
@@ -76,6 +76,9 @@ private function AddPlayerSkillCasterButton(caster: GameObject) {
 	var allButtons: GameObject[] = playerSkillCasterButtons;
 	var skillIndex: int = allButtons.Length;
 	var newButton: SkillButton = Instantiate(components.SkillButton);
+	var skillsPanel: Image = app.view.skillsPanel;
+	newButton.transform.SetParent(skillsPanel.transform);
+	newButton.skillName = caster.GetComponent(SkillCaster).skillName;
 	allButtons = PushGameObjectArray(allButtons, newButton.gameObject);
 	for(var i = 0; i < allButtons.Length; ++i) {
 		allButtons[i].GetComponent(SkillButton).SetSkillIndex(i, allButtons.Length);

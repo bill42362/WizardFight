@@ -1,4 +1,5 @@
 ﻿#pragma strict
+var skillName: String;
 var castingTime: double = 4000.0;
 var alertTime: double = 2000.0;
 var skillState: String = SkillsController.SKILL_STATE_ALERTING;
@@ -60,6 +61,7 @@ function GetStateOffsetByTime(t: double): double {
 }
 function SetCastingTime(c: double) { castingTime = c; }
 function SetAlertTime(a: double) { alertTime = a; }
+function SetSkillName(n: String) { skillName = n; }
 function SetCastCallback(c: Function) { castCallback = c; }
 function CallCastCallbackByCastTime(t: double) {
 	if((SkillsController.SKILL_STATE_CHANTED == skillState) && (null != castCallback)) {

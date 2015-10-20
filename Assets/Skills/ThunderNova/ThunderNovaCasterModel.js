@@ -1,6 +1,7 @@
 ﻿#pragma strict
 var thunderNovaModel: ThunderNovaModel; // ThunderNovaModel.js
 var thunderNovaView: ThunderNovaView; // ThunderNovaView.js
+var skillName: String = "Thunder Nova";
 var castingTime: double = 4000.0;
 var alertTime: double = 2000.0;
 private var app: WizardFightApplication; // WizardFightApplication.js
@@ -21,6 +22,7 @@ function UpdateSkillCaster() {
 	skillCaster.SetCastingTime(castingTime);
 	skillCaster.SetAlertTime(alertTime);
 	skillCaster.SetCastCallback(Cast);
+	skillCaster.SetSkillName(skillName);
 }
 var Cast = function(chantedTime: double) {
 	var model = thunderNovaModel;
