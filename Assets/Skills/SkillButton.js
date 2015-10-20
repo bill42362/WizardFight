@@ -1,29 +1,38 @@
 ﻿#pragma strict
 import UnityEngine.UI;
 var skillName: String;
+var slider: Slider;
+private var epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 private var app: WizardFightApplication; // WizardFightApplication.js
 private var eventCenter: EventCenter; // EventCenter.js
 private var rectTransform: RectTransform;
 private var uiNeedsLayout: boolean = false;
 private var totalSkillsAmount: int = 1;
 private var skillIndex: int = 0;
+private var skillCaster: SkillCaster; // SkillCaster.js
+private var image: Image;
 
 function Awake () {
 	rectTransform = GetComponent(RectTransform);
+	image = GetComponent(Image);
 	app = WizardFightApplication.Shared();
 	eventCenter = app.eventCenter;
 }
 function Start () { }
 function Update () {
+	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 	if(true == uiNeedsLayout) {
 		LayoutUI();
 	}
+	slider.value = skillCaster.GetChantedTimeByTime(timestamp)/skillCaster.castingTime;
+	image.color = skillCaster.skillColor;
 }
 function SetSkillIndex(index: int, skillsLength: int) {
 	totalSkillsAmount = skillsLength;
 	skillIndex = index;
 	uiNeedsLayout = true;
 }
+function SetSkillCaster(c: SkillCaster) { skillCaster = c; }
 private function LayoutUI() {
 	var text: Text = GetComponentInChildren(Text);
 	text.text = skillName;

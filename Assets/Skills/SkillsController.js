@@ -79,6 +79,7 @@ private function AddPlayerSkillCasterButton(caster: GameObject) {
 	var skillsPanel: Image = app.view.skillsPanel;
 	newButton.transform.SetParent(skillsPanel.transform);
 	newButton.skillName = caster.GetComponent(SkillCaster).skillName;
+	newButton.SetSkillCaster(caster.GetComponent(SkillCaster));
 	allButtons = PushGameObjectArray(allButtons, newButton.gameObject);
 	for(var i = 0; i < allButtons.Length; ++i) {
 		allButtons[i].GetComponent(SkillButton).SetSkillIndex(i, allButtons.Length);

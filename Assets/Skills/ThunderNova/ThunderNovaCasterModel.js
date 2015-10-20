@@ -2,6 +2,7 @@
 var thunderNovaModel: ThunderNovaModel; // ThunderNovaModel.js
 var thunderNovaView: ThunderNovaView; // ThunderNovaView.js
 var skillName: String = "Thunder Nova";
+var skillColor: Color = Color(0.8, 0.6, 0.2, 1.0);
 var castingTime: double = 4000.0;
 var alertTime: double = 2000.0;
 private var app: WizardFightApplication; // WizardFightApplication.js
@@ -23,6 +24,7 @@ function UpdateSkillCaster() {
 	skillCaster.SetAlertTime(alertTime);
 	skillCaster.SetCastCallback(Cast);
 	skillCaster.SetSkillName(skillName);
+	skillCaster.SetSkillColor(skillColor);
 }
 var Cast = function(chantedTime: double) {
 	var model = thunderNovaModel;
