@@ -21,11 +21,10 @@ function Awake () {
 }
 function Update () {
 	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
-	if(true == uiNeedsLayout) {
-		LayoutUI();
-	}
+	if(true == uiNeedsLayout) { LayoutUI(); }
 	slider.value = skillCaster.GetChantedTimeByTime(timestamp)/skillCaster.castingTime;
 	image.color = skillCaster.skillColor;
+	if(false == skillCaster.updatedByModel) { uiNeedsLayout = true; }
 }
 function SetSkillIndex(index: int, skillsLength: int) {
 	totalSkillsAmount = skillsLength;
@@ -38,7 +37,8 @@ function OnClick() {
 }
 private function LayoutUI() {
 	var text: Text = GetComponentInChildren(Text);
-	text.text = skillName;
+	text.text = skillCaster.skillName;
+	skillName = skillCaster.skillName;
 	var parentRect: Rect = rectTransform.parent.GetComponent(RectTransform).rect;
 	var parentScale: Vector3 = rectTransform.parent.localScale;
 	var height: float = parentRect.height*parentScale.y;

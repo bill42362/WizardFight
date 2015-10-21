@@ -41,7 +41,10 @@ function Update () {
 		skillsController.gameObject.SetActive(true);
 	}
 	if(false == playerSkillsPushed) {
-		MakeAndPushPlayerSkillCasters();
+		skillsController.MakeAndPushSkillCasters(
+			'ThunderNova', playerController.playerModel
+		);
+		playerSkillsPushed = true;
 	}
 	if(null == enemiesController.enemies) {
 		enemiesController.SetEnemiesModel(model.enemies);
@@ -49,17 +52,4 @@ function Update () {
 	if(null == enemiesController.enemiesView) {
 		enemiesController.SetEnemiesView(view.enemiesView);
 	}
-}
-private function MakeAndPushPlayerSkillCasters() {
-	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
-	var thunderNovaCasterModel = Instantiate(components.ThunderNovaCasterModel);
-	thunderNovaCasterModel.gameObject.AddComponent(SkillCaster);
-	thunderNovaCasterModel.UpdateSkillCaster();
-	thunderNovaCasterModel.GetComponent(SkillCaster).UpdateStartCastingTime(timestamp);
-	skillsController.AddSkillCaster(thunderNovaCasterModel.gameObject, playerController.playerModel);
-	thunderNovaCasterModel.gameObject.SetActive(true);
-	var thunderNovaCasterView = Instantiate(components.ThunderNovaCasterView);
-	thunderNovaCasterView.SetModel(thunderNovaCasterModel);
-	thunderNovaCasterView.gameObject.SetActive(true);
-	playerSkillsPushed = true;
 }

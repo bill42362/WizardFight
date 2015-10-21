@@ -13,11 +13,15 @@ private var skillCastersDictionary = new Dictionary.<GameObject, GameObject[]>()
 private var skillSwitchesDictionary = new Dictionary.<GameObject, boolean[]>();
 private var playerGameObject: GameObject;
 private var playerSkillCasterButtons: GameObject[] = new GameObject[0];
+private var skillCasterModelPrefabsTable = new Dictionary.<String, GameObject>();
+private var skillCasterViewPrefabsTable = new Dictionary.<String, GameObject>();
 
-function Start () {
+function Awake () {
 	app = WizardFightApplication.Shared();
 	eventCenter = app.eventCenter;
 	components = app.components;
+	skillCasterModelPrefabsTable['ThunderNova'] = components.ThunderNovaCasterModel.gameObject;
+	skillCasterViewPrefabsTable['ThunderNova'] = components.ThunderNovaCasterView.gameObject;
 }
 function Update () {
 	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
@@ -37,8 +41,22 @@ var OnSkillStateChanged = function(e: SbiEvent) {
 		}
 	}
 };
+function MakeAndPushSkillCasters(skillName: String, owner: GameObject) {
+	var model: GameObject = Instantiate(skillCasterModelPrefabsTable[skillName]);
+	var view: GameObject = Instantiate(skillCasterViewPrefabsTable[skillName]);
+	if((null != model) && (null != view)) {
+		var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
+		model.AddComponent(SkillCaster);
+		model.GetComponent(SkillCaster).UpdateStartCastingTime(timestamp);
+		AddSkillCaster(model, owner);
+		model.SetActive(true);
+		view.AddComponent(SkillCasterView);
+		view.GetComponent(SkillCasterView).SetModel(model);
+		view.SetActive(true);
+	}
+}
 function AddSkillCaster(caster: GameObject, owner: GameObject): int {
-	if(null == eventCenter) { Start(); }
+	if(null == eventCenter) { Awake(); }
 	var casterIndex: int = -1;
 	if((null == playerGameObject) && ('player' == owner.name)) {
 		playerGameObject = owner;
@@ -78,7 +96,6 @@ private function AddPlayerSkillCasterButton(caster: GameObject) {
 	var newButton: SkillButton = Instantiate(components.SkillButton);
 	var skillsPanel: Image = app.view.skillsPanel;
 	newButton.transform.SetParent(skillsPanel.transform);
-	newButton.skillName = caster.GetComponent(SkillCaster).skillName;
 	newButton.SetSkillCaster(caster.GetComponent(SkillCaster));
 	allButtons = PushGameObjectArray(allButtons, newButton.gameObject);
 	for(var i = 0; i < allButtons.Length; ++i) {

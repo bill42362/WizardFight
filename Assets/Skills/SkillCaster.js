@@ -4,6 +4,7 @@ var castingTime: double = 4000.0;
 var alertTime: double = 2000.0;
 var skillState: String = SkillsController.SKILL_STATE_ALERTING;
 var skillColor: Color = Color(0.2, 0.6, 0.8, 1);
+var updatedByModel: boolean = false;
 private var app: WizardFightApplication; // WizardFightApplication.js
 private var components: WizardFightComponents; // WizardFightComponents.js
 private var eventCenter: EventCenter; // EventCenter.js
@@ -67,6 +68,7 @@ function SetCastingTime(c: double) { castingTime = c; }
 function SetAlertTime(a: double) { alertTime = a; }
 function SetSkillName(n: String) { skillName = n; }
 function SetSkillColor(c: Color) { skillColor = c; }
+function SetSkillUpdated() { updatedByModel = true; }
 function SetCastCallback(c: Function) { castCallback = c; }
 function CallCastCallbackByCastTime(t: double) {
 	if((SkillsController.SKILL_STATE_CHANTED == skillState) && (null != castCallback)) {

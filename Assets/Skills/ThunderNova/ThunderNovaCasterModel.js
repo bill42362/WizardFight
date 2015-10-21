@@ -8,6 +8,7 @@ var alertTime: double = 2000.0;
 private var app: WizardFightApplication; // WizardFightApplication.js
 private var components: WizardFightComponents; // WizardFightComponents.js
 private var eventCenter: EventCenter; // EventCenter.js
+private var casterUpdated: boolean = false;
 
 function Start () {
 	app = WizardFightApplication.Shared();
@@ -17,7 +18,13 @@ function Start () {
 	thunderNovaView = Instantiate(components.ThunderNovaView);
 	thunderNovaView.SetModel(thunderNovaModel);
 }
-function Update () { }
+function Update () {
+	var skillCaster = gameObject.GetComponent(SkillCaster);
+	if((false == casterUpdated) && (null != skillCaster)) {
+		UpdateSkillCaster();
+		casterUpdated = true;
+	}
+}
 function UpdateSkillCaster() {
 	var skillCaster = gameObject.GetComponent(SkillCaster);
 	skillCaster.SetCastingTime(castingTime);
@@ -25,6 +32,7 @@ function UpdateSkillCaster() {
 	skillCaster.SetCastCallback(Cast);
 	skillCaster.SetSkillName(skillName);
 	skillCaster.SetSkillColor(skillColor);
+	skillCaster.SetSkillUpdated();
 }
 var Cast = function(chantedTime: double) {
 	var model = thunderNovaModel;

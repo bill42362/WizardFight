@@ -6,6 +6,9 @@ function Start () {
 	rendererObject = this.GetComponent.<Renderer>();
 }
 function Update () {
+	if(null == model) {
+		model = GetComponent(SkillCasterView).model.GetComponent(ThunderNovaCasterModel);
+	}
 	if(null != model) {
 		rendererObject.enabled = model.gameObject.activeSelf;
 		var newPosition = model.transform.position;
@@ -25,4 +28,3 @@ function Update () {
 		rendererObject.material.color = renderColor;
 	}
 }
-function SetModel(m: ThunderNovaCasterModel) { model = m; }
