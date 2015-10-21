@@ -6,17 +6,19 @@ private var eventCenter: EventCenter; // EventCenter.js
 private var model: WizardFightModel; // WizardFightModel.js
 private var view: WizardFightView; // WizardFightView.js
 private var playerController: PlayerController; // PlayerController.js
+private var enemiesController: EnemiesController; // EnemiesController.js
 private var skillsController: SkillsController; // SkillsController.js
 private var playerSkillsPushed: boolean = false;
 
-function Start () {
+function Awake () {
 	app = WizardFightApplication.Shared();
 	eventCenter = app.eventCenter;
 	components = app.components;
 	model = app.model;
 	view = app.view;
+	playerController = GetComponentInChildren(PlayerController);
+	enemiesController = GetComponentInChildren(EnemiesController);
 }
-
 function Update () {
 	if(null == model) { model = app.model; }
 	if(null == view) { view = app.view; }
@@ -27,10 +29,6 @@ function Update () {
 		var battleFieldView = Instantiate(components.BattleFieldView);
 		battleFieldView.gameObject.SetActive(true);
 		view.battleFieldView = battleFieldView;
-	}
-	if(null == playerController) {
-		playerController = Instantiate(components.PlayerController);
-		playerController.gameObject.SetActive(true);
 	}
 	if(null == playerController.playerModel) {
 		playerController.SetPlayerModel(components.WizardModel.gameObject);
@@ -44,6 +42,12 @@ function Update () {
 	}
 	if(false == playerSkillsPushed) {
 		MakeAndPushPlayerSkillCasters();
+	}
+	if(null == enemiesController.enemies) {
+		enemiesController.SetEnemiesModel(model.enemies);
+	}
+	if(null == enemiesController.enemiesView) {
+		enemiesController.SetEnemiesView(view.enemiesView);
 	}
 }
 private function MakeAndPushPlayerSkillCasters() {

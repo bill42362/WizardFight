@@ -6,10 +6,10 @@ var controller: WizardFightController; // WizardFightController.js
 var model: WizardFightModel; // WizardFightModel.js
 var view: WizardFightView; // WizardFightView.js
 
-function Start () {
+function Awake () {
 	app = GetComponent(WizardFightApplication);
 	controller = components.WizardFightController;
-	model = components.WizardFightModel;
+	model = GetComponentInChildren(WizardFightModel);
 	view = components.WizardFightView;
 }
 function Update () { }
