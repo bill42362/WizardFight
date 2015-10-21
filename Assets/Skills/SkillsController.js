@@ -84,9 +84,28 @@ private function AddPlayerSkillCasterButton(caster: GameObject) {
 	for(var i = 0; i < allButtons.Length; ++i) {
 		allButtons[i].GetComponent(SkillButton).SetSkillIndex(i, allButtons.Length);
 	}
+	eventCenter.RegisterListener(newButton, 'skillbuttonclicked', this, OnSkillButtonClick);
 	newButton.gameObject.SetActive(true);
 	playerSkillCasterButtons = allButtons;
 }
+var OnSkillButtonClick = function(e: SbiEvent) {
+	var playerSwitches: boolean[] = skillSwitchesDictionary[playerGameObject];
+	var switchesAllOff: boolean = true;
+	if(false == playerSwitches[e.data]) {
+		for(var i = 0; i < playerSwitches.Length; ++i) {
+			if(true == playerSwitches[i]) {
+				switchesAllOff = false;
+			}
+		}
+	}
+	playerSwitches[e.data] = !playerSwitches[e.data];
+	if(true == switchesAllOff) {
+		var caster: GameObject = skillCastersDictionary[playerGameObject][e.data];
+		caster.GetComponent(SkillCaster).UpdateStartCastingTime(e.time);
+		caster.SetActive(true);
+	}
+	skillSwitchesDictionary[playerGameObject] = playerSwitches;
+};
 private function MoveCastersToOwners() {
 	var e = ownerDictionary.GetEnumerator();
 	while(e.MoveNext()) {

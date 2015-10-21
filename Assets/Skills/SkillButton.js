@@ -34,7 +34,7 @@ function SetSkillIndex(index: int, skillsLength: int) {
 }
 function SetSkillCaster(c: SkillCaster) { skillCaster = c; }
 function OnClick() {
-	Debug.Log('click');
+	eventCenter.CastEvent(this, 'skillbuttonclicked', skillIndex);
 }
 private function LayoutUI() {
 	var text: Text = GetComponentInChildren(Text);

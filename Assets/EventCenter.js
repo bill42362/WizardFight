@@ -1,5 +1,6 @@
 ﻿#pragma strict
 private var hearings: Array = new Array();
+private var epochStart: System.DateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 function CastEvent(caster: Object, type: String, data: Object) {
 	for(var i = 0; i < hearings.length; ++i) {
 		var h: Hearing = hearings[i] as Hearing;
@@ -9,6 +10,7 @@ function CastEvent(caster: Object, type: String, data: Object) {
 			e.listener = h.listener;
 			e.type = h.type;
 			e.data = data;
+			e.time = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 			h.method(e);
 		}
 	}
@@ -44,4 +46,5 @@ class SbiEvent {
 	var listener: Object;
 	var type: String;
 	var data: Object;
+	var time: double;
 }
