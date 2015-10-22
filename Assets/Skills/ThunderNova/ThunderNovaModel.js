@@ -14,3 +14,9 @@ function GetAge(): double {
 	var age: double = timestamp - appearTime;
 	return age;
 }
+function OnTriggerStay(other: Collider) {
+	if(gameObject.tag != other.tag) {
+		var wizardModel = other.GetComponent(WizardModel);
+		wizardModel.TakeDamage(damage);
+	}
+}

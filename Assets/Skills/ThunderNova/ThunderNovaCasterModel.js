@@ -39,6 +39,7 @@ var Cast = function(chantedTime: double) {
 	model.SetAppearTime(chantedTime);
 	var novaPosition = transform.position;
 	novaPosition.y = 0;
+	model.gameObject.tag = gameObject.tag;
 	model.gameObject.transform.position = novaPosition;
 	model.gameObject.SetActive(true);
 	var view = thunderNovaView;

@@ -1,15 +1,21 @@
 ﻿#pragma strict
 var enemyCount: int = 1;
 var enemies: GameObject[] = new GameObject[0];
+var wizardModelPrefab: WizardModel; // WizardModel.js
+private var app: WizardFightApplication; // WizardFightApplication.js
+private var components: WizardFightComponents; // WizardFightComponents.js
 
 function Awake () {
+	app = WizardFightApplication.Shared();
+	components = app.components;
+	wizardModelPrefab = components.WizardModel;
 	for(var i = 0; i < enemyCount; ++i) {
-		var newEnemyGameObject = new GameObject();
+		var newEnemyGameObject = Instantiate(wizardModelPrefab);
 		newEnemyGameObject.transform.position = new Vector3(0, 0, 5);
-		newEnemyGameObject.AddComponent(WizardModel);
 		newEnemyGameObject.name = 'EnemyWizard';
+		newEnemyGameObject.tag = 'Enemy';
 		newEnemyGameObject.transform.parent = gameObject.transform;
-		enemies = PushGameObjectArray(enemies, newEnemyGameObject);
+		enemies = PushGameObjectArray(enemies, newEnemyGameObject.gameObject);
 	}
 }
 function Update () {

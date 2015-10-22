@@ -14,7 +14,7 @@ function Update () {
 				enemyViews = PushGameObjectArray(enemyViews, newEnemyViewGameObject);
 				newEnemyViewGameObject.SetActive(true);
 			}
-			if(false == enemyViews[modelCount].activeSelf) { enemyViews[modelCount].SetActive(true); }
+			enemyViews[modelCount].SetActive(models[modelCount].activeSelf);
 			// Align views transform.
 			enemyViews[modelCount].transform.position = models[modelCount].transform.position;
 		}

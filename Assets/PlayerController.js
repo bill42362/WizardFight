@@ -19,7 +19,7 @@ function Start () {
 }
 function Update () {
 	if(null != playerView) {
-		if(null != playerModel) {
+		if((null != playerModel) && (true == playerModel.activeSelf)) {
 			var targetDirection = playerTargetPosition - playerModel.gameObject.transform.position;
 			var force = targetDirection*15;
 			playerModel.GetComponent.<Rigidbody>().velocity = force;
@@ -34,6 +34,7 @@ function SetPlayerModel(m: GameObject) {
 	playerModel = Instantiate(m);
 	playerModel.transform.position = initPlayerPosition;
 	playerModel.name = 'player';
+	playerModel.tag = 'Player';
 	playerModel.SetActive(true);
 }
 function SetPlayerView(v: GameObject) {

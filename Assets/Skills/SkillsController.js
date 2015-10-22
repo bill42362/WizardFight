@@ -46,6 +46,7 @@ function MakeAndPushSkillCasters(skillName: String, owner: GameObject) {
 	var view: GameObject = Instantiate(skillCasterViewPrefabsTable[skillName]);
 	if((null != model) && (null != view)) {
 		var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
+		model.tag = owner.tag;
 		model.AddComponent(SkillCaster);
 		model.GetComponent(SkillCaster).UpdateStartCastingTime(timestamp);
 		AddSkillCaster(model, owner);
@@ -127,8 +128,9 @@ private function MoveCastersToOwners() {
 	var e = ownerDictionary.GetEnumerator();
 	while(e.MoveNext()) {
 		var caster = e.Current.Key;
+		var owner = e.Current.Value;
+		caster.SetActive(owner.activeSelf);
 		if(caster.activeSelf) {
-			var owner = e.Current.Value;
 			caster.transform.position = owner.transform.position;
 		}
 	}
