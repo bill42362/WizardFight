@@ -8,7 +8,7 @@ var view: WizardFightView; // WizardFightView.js
 
 function Awake () {
 	app = GetComponent(WizardFightApplication);
-	controller = components.WizardFightController;
+	controller = GetComponentInChildren(WizardFightController);
 	model = GetComponentInChildren(WizardFightModel);
 	view = components.WizardFightView;
 }

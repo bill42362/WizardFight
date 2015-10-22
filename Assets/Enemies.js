@@ -12,7 +12,9 @@ function Awake () {
 		enemies = PushGameObjectArray(enemies, newEnemyGameObject);
 	}
 }
-function Update () { }
+function Update () {
+	if(enemyCount != enemies.Length) { Awake(); }
+}
 private function PushGameObjectArray(array: GameObject[], item: GameObject): GameObject[] {
 	var index = array.Length;
 	System.Array.Resize.<GameObject>(array, array.Length + 1);
