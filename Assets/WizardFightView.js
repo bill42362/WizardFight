@@ -9,6 +9,8 @@ private var app: WizardFightApplication; // WizardFightApplication.js
 
 function Awake () {
 	app = WizardFightApplication.Shared();
+	battleFieldView = GetComponentInChildren(BattleFieldView);
 	rootCanvas = GetComponentInChildren(RootCanvas);
+	playerView = GetComponentInChildren(WizardView);
 	enemiesView = GetComponentInChildren(EnemiesView);
 }

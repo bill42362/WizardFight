@@ -8,5 +8,11 @@ private var eventCenter: EventCenter; // EventCenter.js
 function Awake () {
 	app = WizardFightApplication.Shared();
 	eventCenter = app.eventCenter;
+	battleFieldModel = GetComponentInChildren(BattleFieldModel);
+	playerModel = GetComponentInChildren(WizardModel);
 	enemies = GetComponentInChildren(Enemies);
+}
+function GetEnemies(): Enemies {
+	if(null == enemies) { enemies = GetComponentInChildren(Enemies); }
+	return enemies;
 }

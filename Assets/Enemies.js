@@ -7,8 +7,8 @@ private var components: WizardFightComponents; // WizardFightComponents.js
 
 function Awake () {
 	app = WizardFightApplication.Shared();
-	components = app.components;
-	wizardModelPrefab = components.WizardModel;
+	wizardModelPrefab = Instantiate(Resources.Load("Wizard/WizardModel", WizardModel));
+	wizardModelPrefab.gameObject.SetActive(false);
 	for(var i = 0; i < enemyCount; ++i) {
 		var newEnemyGameObject = Instantiate(wizardModelPrefab);
 		newEnemyGameObject.transform.position = new Vector3(0, 0, 5);
@@ -16,6 +16,7 @@ function Awake () {
 		newEnemyGameObject.tag = 'Enemy';
 		newEnemyGameObject.transform.parent = gameObject.transform;
 		enemies = PushGameObjectArray(enemies, newEnemyGameObject.gameObject);
+		newEnemyGameObject.gameObject.SetActive(true);
 	}
 }
 function Update () {

@@ -15,7 +15,7 @@ function Update () {
 		newPosition.y = 0;
 		transform.position = newPosition;
 		var renderColor: Color = Color(0.0, 0.0, 0.0, 0.0);
-		switch(model.GetComponent(SkillCaster).GetState()) {
+		switch(model.GetComponent(SkillCasterModel).GetState()) {
 			case SkillsController.SKILL_STATE_CHANTING:
 				renderColor = Color(0.2, 0.6, 0.8, 0.5);
 				break;

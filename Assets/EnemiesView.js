@@ -2,26 +2,31 @@
 var enemies: Enemies; // Enemies.js
 var enemyViews: GameObject[] = new GameObject[0];
 var wizardViewPrefab: GameObject;
+private var app: WizardFightApplication; // WizardFightApplication.js
 
-function Awake () { }
+function Awake () {
+	app = WizardFightApplication.Shared();
+	var appModel = app.GetModel();;
+	enemies = appModel.GetEnemies();
+	wizardViewPrefab = Instantiate(Resources.Load("Wizard/WizardView", GameObject));
+	wizardViewPrefab.SetActive(false);
+}
 function Update () {
-	if(null != enemies) {
-		var models: GameObject[] = enemies.enemies;
-		for(var modelCount = 0; modelCount < models.Length; ++modelCount) {
-			// Create new views to meet models.
-			if(!(enemyViews.Length > modelCount)) {
-				var newEnemyViewGameObject: GameObject = Instantiate(wizardViewPrefab);
-				enemyViews = PushGameObjectArray(enemyViews, newEnemyViewGameObject);
-				newEnemyViewGameObject.SetActive(true);
-			}
-			enemyViews[modelCount].SetActive(models[modelCount].activeSelf);
-			// Align views transform.
-			enemyViews[modelCount].transform.position = models[modelCount].transform.position;
+	var models: GameObject[] = enemies.enemies;
+	for(var modelCount = 0; modelCount < models.Length; ++modelCount) {
+		// Create new views to meet models.
+		if(!(enemyViews.Length > modelCount)) {
+			var newEnemyViewGameObject: GameObject = Instantiate(wizardViewPrefab);
+			enemyViews = PushGameObjectArray(enemyViews, newEnemyViewGameObject);
+			newEnemyViewGameObject.SetActive(true);
 		}
-		// Inactivate unused views.
-		for(var viewsCount = models.Length; viewsCount < enemyViews.Length; ++viewsCount) {
-			enemyViews[viewsCount].SetActive(false);
-		}
+		enemyViews[modelCount].SetActive(models[modelCount].activeSelf);
+		// Align views transform.
+		enemyViews[modelCount].transform.position = models[modelCount].transform.position;
+	}
+	// Inactivate unused views.
+	for(var viewsCount = models.Length; viewsCount < enemyViews.Length; ++viewsCount) {
+		enemyViews[viewsCount].SetActive(false);
 	}
 }
 function SetEnemies(e: Enemies) { enemies = e; }

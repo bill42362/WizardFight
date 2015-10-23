@@ -10,9 +10,17 @@ function Awake () {
 	app = GetComponent(WizardFightApplication);
 	controller = GetComponentInChildren(WizardFightController);
 	model = GetComponentInChildren(WizardFightModel);
-	view = components.WizardFightView;
+	view = GetComponentInChildren(WizardFightView);
 }
 function Update () { }
+function GetModel(): WizardFightModel {
+	if(null == model) { model = GetComponentInChildren(WizardFightModel); }
+	return model;
+}
+function GetView(): WizardFightView {
+	if(null == view) { view = GetComponentInChildren(WizardFightView); }
+	return view;
+}
 static function Shared(): WizardFightApplication {
 	if(null == app) {
 		app = FindObjectOfType(WizardFightApplication);

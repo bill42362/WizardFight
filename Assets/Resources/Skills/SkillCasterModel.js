@@ -12,11 +12,11 @@ private var skillsController: SkillsController; // SkillsController.js
 private var startCastingTime: double = -1;
 private var castCallback: Function;
 
-function Start () {
+function Awake () {
 	app = WizardFightApplication.Shared();
 	eventCenter = app.eventCenter;
 	components = app.components;
-	skillsController = components.SkillsController;
+	skillsController = app.controller.skillsController;
 }
 function Update () { }
 function UpdateStartCastingTime(t: double) {

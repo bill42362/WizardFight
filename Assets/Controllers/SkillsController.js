@@ -5,7 +5,6 @@ static var SKILL_STATE_CHANTING: String = 'chanting';
 static var SKILL_STATE_ALERTING: String = 'alerting';
 static var SKILL_STATE_CHANTED: String = 'chanted';
 private var app: WizardFightApplication; // WizardFightApplication.js
-private var components: WizardFightComponents; // WizardFightComponents.js
 private var eventCenter: EventCenter; // EventCenter.js
 private var epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 private var ownerDictionary = new Dictionary.<GameObject, GameObject>();
@@ -19,9 +18,12 @@ private var skillCasterViewPrefabsTable = new Dictionary.<String, GameObject>();
 function Awake () {
 	app = WizardFightApplication.Shared();
 	eventCenter = app.eventCenter;
-	components = app.components;
-	skillCasterModelPrefabsTable['ThunderNova'] = components.ThunderNovaCasterModel.gameObject;
-	skillCasterViewPrefabsTable['ThunderNova'] = components.ThunderNovaCasterView.gameObject;
+	skillCasterModelPrefabsTable['ThunderNova'] = Instantiate(Resources.Load(
+		"Skills/ThunderNova/ThunderNovaCasterModel", GameObject
+	));
+	skillCasterViewPrefabsTable['ThunderNova'] = Instantiate(Resources.Load(
+		"Skills/ThunderNova/ThunderNovaCasterView", GameObject
+	));
 }
 function Update () {
 	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
@@ -32,11 +34,11 @@ var OnSkillStateChanged = function(e: SbiEvent) {
 	var data: SkillStateChangeEventData = e.data as SkillStateChangeEventData;
 	if(SkillsController.SKILL_STATE_CHANTED == data.newState) {
 		var caster = e.target as GameObject;
-		caster.GetComponent(SkillCaster).CallCastCallbackByCastTime(data.time);
+		caster.GetComponent(SkillCasterModel).CallCastCallbackByCastTime(data.time);
 		caster.SetActive(false);
 		var nextCaster = PickNextCaster(caster);
 		if(null != nextCaster) {
-			nextCaster.GetComponent(SkillCaster).UpdateStartCastingTime(data.time);
+			nextCaster.GetComponent(SkillCasterModel).UpdateStartCastingTime(data.time);
 			nextCaster.SetActive(true);
 		}
 	}
@@ -47,8 +49,8 @@ function MakeAndPushSkillCasters(skillName: String, owner: GameObject) {
 	if((null != model) && (null != view)) {
 		var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 		model.tag = owner.tag;
-		model.AddComponent(SkillCaster);
-		model.GetComponent(SkillCaster).UpdateStartCastingTime(timestamp);
+		model.AddComponent(SkillCasterModel);
+		model.GetComponent(SkillCasterModel).UpdateStartCastingTime(timestamp);
 		AddSkillCaster(model, owner);
 		model.SetActive(true);
 		view.AddComponent(SkillCasterView);
@@ -59,7 +61,7 @@ function MakeAndPushSkillCasters(skillName: String, owner: GameObject) {
 function AddSkillCaster(caster: GameObject, owner: GameObject): int {
 	if(null == eventCenter) { Awake(); }
 	var casterIndex: int = -1;
-	if((null == playerGameObject) && ('player' == owner.name)) {
+	if((null == playerGameObject) && ('Player' == owner.tag)) {
 		playerGameObject = owner;
 	}
 	var ownerExist = skillCastersDictionary.ContainsKey(owner);
@@ -94,13 +96,15 @@ function AddSkillCaster(caster: GameObject, owner: GameObject): int {
 private function AddPlayerSkillCasterButton(caster: GameObject) {
 	var allButtons: GameObject[] = playerSkillCasterButtons;
 	var skillIndex: int = allButtons.Length;
-	var newButton: SkillButton = Instantiate(components.SkillButton);
+	var newButton: SkillButtonView = Instantiate(Resources.Load(
+		'Skills/SkillButtonView', SkillButtonView
+	));
 	var skillsPanel: Image = app.view.skillsPanel;
 	newButton.transform.SetParent(skillsPanel.transform);
-	newButton.SetSkillCaster(caster.GetComponent(SkillCaster));
+	newButton.SetSkillCaster(caster.GetComponent(SkillCasterModel));
 	allButtons = PushGameObjectArray(allButtons, newButton.gameObject);
 	for(var i = 0; i < allButtons.Length; ++i) {
-		allButtons[i].GetComponent(SkillButton).SetSkillIndex(i, allButtons.Length);
+		allButtons[i].GetComponent(SkillButtonView).SetSkillIndex(i, allButtons.Length);
 	}
 	eventCenter.RegisterListener(newButton, 'skillbuttonclicked', this, OnSkillButtonClick);
 	newButton.gameObject.SetActive(true);
@@ -109,17 +113,18 @@ private function AddPlayerSkillCasterButton(caster: GameObject) {
 var OnSkillButtonClick = function(e: SbiEvent) {
 	var playerSwitches: boolean[] = skillSwitchesDictionary[playerGameObject];
 	var switchesAllOff: boolean = true;
-	if(false == playerSwitches[e.data]) {
+	var skillIndex: int = System.Convert.ToInt32(e.data);
+	if(false == playerSwitches[skillIndex]) {
 		for(var i = 0; i < playerSwitches.Length; ++i) {
 			if(true == playerSwitches[i]) {
 				switchesAllOff = false;
 			}
 		}
 	}
-	playerSwitches[e.data] = !playerSwitches[e.data];
+	playerSwitches[skillIndex] = !playerSwitches[skillIndex];
 	if(true == switchesAllOff) {
-		var caster: GameObject = skillCastersDictionary[playerGameObject][e.data];
-		caster.GetComponent(SkillCaster).UpdateStartCastingTime(e.time);
+		var caster: GameObject = skillCastersDictionary[playerGameObject][skillIndex];
+		caster.GetComponent(SkillCasterModel).UpdateStartCastingTime(e.time);
 		caster.SetActive(true);
 	}
 	skillSwitchesDictionary[playerGameObject] = playerSwitches;
@@ -140,7 +145,7 @@ private function UpdateSkillCastersStateByTime(t: double) {
 	while(e.MoveNext()) {
 		var caster = e.Current.Key;
 		if(caster.activeSelf) {
-			caster.GetComponent(SkillCaster).UpdateSkillStateByTime(t);
+			caster.GetComponent(SkillCasterModel).UpdateSkillStateByTime(t);
 		}
 	}
 }

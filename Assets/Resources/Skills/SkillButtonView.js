@@ -9,7 +9,7 @@ private var rectTransform: RectTransform;
 private var uiNeedsLayout: boolean = false;
 private var totalSkillsAmount: int = 1;
 private var skillIndex: int = 0;
-private var skillCaster: SkillCaster; // SkillCaster.js
+private var skillCasterModel: SkillCasterModel; // SkillCasterModel.js
 private var image: Image;
 
 function Awake () {
@@ -22,23 +22,23 @@ function Awake () {
 function Update () {
 	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 	if(true == uiNeedsLayout) { LayoutUI(); }
-	slider.value = skillCaster.GetChantedTimeByTime(timestamp)/skillCaster.castingTime;
-	image.color = skillCaster.skillColor;
-	if(false == skillCaster.updatedByModel) { uiNeedsLayout = true; }
+	slider.value = skillCasterModel.GetChantedTimeByTime(timestamp)/skillCasterModel.castingTime;
+	image.color = skillCasterModel.skillColor;
+	if(false == skillCasterModel.updatedByModel) { uiNeedsLayout = true; }
 }
 function SetSkillIndex(index: int, skillsLength: int) {
 	totalSkillsAmount = skillsLength;
 	skillIndex = index;
 	uiNeedsLayout = true;
 }
-function SetSkillCaster(c: SkillCaster) { skillCaster = c; }
+function SetSkillCaster(c: SkillCasterModel) { skillCasterModel = c; }
 function OnClick() {
 	eventCenter.CastEvent(this, 'skillbuttonclicked', skillIndex);
 }
 private function LayoutUI() {
 	var text: Text = GetComponentInChildren(Text);
-	text.text = skillCaster.skillName;
-	skillName = skillCaster.skillName;
+	text.text = skillCasterModel.skillName;
+	skillName = skillCasterModel.skillName;
 	var parentRect: Rect = rectTransform.parent.GetComponent(RectTransform).rect;
 	var parentScale: Vector3 = rectTransform.parent.localScale;
 	var height: float = parentRect.height*parentScale.y;

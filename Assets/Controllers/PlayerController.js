@@ -13,35 +13,24 @@ private var groundPlane: Plane = Plane(Vector3(0.0, 1.0, 0.0), Vector3(0, 0, 0))
 function Awake () {
 	app = WizardFightApplication.Shared();
 	eventCenter = app.eventCenter;
+	var appModel = app.GetModel();
+	playerModel = appModel.playerModel.gameObject;
+	var appView = app.GetView();
+	playerView = appView.playerView.gameObject;
 }
 function Start () {
 	eventCenter.RegisterListener(app.view.rootCanvas, 'mouseup', this, OnMouseUp);
 }
 function Update () {
-	if(null != playerView) {
-		if((null != playerModel) && (true == playerModel.activeSelf)) {
-			var targetDirection = playerTargetPosition - playerModel.gameObject.transform.position;
-			var force = targetDirection*15;
-			playerModel.GetComponent.<Rigidbody>().velocity = force;
-			UpdateWizardView();
-		} else {
-			playerView.SetActive(false);
-			playerViewActivated = false;
-		}
+	if(true == playerModel.activeSelf) {
+		var targetDirection = playerTargetPosition - playerModel.gameObject.transform.position;
+		var force = targetDirection*15;
+		playerModel.GetComponent.<Rigidbody>().velocity = force;
+		UpdateWizardView();
+	} else {
+		playerView.SetActive(false);
+		playerViewActivated = false;
 	}
-}
-function SetPlayerModel(m: GameObject) {
-	playerModel = Instantiate(m);
-	playerModel.transform.position = initPlayerPosition;
-	playerModel.name = 'player';
-	playerModel.tag = 'Player';
-	playerModel.SetActive(true);
-}
-function SetPlayerView(v: GameObject) {
-	playerView = Instantiate(v);
-	playerView.transform.position = initPlayerPosition;
-	playerView.SetActive(true);
-	playerViewActivated = true;
 }
 var OnMouseUp = function(e: SbiEvent) {
 	var ray: Ray = Camera.main.ScreenPointToRay(Input.mousePosition);

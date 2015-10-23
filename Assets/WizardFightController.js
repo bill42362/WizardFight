@@ -14,32 +14,13 @@ function Awake () {
 	app = WizardFightApplication.Shared();
 	eventCenter = app.eventCenter;
 	components = app.components;
-	model = app.model;
-	view = app.view;
+	model = app.GetComponentInChildren(WizardFightModel);
+	view = app.GetComponentInChildren(WizardFightView);
+	skillsController = GetComponentInChildren(SkillsController);
 	playerController = GetComponentInChildren(PlayerController);
 	enemiesController = GetComponentInChildren(EnemiesController);
 }
 function Update () {
-	if(null == model) { model = app.model; }
-	if(null == view) { view = app.view; }
-	if(null == model.battleFieldModel) {
-		var battleFieldModel = Instantiate(components.BattleFieldModel);
-		model.battleFieldModel = battleFieldModel;
-		battleFieldModel.gameObject.SetActive(true);
-		var battleFieldView = Instantiate(components.BattleFieldView);
-		battleFieldView.gameObject.SetActive(true);
-		view.battleFieldView = battleFieldView;
-	}
-	if(null == playerController.playerModel) {
-		playerController.SetPlayerModel(components.WizardModel.gameObject);
-	}
-	if(null == playerController.playerView) {
-		playerController.SetPlayerView(components.WizardView.gameObject);
-	}
-	if(null == skillsController) {
-		skillsController = Instantiate(components.SkillsController);
-		skillsController.gameObject.SetActive(true);
-	}
 	if(false == playerSkillsPushed) {
 		skillsController.MakeAndPushSkillCasters(
 			'ThunderNova', playerController.playerModel
