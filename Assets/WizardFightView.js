@@ -14,3 +14,7 @@ function Awake () {
 	playerView = GetComponentInChildren(WizardView);
 	enemiesView = GetComponentInChildren(EnemiesView);
 }
+function GetPlayerView(): WizardView {
+	if(null == playerView) { playerView = GetComponentInChildren(WizardView); }
+	return playerView;
+}

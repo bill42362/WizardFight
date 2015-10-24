@@ -35,3 +35,7 @@ function Update () {
 		enemiesController.SetEnemiesView(view.enemiesView);
 	}
 }
+function GetPlayerController(): PlayerController {
+	if(null == playerController) { playerController = GetComponentInChildren(PlayerController); }
+	return playerController;
+}

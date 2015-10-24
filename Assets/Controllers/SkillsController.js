@@ -14,6 +14,7 @@ private var playerGameObject: GameObject;
 private var playerSkillCasterButtons: GameObject[] = new GameObject[0];
 private var skillCasterModelPrefabsTable = new Dictionary.<String, GameObject>();
 private var skillCasterViewPrefabsTable = new Dictionary.<String, GameObject>();
+private var playerController: PlayerController;
 
 function Awake () {
 	app = WizardFightApplication.Shared();
@@ -24,6 +25,7 @@ function Awake () {
 	skillCasterViewPrefabsTable['ThunderNova'] = Instantiate(Resources.Load(
 		"Skills/ThunderNova/ThunderNovaCasterView", GameObject
 	));
+	playerController = app.GetController().GetPlayerController();
 }
 function Update () {
 	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
@@ -32,8 +34,8 @@ function Update () {
 }
 var OnSkillStateChanged = function(e: SbiEvent) {
 	var data: SkillStateChangeEventData = e.data as SkillStateChangeEventData;
+	var caster = e.target as GameObject;
 	if(SkillsController.SKILL_STATE_CHANTED == data.newState) {
-		var caster = e.target as GameObject;
 		caster.GetComponent(SkillCasterModel).CallCastCallbackByCastTime(data.time);
 		caster.SetActive(false);
 		var nextCaster = PickNextCaster(caster);
@@ -41,6 +43,10 @@ var OnSkillStateChanged = function(e: SbiEvent) {
 			nextCaster.GetComponent(SkillCasterModel).UpdateStartCastingTime(data.time);
 			nextCaster.SetActive(true);
 		}
+	}
+	var owner = ownerDictionary[caster];
+	if(playerGameObject == ownerDictionary[caster]) {
+		playerController.SetPlayerChantintState(data.newState);
 	}
 };
 function MakeAndPushSkillCasters(skillName: String, owner: GameObject) {

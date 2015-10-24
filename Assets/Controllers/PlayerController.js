@@ -9,14 +9,15 @@ private var playerViewActivated: boolean = false;
 private var initPlayerPosition: Vector3 = Vector3(0, 0.5, -5);
 private var playerTargetPosition: Vector3 = Vector3(0, 0.5, -5);
 private var groundPlane: Plane = Plane(Vector3(0.0, 1.0, 0.0), Vector3(0, 0, 0));
+private var playerChantingState: String = 'chanting';
 
 function Awake () {
 	app = WizardFightApplication.Shared();
 	eventCenter = app.eventCenter;
 	var appModel = app.GetModel();
-	playerModel = appModel.playerModel.gameObject;
+	playerModel = appModel.GetPlayerModel().gameObject;
 	var appView = app.GetView();
-	playerView = appView.playerView.gameObject;
+	playerView = appView.GetPlayerView().gameObject;
 }
 function Start () {
 	eventCenter.RegisterListener(app.view.rootCanvas, 'mouseup', this, OnMouseUp);
@@ -41,6 +42,16 @@ var OnMouseUp = function(e: SbiEvent) {
 		SetPlayerTargetPosition(playerTargetPosition);
 	}
 };
+function SetPlayerChantintState(s: String) {
+	eventCenter.CastEvent(this, 'playerChantingStateChanged', s);
+	playerChantingState = s;
+}
+function GetPlayerChantintState(): String { return playerChantingState; }
+function GetPlayerPosition(): Vector3 {
+	var pos = new Vector3(0, 0, -5);
+	if(null != playerModel) { pos = playerModel.transform.position; }
+	return pos;
+}
 function SetPlayerTargetPosition(pos: Vector3) {
 	playerTargetPosition = pos;
 	eventCenter.CastEvent(this, 'playerTargetPositionChanged', pos);

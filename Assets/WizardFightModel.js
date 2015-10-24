@@ -12,6 +12,10 @@ function Awake () {
 	playerModel = GetComponentInChildren(WizardModel);
 	enemies = GetComponentInChildren(Enemies);
 }
+function GetPlayerModel(): WizardModel {
+	if(null == playerModel) { playerModel = GetComponentInChildren(WizardModel); }
+	return playerModel;
+}
 function GetEnemies(): Enemies {
 	if(null == enemies) { enemies = GetComponentInChildren(Enemies); }
 	return enemies;

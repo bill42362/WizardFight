@@ -21,6 +21,10 @@ function GetView(): WizardFightView {
 	if(null == view) { view = GetComponentInChildren(WizardFightView); }
 	return view;
 }
+function GetController(): WizardFightController {
+	if(null == controller) { controller = GetComponentInChildren(WizardFightController); }
+	return controller;
+}
 static function Shared(): WizardFightApplication {
 	if(null == app) {
 		app = FindObjectOfType(WizardFightApplication);
