@@ -127,9 +127,6 @@
  <Reference Include="UnityEditor.OSXStandalone.Extensions">
  <HintPath>F:/Unity3D/Editor/Data/PlaybackEngines/macstandalonesupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
  </Reference>
- <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
- <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/2015/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
- </Reference>
  <Reference Include="Mono.Cecil">
  <HintPath>F:/Unity3D/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
  </Reference>

@@ -10,10 +10,20 @@ public class JoinRoomButton : Photon.PunBehaviour {
 	
 	// Update is called once per frame
 	public override void OnJoinedRoom() {
+  
 		Debug.Log("Join Room Success!!!");
-		PhotonNetwork.Instantiate( "Player" ,
-								   new Vector3(0,0,5), 
-								   Quaternion.identity, 
-								   0 );
+        if (PhotonNetwork.room.playerCount == 1)
+        {
+            PhotonNetwork.Instantiate("Player",
+                                       new Vector3(0, 0, -5),
+                                       Quaternion.identity,
+                                       0);
+        }
+        else {
+            PhotonNetwork.Instantiate("Player",
+                           new Vector3(0, 0, 5),
+                           Quaternion.identity,
+                           0);
+        }
 	}
 }

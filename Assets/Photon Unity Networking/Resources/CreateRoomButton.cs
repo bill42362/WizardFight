@@ -11,10 +11,7 @@ public class CreateRoomButton : Photon.PunBehaviour {
 	
 	// Update is called once per frame
 	public override void OnCreatedRoom() {
-		Debug.Log("Create Room Success!!!");
-		PhotonNetwork.Instantiate( "Player" ,
-								   new Vector3(0,0,-5), 
-								   Quaternion.identity, 
-								   0 );
+        Debug.Log("Create Room Success!!!");
+
 	}
 }
