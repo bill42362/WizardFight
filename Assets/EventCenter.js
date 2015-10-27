@@ -4,7 +4,7 @@ private var epochStart: System.DateTime = new System.DateTime(1970, 1, 1, 0, 0, 
 function CastEvent(caster: Object, type: String, data: Object) {
 	for(var i = 0; i < hearings.length; ++i) {
 		var h: Hearing = hearings[i] as Hearing;
-		if((caster == h.target) && (type == h.type)) {
+		if(((caster == h.target) || (this == h.target)) && (type == h.type)) {
 			var e = new SbiEvent();
 			e.target = caster;
 			e.listener = h.listener;
