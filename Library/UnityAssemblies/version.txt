@@ -1,8 +1,10 @@
 5.2.2f1:2.1.0.0
 StandaloneOSXIntel
 F:/Unity3D/Editor/Data/Managed/UnityEngine.dll
+F:/Unity3D/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll
 F:/Unity3D/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll
 F:/Unity3D/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll
+F:/Unity3D/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll
 F:/Unity3D/Editor/Data/Managed/UnityEditor.dll
 F:/Unity3D/Editor/Data\Managed/Mono.Cecil.dll
 F:/Unity3D/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll

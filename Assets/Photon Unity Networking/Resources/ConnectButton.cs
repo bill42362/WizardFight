@@ -1,11 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-public class NetworkHandler : Photon.PunBehaviour
+public class ConnectButton : Photon.PunBehaviour
 {
-
-    public void connectToPhoton()
+    public void OnClicked()
     {
         if ( !PhotonNetwork.connected )
             PhotonNetwork.ConnectUsingSettings("0.001");
@@ -21,4 +20,5 @@ public class NetworkHandler : Photon.PunBehaviour
         button.interactable = false;
         Debug.Log("Connection Success!!!");
     }
+
 }
