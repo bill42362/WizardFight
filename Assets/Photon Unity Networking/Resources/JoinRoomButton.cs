@@ -14,16 +14,18 @@ public class JoinRoomButton : Photon.PunBehaviour {
 		Debug.Log("Join Room Success!!!");
         if (PhotonNetwork.room.playerCount == 1)
         {
-            PhotonNetwork.Instantiate("Player",
+            GameObject myPlayer = PhotonNetwork.Instantiate("Player",
                                        new Vector3(0, 0, -5),
                                        Quaternion.identity,
                                        0);
+            myPlayer.tag = "Player";
         }
         else {
-            PhotonNetwork.Instantiate("Player",
+            GameObject myPlayer = PhotonNetwork.Instantiate("Player",
                            new Vector3(0, 0, 5),
                            Quaternion.identity,
                            0);
+            myPlayer.tag = "Player";
         }
 	}
 }
