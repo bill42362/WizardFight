@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 public class JoinRoomButton : Photon.PunBehaviour {
-
+    private GameObject me;
 	// Use this for initialization
 	public void OnClicked () {
 		PhotonNetwork.JoinRoom("myroom");
@@ -28,4 +28,16 @@ public class JoinRoomButton : Photon.PunBehaviour {
             myPlayer.tag = "Player";
         }
 	}
+    public override void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        if ( info.photonView.isMine)
+        {
+            me = info.photonView.gameObject;
+        }
+        else
+        {
+            me.GetComponent<LookAt>().target = info.photonView.gameObject;
+        }
+
+    }
 }
