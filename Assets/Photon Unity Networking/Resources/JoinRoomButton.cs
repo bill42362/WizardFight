@@ -28,16 +28,5 @@ public class JoinRoomButton : Photon.PunBehaviour {
             myPlayer.tag = "Player";
         }
 	}
-    public override void OnPhotonInstantiate(PhotonMessageInfo info)
-    {
-        if ( info.photonView.isMine)
-        {
-            me = info.photonView.gameObject;
-        }
-        else
-        {
-            me.GetComponent<LookAt>().target = info.photonView.gameObject;
-        }
 
-    }
 }

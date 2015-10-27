@@ -1,5 +1,6 @@
 ﻿#pragma strict
 var target: GameObject;
+var me: GameObject ;
 var up: Vector3 = new Vector3(0, 1, 0);
 function Awake() { 
     Debug.Log("Look at Awake() called");
@@ -7,3 +8,4 @@ function Awake() {
 function Update () {
 	if(null != target) { transform.LookAt(target.transform, up); }
 }
+
