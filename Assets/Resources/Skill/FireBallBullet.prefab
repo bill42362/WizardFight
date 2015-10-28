@@ -1,47 +1,48 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &123528
+--- !u!1 &127382
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 418764}
-  - 33: {fileID: 3359630}
-  - 135: {fileID: 13548920}
-  - 23: {fileID: 2351488}
-  - 114: {fileID: 11434446}
+  - 4: {fileID: 499538}
+  - 33: {fileID: 3338450}
+  - 135: {fileID: 13539848}
+  - 23: {fileID: 2328340}
+  - 114: {fileID: 11421068}
+  - 54: {fileID: 5429200}
   m_Layer: 0
-  m_Name: Blizzard
+  m_Name: FireBallBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &418764
+--- !u!4 &499538
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 123528}
+  m_GameObject: {fileID: 127382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
-  m_LocalScale: {x: 3, y: .00999999978, z: 3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!23 &2351488
+--- !u!23 &2328340
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 123528}
+  m_GameObject: {fileID: 127382}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 1ae95a1e80a78476cbf5f37750634d39, type: 2}
+  - {fileID: 2100000, guid: fa5f6aa9c1a864179ac3718d3b39c9a1, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -55,37 +56,49 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!33 &3359630
+--- !u!33 &3338450
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 123528}
+  m_GameObject: {fileID: 127382}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &11434446
+--- !u!54 &5429200
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127382}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &11421068
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 123528}
+  m_GameObject: {fileID: 127382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af9dfc5e6e7fa49a8be0147f13bfdf3a, type: 3}
+  m_Script: {fileID: 11500000, guid: fe1897da46407425c85589e816d26ab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lastStartGuideTime: 0
-  coolDownTime: 15000
-  damagePerMillisecond: .0099999997764825821
-  chantTime: 0
-  guideTime: 10000
-  player: {fileID: 0}
-  enemy: {fileID: 0}
---- !u!135 &13548920
+  owner: {fileID: 0}
+  damage: 10
+  flyingSpeed: 10
+  lifeTime: 3000
+--- !u!135 &13539848
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 123528}
+  m_GameObject: {fileID: 127382}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
@@ -98,8 +111,28 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fa5f6aa9c1a864179ac3718d3b39c9a1, type: 2}
+    - target: {fileID: 0}
+      propertyPath: lifeTime
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.x
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.y
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.z
+      value: .5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 123528}
+  m_RootGameObject: {fileID: 127382}
   m_IsPrefabParent: 1
