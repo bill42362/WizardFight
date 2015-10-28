@@ -1,15 +1,17 @@
 ﻿#pragma strict
-var skillIndex: int = 0;
-var skillName: String = 'Fire Ball';
-var coolDownTime: double = 8000;
-var chantTime: double = 1000;
-var isChanting: boolean = false;
+var skillIndex: int = 1;
+var skillName: String = 'Blizzard';
+var coolDownTime: double = 15000;
+var guidingTime: double = 10000;
+var isGuiding: boolean = false;
 var owner: GameObject;
+var enemy: GameObject;
 private var epochStart: System.DateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 private var eventCenter: EventCenter;
 private var isButtonPressed: boolean = false;
 private var timeStartCooling: double = 0;
-private var timeStartChanting: double = 0;
+private var timeStartGuiding: double = 0;
+private var blizzard: GameObject;
 
 function Awake () {
 	eventCenter = GameObject.FindWithTag('EventCenter').GetComponent(EventCenter);
@@ -20,20 +22,24 @@ function Awake () {
 }
 function Update () {
 	if(false == isButtonPressed) {	
-		isChanting = false;
+		if(true == isGuiding) {
+			StopGuiding();
+			isGuiding = false;
+		}
 		return;
 	}
 	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
-	if(false == isChanting) {
+	if(false == isGuiding) {
 		if(true == GetIsCoolDownFinished()) {
-			isChanting = true;
-			timeStartChanting = timestamp;
+			isGuiding = true;
+			timeStartGuiding = timestamp;
+			StartGuiding();
+			StartCoolDown();
 		}
 	} else {
-		if((timeStartChanting + chantTime) < timestamp) {
-			StartCoolDown();
-			isChanting = false;
-			Cast();
+		if((timeStartGuiding + guidingTime) < timestamp) {
+			isGuiding = false;
+			StopGuiding();
 		}
 	}
 }
@@ -48,14 +54,22 @@ var OnSkillButtonUp = function(e: SbiEvent) {
 	isButtonPressed = false;
 };
 var OnPlayerMove = function(e: SbiEvent) {
-	isChanting = false;
+	isGuiding = false;
 	isButtonPressed = false;
 };
-private function Cast() {
-	var fireBall: GameObject = Instantiate(
-		Resources.Load('Skill/FireBallBullet'), transform.position, transform.rotation
-	) as GameObject;
+private function StartGuiding() {
+	var targetPosition: Vector3 = transform.position;
+	if(null != enemy) { targetPosition = enemy.transform.position; }
+	if(null == blizzard) {
+		blizzard = Instantiate(
+			Resources.Load('Skill/Blizzard'), targetPosition, transform.rotation
+		) as GameObject;
+	} else {
+		blizzard.transform.position = targetPosition;
+	}
+	blizzard.SetActive(true);
 }
+private function StopGuiding() { blizzard.SetActive(false); }
 private function StartCoolDown() {
 	timeStartCooling = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 }

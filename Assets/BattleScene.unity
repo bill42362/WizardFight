@@ -550,6 +550,52 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 1, y: 0}
+--- !u!1001 &621520566
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 445226, guid: 029918f8095ff481fa275a4816b11014, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445226, guid: 029918f8095ff481fa275a4816b11014, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445226, guid: 029918f8095ff481fa275a4816b11014, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445226, guid: 029918f8095ff481fa275a4816b11014, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445226, guid: 029918f8095ff481fa275a4816b11014, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445226, guid: 029918f8095ff481fa275a4816b11014, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445226, guid: 029918f8095ff481fa275a4816b11014, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 445226, guid: 029918f8095ff481fa275a4816b11014, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11484606, guid: 029918f8095ff481fa275a4816b11014, type: 2}
+      propertyPath: skillIndex
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 029918f8095ff481fa275a4816b11014, type: 2}
+  m_IsPrefabParent: 0
 --- !u!224 &857230681 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22420016, guid: a85df9873fbaf4cc290b98ca6ef68a87,
