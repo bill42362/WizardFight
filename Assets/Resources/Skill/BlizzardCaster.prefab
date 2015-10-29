@@ -9,9 +9,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 445226}
   - 33: {fileID: 3388786}
-  - 65: {fileID: 6583796}
   - 23: {fileID: 2333626}
   - 114: {fileID: 11484606}
+  - 114: {fileID: 11486138}
+  - 114: {fileID: 11453910}
   m_Layer: 0
   m_Name: BlizzardCaster
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142832}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -62,18 +63,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142832}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &6583796
-BoxCollider:
+--- !u!114 &11453910
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142832}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ee2a86077bb44a5a2c813b28cf79cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDownTime: 15000
 --- !u!114 &11484606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85,13 +86,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23563a6b414354527885f0ce6f3b9e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillIndex: 0
+  skillIndex: 1
   skillName: Blizzard
-  coolDownTime: 15000
   guidingTime: 10000
   isGuiding: 0
   owner: {fileID: 0}
   enemy: {fileID: 0}
+--- !u!114 &11486138
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c83bbaab861445e8386005f755b66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: Blizzard
+  buttonColor: {r: .20784314, g: .603921592, b: .80392158, a: .501960814}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

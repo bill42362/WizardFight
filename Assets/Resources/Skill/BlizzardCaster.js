@@ -1,19 +1,19 @@
 ﻿#pragma strict
 var skillIndex: int = 1;
 var skillName: String = 'Blizzard';
-var coolDownTime: double = 15000;
 var guidingTime: double = 10000;
 var isGuiding: boolean = false;
 var owner: GameObject;
 var enemy: GameObject;
 private var epochStart: System.DateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 private var eventCenter: EventCenter;
+private var coolDownTimer: CoolDownTimer;
 private var isButtonPressed: boolean = false;
-private var timeStartCooling: double = 0;
 private var timeStartGuiding: double = 0;
 private var blizzard: GameObject;
 
 function Awake () {
+	coolDownTimer = GetComponent(CoolDownTimer);
 	eventCenter = GameObject.FindWithTag('EventCenter').GetComponent(EventCenter);
 	eventCenter.RegisterListener(eventCenter, 'skillButtonDown', gameObject, OnSkillButtonDown);
 	eventCenter.RegisterListener(eventCenter, 'skillButtonUp', gameObject, OnSkillButtonUp);
@@ -30,11 +30,11 @@ function Update () {
 	}
 	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 	if(false == isGuiding) {
-		if(true == GetIsCoolDownFinished()) {
+		if(true == coolDownTimer.GetIsCoolDownFinished()) {
 			isGuiding = true;
 			timeStartGuiding = timestamp;
 			StartGuiding();
-			StartCoolDown();
+			coolDownTimer.StartCoolDown();
 		}
 	} else {
 		if((timeStartGuiding + guidingTime) < timestamp) {
@@ -70,10 +70,3 @@ private function StartGuiding() {
 	blizzard.SetActive(true);
 }
 private function StopGuiding() { blizzard.SetActive(false); }
-private function StartCoolDown() {
-	timeStartCooling = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
-}
-private function GetIsCoolDownFinished(): boolean {
-	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
-	return (timeStartCooling + coolDownTime) < timestamp;
-}

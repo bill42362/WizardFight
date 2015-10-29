@@ -6,6 +6,7 @@ TagManager:
   tags:
   - EventCenter
   - Enemy
+  - PlayerSkillCasters
   layers:
   - Default
   - TransparentFX

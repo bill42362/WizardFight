@@ -1,17 +1,17 @@
 ﻿#pragma strict
 var skillIndex: int = 0;
 var skillName: String = 'Fire Ball';
-var coolDownTime: double = 8000;
 var chantTime: double = 1000;
 var isChanting: boolean = false;
 var owner: GameObject;
 private var epochStart: System.DateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 private var eventCenter: EventCenter;
+private var coolDownTimer: CoolDownTimer;
 private var isButtonPressed: boolean = false;
-private var timeStartCooling: double = 0;
 private var timeStartChanting: double = 0;
 
 function Awake () {
+	coolDownTimer = GetComponent(CoolDownTimer);
 	eventCenter = GameObject.FindWithTag('EventCenter').GetComponent(EventCenter);
 	eventCenter.RegisterListener(eventCenter, 'skillButtonDown', gameObject, OnSkillButtonDown);
 	eventCenter.RegisterListener(eventCenter, 'skillButtonUp', gameObject, OnSkillButtonUp);
@@ -25,13 +25,13 @@ function Update () {
 	}
 	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 	if(false == isChanting) {
-		if(true == GetIsCoolDownFinished()) {
+		if(true == coolDownTimer.GetIsCoolDownFinished()) {
 			isChanting = true;
 			timeStartChanting = timestamp;
 		}
 	} else {
 		if((timeStartChanting + chantTime) < timestamp) {
-			StartCoolDown();
+			coolDownTimer.StartCoolDown();
 			isChanting = false;
 			Cast();
 		}
@@ -55,11 +55,4 @@ private function Cast() {
 	var fireBall: GameObject = Instantiate(
 		Resources.Load('Skill/FireBallBullet'), transform.position, transform.rotation
 	) as GameObject;
-}
-private function StartCoolDown() {
-	timeStartCooling = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
-}
-private function GetIsCoolDownFinished(): boolean {
-	var timestamp: double = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
-	return (timeStartCooling + coolDownTime) < timestamp;
 }
