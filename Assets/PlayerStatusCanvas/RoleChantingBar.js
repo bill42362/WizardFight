@@ -13,8 +13,10 @@ function Awake () {
 function Update () {
 }
 function OnStartChanting(e: SbiEvent) {
-	print('start');
+	var data: ChantingEventData = e.data as ChantingEventData;
+	print(data.role);
 }
 function OnStopChanting(e: SbiEvent) {
-	print('stop');
+	var data: ChantingEventData = e.data as ChantingEventData;
+	print(data.role);
 }
