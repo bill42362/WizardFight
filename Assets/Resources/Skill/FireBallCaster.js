@@ -27,14 +27,16 @@ function Update () {
 	if(false == isChanting) {
 		if(true == coolDownTimer.GetIsCoolDownFinished()) {
 			isChanting = true;
-			eventCenter.CastEvent(eventCenter, 'startChanting', gameObject);
+			var startData = new ChantingEventData('start', owner, gameObject);
+			eventCenter.CastEvent(eventCenter, 'startChanting', startData);
 			timeStartChanting = timestamp;
 		}
 	} else {
 		if((timeStartChanting + chantTime) < timestamp) {
 			coolDownTimer.StartCoolDown();
 			isChanting = false;
-			eventCenter.CastEvent(eventCenter, 'stopChanting', gameObject);
+			var stopData = new ChantingEventData('stop', owner, gameObject);
+			eventCenter.CastEvent(eventCenter, 'stopChanting', stopData);
 			Cast();
 		}
 	}
