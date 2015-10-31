@@ -38,13 +38,13 @@ public class PhotonBehaviors : Photon.PunBehaviour
         GameManager.Instance
                    .GetPlayerCharacter()
                    .GetPhotonView()
-                   .RPC("moveByLeftOrRight", PhotonTargets.AllViaServer, false);
+                   .RPC("moveByLeftOrRight", PhotonTargets.All, false);
     }
     public void OnRightClicked()
     {
         GameManager.Instance
                    .GetPlayerCharacter()
                    .GetPhotonView()
-                   .RPC("moveByLeftOrRight", PhotonTargets.AllViaServer, true);
+                   .RPC("moveByLeftOrRight", PhotonTargets.All, true);
     }
 }
