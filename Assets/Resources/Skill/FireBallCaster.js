@@ -66,7 +66,7 @@ var OnPlayerMove = function(e: SbiEvent) {
 	isButtonPressed = false;
 };
 private function Cast() {
-	var fireBall: GameObject = NetworkManager.Instance.Instantiate(
-		Resources.Load('Skill/FireBallBullet'), owner.transform.position, owner.transform.rotation
-	) as GameObject;
+    NetworkManager.Instance.Instantiate(
+		'Skill/FireBallBullet', owner.transform.position, owner.transform.rotation , 0
+	);
 }
