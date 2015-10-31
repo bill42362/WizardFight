@@ -20,7 +20,13 @@ function Awake () {
 	eventCenter.RegisterListener(eventCenter, 'leftButtonPressed', gameObject, OnPlayerMove);
 	eventCenter.RegisterListener(eventCenter, 'rightButtonPressed', gameObject, OnPlayerMove);
 }
+function Start() {
+    
+}
 function Update () {
+    // FIXME: this assignment should be removed.
+    owner = GameObject.FindWithTag('Player');
+
 	if(false == isButtonPressed) {	
 		isChanting = false;
 		return;
@@ -52,13 +58,15 @@ var OnSkillButtonUp = function(e: SbiEvent) {
 	var index: int = System.Convert.ToInt32(e.data);
 	if(skillIndex != index) return;
 	isButtonPressed = false;
+    // FIXME: this Cast should be removed.
+	Cast();
 };
 var OnPlayerMove = function(e: SbiEvent) {
 	isChanting = false;
 	isButtonPressed = false;
 };
 private function Cast() {
-	var fireBall: GameObject = Instantiate(
-		Resources.Load('Skill/FireBallBullet'), transform.position, transform.rotation
+	var fireBall: GameObject = NetworkManager.Instance.Instantiate(
+		Resources.Load('Skill/FireBallBullet'), owner.transform.position, owner.transform.rotation
 	) as GameObject;
 }
