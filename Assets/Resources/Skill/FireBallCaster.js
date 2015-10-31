@@ -1,4 +1,6 @@
 ﻿#pragma strict
+import PhotonNetwork;
+import NetworkManager;
 var skillIndex: int = 0;
 var skillName: String = 'Fire Ball';
 var chantTime: double = 1000;
