@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour {
     {
         Instance.PlayerOrderInRoom = order;
         int position = (Instance.PlayerOrderInRoom == 1) ? -5 : 5;
-        NetworkManager.Instance.Instantiate("Player",
+        NetworkManager.Instance.Instantiate("unitychan",
                                        new Vector3(0, 0, position),
                                        Quaternion.identity,
                                        0);

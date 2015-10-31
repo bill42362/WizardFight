@@ -211,6 +211,10 @@ Prefab:
       propertyPath: m_Text
       value: '>'
       objectReference: {fileID: 0}
+    - target: {fileID: 11453776, guid: 49dcd59272df24585994e17d8ac02354, type: 2}
+      propertyPath: eventName
+      value: rightButtonPressed
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 49dcd59272df24585994e17d8ac02354, type: 2}
   m_IsPrefabParent: 0
