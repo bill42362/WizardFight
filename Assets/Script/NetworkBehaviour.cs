@@ -20,4 +20,8 @@ public class NetworkBehaviour : MonoBehaviour {
     {
         NetworkManager.Instance.Match();
     }
+    public void Leave()
+    {
+        NetworkManager.Instance.LeaveRoom();
+    }
 }
