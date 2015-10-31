@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class GameManager : MonoBehaviour {
     private static string GameVersion = "0.00001";
     private string PlayerName = null;
     private int PlayerOrderInRoom = 0;
+    private GameObject PlayerCharacter = null;
     private static GameManager _instance = null;
     protected GameManager() {
         PlayerName = "username";
@@ -27,17 +29,23 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void SetPlayerCharacter(GameObject me)
+    {
+        Instance.PlayerCharacter = me;
+    }
+    public GameObject GetPlayerCharacter()
+    {
+        return Instance.PlayerCharacter;
+    }
 
     // Use this for initialization
     public void Start()
     {
-        //Debug.Log("GameManager.Start() should not be called.");
     }
 
     // Update is called once per frame
     public void Update()
     {
-        //Debug.Log("GameManager.Update() should not be called.");
     }
 
     public string GetPlayerName()

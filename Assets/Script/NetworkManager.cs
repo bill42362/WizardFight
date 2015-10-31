@@ -3,13 +3,11 @@ public class NetworkManager : Photon.PunBehaviour {
 
     public void Start()
     {
-        //Debug.Log("NetworkManager.Start() should not be called.");
     }
 
     // Update is called once per frame
     public void Update()
     {
-        //Debug.Log("NetworkManager.Update() should not be called.");
     }
     private static NetworkManager _instance = null;
     protected NetworkManager() { }
@@ -35,15 +33,20 @@ public class NetworkManager : Photon.PunBehaviour {
     {
         if (!PhotonNetwork.connected)
             PhotonNetwork.ConnectUsingSettings(GameManager.Instance.GetGameVersion());
+
     }
     public void Match()
     {
         Debug.Log("Match");
         if (PhotonNetwork.connectedAndReady && !PhotonNetwork.inRoom)
         {
+           
             PhotonNetwork.JoinRandomRoom();
         }
     }
+    public RoomInfo[] GetRoomList() {
+        return PhotonNetwork.GetRoomList();
+            }
     public void LeaveRoom()
     {
         if (PhotonNetwork.inRoom)
@@ -77,12 +80,17 @@ public class NetworkManager : Photon.PunBehaviour {
         Debug.Log("OnJoinRoom");
         GameManager.Instance.onJoinRoom(PhotonNetwork.room.playerCount);
     }
-    public override void OnConnectedToMaster()
+    public override void OnConnectedToPhoton()
     {
-        base.OnConnectedToMaster();
+        base.OnConnectedToPhoton();
         Debug.Log("OnConnectedToPhoton");
+
     }
 
+    public override void OnJoinedLobby()
+    {
+        Debug.Log("OnJoinedLobby");
+    }
     public override void OnPhotonRandomJoinFailed(object[] codeAndMsg)
     {
         Debug.Log("OnPhotonRandomJoinFailed: " + codeAndMsg.ToString());
@@ -93,5 +101,9 @@ public class NetworkManager : Photon.PunBehaviour {
         base.OnPhotonCreateRoomFailed(codeAndMsg);
         Debug.Log("OnPhotonCreateRoomFailed: " + codeAndMsg.ToString());
     }
-
+    public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
+    {
+        base.OnPhotonPlayerConnected(newPlayer);
+        Debug.Log("OnPhotonPlayerConnected: " + newPlayer.name );
+    }
 }
