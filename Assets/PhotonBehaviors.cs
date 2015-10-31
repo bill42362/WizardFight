@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PhotonBehaviors : Photon.PunBehaviour
 {
-    public static GameObject me;
 	// Use this for initialization
 	void Start () {
 	
@@ -20,13 +19,32 @@ public class PhotonBehaviors : Photon.PunBehaviour
         if ( this.photonView.isMine )
         {
             Debug.Log("Entering OnPhotonInstantiate of mine");
-            me = this.gameObject;
+            GameObject me = this.gameObject;
+            me.tag = "Player";
+            GameManager.Instance.SetPlayerCharacter( me );
+            
         }
         else
         {
             Debug.Log("Entering OnPhotonInstantiate of others'");
-            me.GetComponent<LookAt>().target = this.gameObject;
+            GameManager.Instance
+                       .GetPlayerCharacter()
+                       .GetComponent<LookAt>()
+                       .target = this.gameObject;
         }
     }
-
+    public void OnLeftClicked()
+    {
+        GameManager.Instance
+                   .GetPlayerCharacter()
+                   .GetPhotonView()
+                   .RPC("moveByLeftOrRight", PhotonTargets.AllViaServer, false);
+    }
+    public void OnRightClicked()
+    {
+        GameManager.Instance
+                   .GetPlayerCharacter()
+                   .GetPhotonView()
+                   .RPC("moveByLeftOrRight", PhotonTargets.AllViaServer, true);
+    }
 }
