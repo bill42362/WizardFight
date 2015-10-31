@@ -3,13 +3,13 @@ public class NetworkManager : Photon.PunBehaviour {
 
     public void Start()
     {
-        Debug.Log("NetworkManager.Start() should not be called.");
+        //Debug.Log("NetworkManager.Start() should not be called.");
     }
 
     // Update is called once per frame
     public void Update()
     {
-        Debug.Log("NetworkManager.Update() should not be called.");
+        //Debug.Log("NetworkManager.Update() should not be called.");
     }
     private static NetworkManager _instance = null;
     protected NetworkManager() { }

@@ -21,6 +21,7 @@ public class PhotonBehaviors : Photon.PunBehaviour
         {
             Debug.Log("Entering OnPhotonInstantiate of mine");
             me = this.gameObject;
+            me.tag = "Player";
         }
         else
         {

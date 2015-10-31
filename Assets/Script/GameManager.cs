@@ -31,13 +31,13 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     public void Start()
     {
-        Debug.Log("GameManager.Start() should not be called.");
+        //Debug.Log("GameManager.Start() should not be called.");
     }
 
     // Update is called once per frame
     public void Update()
     {
-        Debug.Log("GameManager.Update() should not be called.");
+        //Debug.Log("GameManager.Update() should not be called.");
     }
 
     public string GetPlayerName()
