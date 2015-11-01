@@ -10,7 +10,9 @@ public class NetworkManager : Photon.PunBehaviour {
     {
     }
     private static NetworkManager _instance = null;
-    protected NetworkManager() { }
+    protected NetworkManager() {
+        PhotonNetwork.offlineMode = true;
+    }
     public static NetworkManager Instance 
     {   get
         {
@@ -31,6 +33,7 @@ public class NetworkManager : Photon.PunBehaviour {
 
     public void Connect()
     {
+        PhotonNetwork.offlineMode = false;
         if (!PhotonNetwork.connected)
             PhotonNetwork.ConnectUsingSettings(GameManager.Instance.GetGameVersion());
 
