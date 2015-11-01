@@ -11,7 +11,7 @@ public class FireBallCaster : MonoBehaviour {
 	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 	private EventCenter eventCenter;
 	private CoolDownTimer coolDownTimer;
-	private bool isButtonPressed = false;
+	public bool isButtonPressed = false;
 	private double timeStartChanting = 0;
 
 	void Awake () {
@@ -58,8 +58,6 @@ public class FireBallCaster : MonoBehaviour {
 		int index = System.Convert.ToInt32(e.data);
 		if(skillIndex != index) return;
 		isButtonPressed = false;
-		// FIXME: this Cast should be removed.
-		Cast();
 	}
 	void OnPlayerMove(SbiEvent e) {
 		isChanting = false;

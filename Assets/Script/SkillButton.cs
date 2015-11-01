@@ -52,7 +52,7 @@ public class SkillButton : MonoBehaviour {
 	}
 	public void OnPointerUp() {
 		eventCenter.CastEvent(
-			this, "skillButtonDown", new SkillButtonEventData("up", skillIndex)
+			this, "skillButtonUp", new SkillButtonEventData("up", skillIndex)
 		);
 	}
 }
