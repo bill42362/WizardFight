@@ -35,7 +35,7 @@ public class FireBallCaster : MonoBehaviour {
 		if(false == isChanting) {
 			if(true == coolDownTimer.GetIsCoolDownFinished()) {
 				isChanting = true;
-				var startData = new ChantingEventData("start", owner, gameObject);
+				ChantingEventData startData = new ChantingEventData("start", owner, gameObject);
 				eventCenter.CastEvent(eventCenter, "startChanting", startData);
 				timeStartChanting = timestamp;
 			}

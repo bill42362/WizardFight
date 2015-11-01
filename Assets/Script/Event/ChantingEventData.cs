@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ChantingEventData : MonoBehaviour {
+public class ChantingEventData : Object {
 	public string type;
 	public GameObject role;
 	public GameObject caster;

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Hearing {
+public class Hearing: Object {
 	public delegate void EventCallback(SbiEvent e);
 	public Object target;
 	public Object listener;
