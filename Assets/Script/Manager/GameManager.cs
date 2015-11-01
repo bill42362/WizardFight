@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 public class GameManager : MonoBehaviour {
     private static string GameVersion = "0.00001";
+    private static GameManager _instance = null;
     private string PlayerName = null;
     private int PlayerOrderInRoom = 0;
     private GameObject PlayerCharacter = null;
-    private static GameManager _instance = null;
     protected GameManager() {
         PlayerName = "username";
     }
@@ -59,9 +58,10 @@ public class GameManager : MonoBehaviour {
     public void onJoinRoom(int order)
     {
         Instance.PlayerOrderInRoom = order;
-        int position = (Instance.PlayerOrderInRoom == 1) ? -5 : 5;
+		bool isPlayerCharater = (order == 1);
+        float positionZ = (isPlayerCharater) ? -5 : 5;
         NetworkManager.Instance.Instantiate("unitychan",
-                                       new Vector3(0, 0, position),
+                                       new Vector3(0, 0, positionZ),
                                        Quaternion.identity,
                                        0);
     }

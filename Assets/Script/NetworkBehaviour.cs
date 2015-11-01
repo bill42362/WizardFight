@@ -5,8 +5,6 @@ public class NetworkBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        if (NetworkManager.Instance != null)
-            Debug.Log("NetworkManager!!!");
     }
 	
 	// Update is called once per frame
