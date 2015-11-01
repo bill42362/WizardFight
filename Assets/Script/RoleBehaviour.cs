@@ -3,12 +3,8 @@ using System.Collections;
 
 public class RoleBehaviour : Photon.PunBehaviour {
 
-	// Use this for initialization
-	void Start () {
+	void Start () { }
 	
-	}
-	
-	// Update is called once per frame
 	void Update () {
         LookAt lookAt = this.GetComponent<LookAt>();
         lookAt.target = GameObject.FindWithTag("Enemy");

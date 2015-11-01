@@ -43,7 +43,7 @@ public class FireBallCaster : MonoBehaviour {
 			if((timeStartChanting + chantTime) < timestamp) {
 				coolDownTimer.StartCoolDown();
 				isChanting = false;
-				var stopData = new ChantingEventData("stop", owner, gameObject);
+				ChantingEventData stopData = new ChantingEventData("stop", owner, gameObject);
 				eventCenter.CastEvent(eventCenter, "stopChanting", stopData);
 				Cast();
 			}

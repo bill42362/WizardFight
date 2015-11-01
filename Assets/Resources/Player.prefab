@@ -92,10 +92,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 109802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e1489349064c4fd685c0d87e0cd9fd7, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a5a94e0d449443ac9ccc85cecf2dd4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  maxHealth: 100
   speed: 10
 --- !u!114 &11405772
 MonoBehaviour:
@@ -116,11 +117,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 109802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 672e85727d0bd4525bb84ac4ec77f903, type: 3}
+  m_Script: {fileID: 11500000, guid: adb2e136d05614766815dc937672a13a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   eventName: rightButtonPressed
-  direction: {x: 1, y: 0, z: 0}
 --- !u!114 &11429144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -228,11 +228,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 109802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 672e85727d0bd4525bb84ac4ec77f903, type: 3}
+  m_Script: {fileID: 11500000, guid: adb2e136d05614766815dc937672a13a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   eventName: leftButtonPressed
-  direction: {x: -1, y: 0, z: 0}
 --- !u!135 &13560578
 SphereCollider:
   m_ObjectHideFlags: 1

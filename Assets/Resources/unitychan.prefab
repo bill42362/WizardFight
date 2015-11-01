@@ -3464,7 +3464,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111490}
-  m_LocalRotation: {x: -.0937465429, y: .697855175, z: .707469046, w: .060806755}
+  m_LocalRotation: {x: -.0937465355, y: .697855115, z: .707468987, w: .0608067438}
   m_LocalPosition: {x: -.0554340295, y: .00173068431, z: .0986537337}
   m_LocalScale: {x: 1.00000036, y: 1.0000006, z: 1.00000048}
   m_Children:
@@ -4880,11 +4880,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 176840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 672e85727d0bd4525bb84ac4ec77f903, type: 3}
+  m_Script: {fileID: 11500000, guid: adb2e136d05614766815dc937672a13a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   eventName: leftButtonPressed
-  direction: {x: -1, y: 0, z: 0}
 --- !u!114 &11415330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4942,7 +4941,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 176840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e1489349064c4fd685c0d87e0cd9fd7, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a5a94e0d449443ac9ccc85cecf2dd4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
@@ -4982,11 +4981,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 176840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 672e85727d0bd4525bb84ac4ec77f903, type: 3}
+  m_Script: {fileID: 11500000, guid: adb2e136d05614766815dc937672a13a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   eventName: rightButtonPressed
-  direction: {x: 1, y: 0, z: 0}
 --- !u!114 &11473794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5055,12 +5053,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 176840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d1f0f5ee56743d3956e1047c364142, type: 3}
+  m_Script: {fileID: 11500000, guid: f520b1f7fab17424195a3ff2456a44b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  me: {fileID: 0}
-  up: {x: 0, y: 1, z: 0}
 --- !u!136 &13674618
 CapsuleCollider:
   m_ObjectHideFlags: 1
