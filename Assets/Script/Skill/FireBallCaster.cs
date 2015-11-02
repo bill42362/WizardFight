@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class FireBallCaster : MonoBehaviour {
 	public int skillIndex = 0;
@@ -50,13 +49,13 @@ public class FireBallCaster : MonoBehaviour {
 		}
 	}
 	void OnSkillButtonDown(SbiEvent e) {
-		int index = System.Convert.ToInt32(e.data);
-		if(skillIndex != index) return;
+		SkillButtonEventData data = e.data as SkillButtonEventData;
+		if(skillIndex != data.index) return;
 		isButtonPressed = true;
 	}
 	void OnSkillButtonUp(SbiEvent e) {
-		int index = System.Convert.ToInt32(e.data);
-		if(skillIndex != index) return;
+		SkillButtonEventData data = e.data as SkillButtonEventData;
+		if(skillIndex != data.index) return;
 		isButtonPressed = false;
 	}
 	void OnPlayerMove(SbiEvent e) {

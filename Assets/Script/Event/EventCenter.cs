@@ -5,7 +5,7 @@ public class EventCenter : MonoBehaviour {
 	private Hearing[] hearings = new Hearing[0];
 	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 
-	public void CastEvent(Object caster, string type, Object data) {
+	public void CastEvent(Object caster, string type, SbiEventData data) {
 		foreach(Hearing h in hearings) {
 			if(((caster == h.target) || (this == h.target)) && (type == h.type)) {
 				SbiEvent e = new SbiEvent();

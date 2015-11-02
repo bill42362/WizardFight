@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class ThunderNovaCaster : MonoBehaviour {
 	public int skillIndex = 2;
@@ -27,13 +26,13 @@ public class ThunderNovaCaster : MonoBehaviour {
 		}
 	}
 	public void OnSkillButtonDown(SbiEvent e) {
-		int index = System.Convert.ToInt32(e.data);
-		if(skillIndex != index) return;
+		SkillButtonEventData data = e.data as SkillButtonEventData;
+		if(skillIndex != data.index) return;
 		isButtonPressed = true;
 	}
 	public void OnSkillButtonUp(SbiEvent e) {
-		int index = System.Convert.ToInt32(e.data);
-		if(skillIndex != index) return;
+		SkillButtonEventData data = e.data as SkillButtonEventData;
+		if(skillIndex != data.index) return;
 		isButtonPressed = false;
 	}
 	private void Cast() {

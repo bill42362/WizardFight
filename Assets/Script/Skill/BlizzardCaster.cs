@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class BlizzardCaster : MonoBehaviour {
 	public int skillIndex = 1;
@@ -11,7 +10,7 @@ public class BlizzardCaster : MonoBehaviour {
 	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 	private EventCenter eventCenter;
 	private CoolDownTimer coolDownTimer;
-	private bool isButtonPressed = false;
+	public bool isButtonPressed = false;
 	private double timeStartGuiding = 0;
 	private GameObject blizzard;
 
@@ -47,13 +46,13 @@ public class BlizzardCaster : MonoBehaviour {
 		}
 	}
 	public void OnSkillButtonDown(SbiEvent e) {
-		int index = System.Convert.ToInt32(e.data);
-		if(skillIndex != index) return;
+		SkillButtonEventData data = e.data as SkillButtonEventData;
+		if(skillIndex != data.index) return;
 		isButtonPressed = true;
 	}
 	public void OnSkillButtonUp(SbiEvent e) {
-		int index = System.Convert.ToInt32(e.data);
-		if(skillIndex != index) return;
+		SkillButtonEventData data = e.data as SkillButtonEventData;
+		if(skillIndex != data.index) return;
 		isButtonPressed = false;
 	}
 	public void OnPlayerMove(SbiEvent e) {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ChantingEventData : Object {
+public class ChantingEventData : SbiEventData {
 	public string type;
 	public GameObject role;
 	public GameObject caster;
