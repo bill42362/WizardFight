@@ -13,6 +13,7 @@ GameObject:
   - 114: {fileID: 11490276}
   - 114: {fileID: 11450238}
   - 114: {fileID: 11424094}
+  - 114: {fileID: 11447766}
   m_Layer: 0
   m_Name: FireBallCaster
   m_TagString: Untagged
@@ -75,6 +76,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coolDownTime: 8000
+--- !u!114 &11447766
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9744f9c7ed8145eca2f3123cf747c7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chantTime: 1000
+  isChanting: 0
 --- !u!114 &11450238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,8 +115,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIndex: 0
   skillName: Fire Ball
-  chantTime: 1000
-  isChanting: 0
   owner: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
@@ -114,6 +126,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chantTime
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
