@@ -88,13 +88,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 127382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe1897da46407425c85589e816d26ab9, type: 3}
+  m_Script: {fileID: 11500000, guid: 11dec3531a310468eb3ad2a2c779cdb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   damage: 10
   flyingSpeed: 10
-  lifeTime: 3000
+  lifeTime: 1000
 --- !u!114 &11440978
 MonoBehaviour:
   m_ObjectHideFlags: 1
