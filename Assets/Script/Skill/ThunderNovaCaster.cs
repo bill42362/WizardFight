@@ -39,8 +39,10 @@ public class ThunderNovaCaster : MonoBehaviour {
 		owner = data.player;
 	}
 	private void Cast() {
+		Vector3 position = transform.position;
+		if(null != owner) { position = owner.transform.position; }
 		GameObject nova = Instantiate(
-			Resources.Load("Prefab/Skill/ThunderNova"), transform.position, transform.rotation
+			Resources.Load("Prefab/Skill/ThunderNova"), position, Quaternion.identity
 		) as GameObject;
 	}
 }
