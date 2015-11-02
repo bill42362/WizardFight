@@ -7,7 +7,7 @@ public class RoleHealthBar : MonoBehaviour {
 
 	public void Awake () {
 		eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
-		eventCenter.RegisterListener(eventCenter, "playerChanged", gameObject, OnPlayerChanged);
+		eventCenter.RegisterListener(eventCenter, "playerChange", gameObject, OnPlayerChange);
 		slider = GetComponent<Slider>();
 	}
 	public void Update () {
@@ -15,7 +15,8 @@ public class RoleHealthBar : MonoBehaviour {
 			slider.value = (float)(role.health/role.maxHealth);
 		}
 	}
-	public void OnPlayerChanged(SbiEvent e) {
-		Debug.Log("playerChangeEvent");
+	public void OnPlayerChange(SbiEvent e) {
+		PlayerChangeEventData data = e.data as PlayerChangeEventData;
+		role = data.player.GetComponent<Role>();
 	}
 }
