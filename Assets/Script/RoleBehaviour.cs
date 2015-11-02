@@ -20,7 +20,7 @@ public class RoleBehaviour : Photon.PunBehaviour {
         double speed = role.speed ;
         Vector3 direction = (isRight) ? new Vector3((float)speed, 0, 0) : new Vector3((float) -speed, 0, 0); 
         Vector3 velocity = transform.localToWorldMatrix.MultiplyVector(direction  );
-        if ((null != direction) && (null != rigidbody))
+        if(null != rigidbody)
         {
             rigidbody.velocity = velocity;
         }

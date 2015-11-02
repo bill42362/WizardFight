@@ -64,7 +64,7 @@ public class FireBallCaster : MonoBehaviour {
 	}
 	private void Cast() {
 		NetworkManager.Instance.Instantiate(
-			"Skill/FireBallBullet", owner.transform.position, owner.transform.rotation , 0
+			"Prefab/Skill/FireBallBullet", owner.transform.position, owner.transform.rotation , 0
 		);
 	}
 }

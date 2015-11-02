@@ -64,7 +64,7 @@ public class BlizzardCaster : MonoBehaviour {
 		if(null != enemy) { targetPosition = enemy.transform.position; }
 		if(null == blizzard) {
 			blizzard = Instantiate(
-				Resources.Load("Skill/Blizzard"), targetPosition, transform.rotation
+				Resources.Load("Prefab/Skill/Blizzard"), targetPosition, transform.rotation
 			) as GameObject;
 		} else {
 			blizzard.transform.position = targetPosition;

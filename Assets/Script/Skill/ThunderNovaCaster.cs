@@ -4,11 +4,9 @@ public class ThunderNovaCaster : MonoBehaviour {
 	public int skillIndex = 2;
 	public string skillName = "Thunder Nova";
 	public GameObject owner;
-	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 	private EventCenter eventCenter;
 	private CoolDownTimer coolDownTimer;
 	private bool isButtonPressed = false;
-	private double timeStartCooling = 0.0;
 
 	public void Awake () {
 		coolDownTimer = GetComponent<CoolDownTimer>();
@@ -37,7 +35,7 @@ public class ThunderNovaCaster : MonoBehaviour {
 	}
 	private void Cast() {
 		GameObject nova = Instantiate(
-			Resources.Load("Skill/ThunderNova"), transform.position, transform.rotation
+			Resources.Load("Prefab/Skill/ThunderNova"), transform.position, transform.rotation
 		) as GameObject;
 	}
 }

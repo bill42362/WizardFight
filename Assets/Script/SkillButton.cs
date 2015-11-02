@@ -40,6 +40,7 @@ public class SkillButton : MonoBehaviour {
 				float coolDownTime = (float)coolDownTimer.coolDownTime;
 				Vector2 anchorMin = coolDownIndicatorRectTransform.anchorMin;
 				anchorMin.x = (1 - 1000*remainCoolDownTime/coolDownTime);
+				coolDownIndicatorRectTransform.anchorMin = anchorMin;
 			} else {
 				coolDownTimeText.text = "";
 			}
