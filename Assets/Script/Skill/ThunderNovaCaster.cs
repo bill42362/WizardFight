@@ -13,6 +13,7 @@ public class ThunderNovaCaster : MonoBehaviour {
 		eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
 		eventCenter.RegisterListener(eventCenter, "skillButtonDown", gameObject, OnSkillButtonDown);
 		eventCenter.RegisterListener(eventCenter, "skillButtonUp", gameObject, OnSkillButtonUp);
+		eventCenter.RegisterListener(eventCenter, "playerChange", gameObject, OnPlayerChange);
 	}
 	public void Update () {
 		if(
@@ -32,6 +33,10 @@ public class ThunderNovaCaster : MonoBehaviour {
 		SkillButtonEventData data = e.data as SkillButtonEventData;
 		if(skillIndex != data.index) return;
 		isButtonPressed = false;
+	}
+	public void OnPlayerChange(SbiEvent e) {
+		PlayerChangeEventData data = e.data as PlayerChangeEventData;
+		owner = data.player;
 	}
 	private void Cast() {
 		GameObject nova = Instantiate(

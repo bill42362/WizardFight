@@ -21,6 +21,7 @@ public class BlizzardCaster : MonoBehaviour {
 		eventCenter.RegisterListener(eventCenter, "skillButtonUp", gameObject, OnSkillButtonUp);
 		eventCenter.RegisterListener(eventCenter, "leftButtonPressed", gameObject, OnPlayerMove);
 		eventCenter.RegisterListener(eventCenter, "rightButtonPressed", gameObject, OnPlayerMove);
+		eventCenter.RegisterListener(eventCenter, "playerChange", gameObject, OnPlayerChange);
 	}
 	public void Update () {
 		if(false == isButtonPressed) {	
@@ -58,6 +59,10 @@ public class BlizzardCaster : MonoBehaviour {
 	public void OnPlayerMove(SbiEvent e) {
 		isGuiding = false;
 		isButtonPressed = false;
+	}
+	public void OnPlayerChange(SbiEvent e) {
+		PlayerChangeEventData data = e.data as PlayerChangeEventData;
+		owner = data.player;
 	}
 	private void StartGuiding() {
 		Vector3 targetPosition = transform.position;

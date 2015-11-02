@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
     private string PlayerName = null;
     private int PlayerOrderInRoom = 0;
     private GameObject PlayerCharacter = null;
+    private EventCenter eventCenter = null;
     protected GameManager() {
         PlayerName = "username";
     }
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     public void Start()
     {
+		eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
     }
 
     // Update is called once per frame
@@ -64,5 +66,8 @@ public class GameManager : MonoBehaviour {
                                        new Vector3(0, 0, positionZ),
                                        Quaternion.identity,
                                        0);
+		eventCenter.CastEvent(
+			this, "playerChange", new PlayerChangeEventData(GetPlayerCharacter())
+		);
     }
 }

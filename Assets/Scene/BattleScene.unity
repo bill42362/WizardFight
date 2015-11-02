@@ -913,14 +913,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 11438606, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
-      propertyPath: m_HandleRect
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 22436438, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 22436438, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_AnchorMax.y
       value: 0

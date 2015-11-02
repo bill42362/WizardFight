@@ -10,7 +10,7 @@ public class FireBallCaster : MonoBehaviour {
 	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 	private EventCenter eventCenter;
 	private CoolDownTimer coolDownTimer;
-	public bool isButtonPressed = false;
+	private bool isButtonPressed = false;
 	private double timeStartChanting = 0;
 
 	void Awake () {
@@ -20,13 +20,15 @@ public class FireBallCaster : MonoBehaviour {
 		eventCenter.RegisterListener(eventCenter, "skillButtonUp", gameObject, OnSkillButtonUp);
 		eventCenter.RegisterListener(eventCenter, "leftButtonPressed", gameObject, OnPlayerMove);
 		eventCenter.RegisterListener(eventCenter, "rightButtonPressed", gameObject, OnPlayerMove);
+		eventCenter.RegisterListener(eventCenter, "playerChange", gameObject, OnPlayerChange);
 	}
 	
 	void Update () {
-		// FIXME: this assignment should be removed.
-		owner = GameObject.FindWithTag("Player");
-
 		if(false == isButtonPressed) {	
+			if(true == isChanting) {
+				ChantingEventData stopData = new ChantingEventData("stop", owner, gameObject);
+				eventCenter.CastEvent(eventCenter, "stopChanting", stopData);
+			}
 			isChanting = false;
 			return;
 		}
@@ -34,7 +36,9 @@ public class FireBallCaster : MonoBehaviour {
 		if(false == isChanting) {
 			if(true == coolDownTimer.GetIsCoolDownFinished()) {
 				isChanting = true;
-				ChantingEventData startData = new ChantingEventData("start", owner, gameObject);
+				ChantingEventData startData = new ChantingEventData(
+					"start", owner, gameObject, chantTime
+				);
 				eventCenter.CastEvent(eventCenter, "startChanting", startData);
 				timeStartChanting = timestamp;
 			}
@@ -61,6 +65,10 @@ public class FireBallCaster : MonoBehaviour {
 	void OnPlayerMove(SbiEvent e) {
 		isChanting = false;
 		isButtonPressed = false;
+	}
+	public void OnPlayerChange(SbiEvent e) {
+		PlayerChangeEventData data = e.data as PlayerChangeEventData;
+		owner = data.player;
 	}
 	private void Cast() {
 		NetworkManager.Instance.Instantiate(
