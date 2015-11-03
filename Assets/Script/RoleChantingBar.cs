@@ -4,12 +4,9 @@ using UnityEngine.UI;
 public class RoleChantingBar : MonoBehaviour {
 	public bool isChanting = false;
 	public GameObject player;
-	public GameObject caster;
+	public ChantTimer chantTimer;
 	private EventCenter eventCenter;
 	private Slider slider;
-	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
-	private double timeStartChanting = 0.0;
-	private double chantTime = 0.0;
 
 	public void Awake () {
 		eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
@@ -19,9 +16,8 @@ public class RoleChantingBar : MonoBehaviour {
 		slider = GetComponent<Slider>();
 	}
 	public void Update () {
-		if(true == isChanting) {
-			double timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
-			slider.value = (float)((timestamp - timeStartChanting)/chantTime);
+		if(null != chantTimer) {
+			slider.value = (float)chantTimer.GetChantingProgress();
 		}
 	}
 
@@ -32,18 +28,14 @@ public class RoleChantingBar : MonoBehaviour {
 	public void OnStartChanting(SbiEvent e) {
 		ChantingEventData data = e.data as ChantingEventData;
 		if(player == data.role) {
-			caster = data.caster;
-			chantTime = data.chantTime;
-			timeStartChanting = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
-			isChanting = true;
+			chantTimer = data.chantTimer;
 		}
 	}
 	public void OnStopChanting(SbiEvent e) {
 		ChantingEventData data = e.data as ChantingEventData;
 		if(player == data.role) {
-			caster = null;
+			chantTimer = null;
 			slider.value = 0;
-			isChanting = false;
 		}
 	}
 }

@@ -24,35 +24,28 @@ public class FireBallCaster : MonoBehaviour {
 	
 	void Update () {
 		if(false == isButtonPressed) {	
-			if(true == chantTimer.isChanting) {
-				chantTimer.StopChanting();
-				ChantingEventData stopData = new ChantingEventData("stop", owner, gameObject);
-				eventCenter.CastEvent(eventCenter, "stopChanting", stopData);
-			}
+			if(true == chantTimer.isChanting) { chantTimer.StopChanting(); }
 			return;
 		}
 		double timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 		if(false == chantTimer.isChanting) {
 			if(true == coolDownTimer.GetIsCoolDownFinished()) {
 				chantTimer.StartChanting();
-				ChantingEventData startData = new ChantingEventData(
-					"start", owner, gameObject, chantTimer.chantTime
-				);
-				eventCenter.CastEvent(eventCenter, "startChanting", startData);
 			}
 		} else {
 			if(true == chantTimer.GetIsChantingFinished()) {
 				coolDownTimer.StartCoolDown();
 				chantTimer.StopChanting();
-				ChantingEventData stopData = new ChantingEventData("stop", owner, gameObject);
-				eventCenter.CastEvent(eventCenter, "stopChanting", stopData);
 				Cast();
 			}
 		}
 	}
 	void OnSkillButtonDown(SbiEvent e) {
 		SkillButtonEventData data = e.data as SkillButtonEventData;
-		if(skillIndex != data.index) return;
+		if(skillIndex != data.index) {
+			chantTimer.StopChanting();
+			return;
+		}
 		isButtonPressed = true;
 	}
 	void OnSkillButtonUp(SbiEvent e) {
@@ -67,6 +60,7 @@ public class FireBallCaster : MonoBehaviour {
 	public void OnPlayerChange(SbiEvent e) {
 		PlayerChangeEventData data = e.data as PlayerChangeEventData;
 		owner = data.player;
+		chantTimer.owner = data.player;
 	}
 	private void Cast() {
 		NetworkManager.Instance.Instantiate(
