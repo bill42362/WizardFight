@@ -93,6 +93,7 @@ GameObject:
   - 224: {fileID: 22466992}
   - 114: {fileID: 11454126}
   - 114: {fileID: 11461772}
+  - 114: {fileID: 11467388}
   m_Layer: 5
   m_Name: PlayerHealthBar
   m_TagString: Untagged
@@ -157,6 +158,7 @@ GameObject:
   - 224: {fileID: 22403914}
   - 114: {fileID: 11407382}
   - 114: {fileID: 11458926}
+  - 114: {fileID: 11416156}
   m_Layer: 5
   m_Name: PlayerChantingBar
   m_TagString: Untagged
@@ -226,6 +228,7 @@ GameObject:
   - 224: {fileID: 22462768}
   - 114: {fileID: 11438606}
   - 114: {fileID: 11406996}
+  - 114: {fileID: 11493968}
   m_Layer: 5
   m_Name: PlayerGuidingBar
   m_TagString: Untagged
@@ -244,9 +247,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca43ff22f73044cd1aaeee97cbc11503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isChanting: 0
+  isGuiding: 0
   player: {fileID: 0}
-  chantTimer: {fileID: 0}
+  guideTimer: {fileID: 0}
 --- !u!114 &11407382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -295,6 +298,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &11416156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 175500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0929e46a15986480aa30c724156543a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  padding: 5
+  skipIcon: 1
 --- !u!114 &11424844
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -538,6 +554,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   role: {fileID: 0}
+--- !u!114 &11467388
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0929e46a15986480aa30c724156543a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  padding: 5
+  skipIcon: 1
 --- !u!114 &11477792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -592,6 +621,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11493968
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0929e46a15986480aa30c724156543a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  padding: 5
+  skipIcon: 1
 --- !u!114 &11494786
 MonoBehaviour:
   m_ObjectHideFlags: 1

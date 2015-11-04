@@ -913,40 +913,28 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 22436438, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 22436438, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 22489288, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 22430272, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22430272, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22447428, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_SizeDelta.x
       value: 64
       objectReference: {fileID: 0}
-    - target: {fileID: 11407382, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
-      propertyPath: m_Colors.m_NormalColor.a
+    - target: {fileID: 22489288, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
+      propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 11438606, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
-      propertyPath: m_Colors.m_NormalColor.a
+    - target: {fileID: 22436438, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
+      propertyPath: m_AnchorMax.x
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 175500, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
-      propertyPath: m_IsActive
+    - target: {fileID: 22436438, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
+      propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
