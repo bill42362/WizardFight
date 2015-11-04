@@ -3,19 +3,19 @@ using UnityEngine;
 public class BlizzardCaster : MonoBehaviour {
 	public int skillIndex = 1;
 	public string skillName = "Blizzard";
-	public double guidingTime = 10000;
-	public bool isGuiding = false;
 	public GameObject owner;
 	public GameObject enemy;
+
+	private bool isButtonPressed = false;
 	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 	private EventCenter eventCenter;
 	private CoolDownTimer coolDownTimer;
-	public bool isButtonPressed = false;
-	private double timeStartGuiding = 0;
+	private GuideTimer guideTimer;
 	private GameObject blizzard;
 
 	public void Awake () {
 		coolDownTimer = GetComponent<CoolDownTimer>();
+		guideTimer = GetComponent<GuideTimer>();
 		eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
 		eventCenter.RegisterListener(eventCenter, "skillButtonDown", gameObject, OnSkillButtonDown);
 		eventCenter.RegisterListener(eventCenter, "skillButtonUp", gameObject, OnSkillButtonUp);
@@ -25,30 +25,29 @@ public class BlizzardCaster : MonoBehaviour {
 	}
 	public void Update () {
 		if(false == isButtonPressed) {	
-			if(true == isGuiding) {
+			if(true == guideTimer.isGuiding) {
 				StopGuiding();
-				isGuiding = false;
 			}
 			return;
 		}
 		double timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
-		if(false == isGuiding) {
+		if(false == guideTimer.isGuiding) {
 			if(true == coolDownTimer.GetIsCoolDownFinished()) {
-				isGuiding = true;
-				timeStartGuiding = timestamp;
-				StartGuiding();
 				coolDownTimer.StartCoolDown();
+				StartGuiding();
 			}
 		} else {
-			if((timeStartGuiding + guidingTime) < timestamp) {
-				isGuiding = false;
+			if(true == guideTimer.GetIsGuidingFinished()) {
 				StopGuiding();
 			}
 		}
 	}
 	public void OnSkillButtonDown(SbiEvent e) {
 		SkillButtonEventData data = e.data as SkillButtonEventData;
-		if(skillIndex != data.index) return;
+		if(skillIndex != data.index) {
+			if(true == guideTimer.isGuiding) { StopGuiding(); }
+			return;
+		}
 		isButtonPressed = true;
 	}
 	public void OnSkillButtonUp(SbiEvent e) {
@@ -57,14 +56,16 @@ public class BlizzardCaster : MonoBehaviour {
 		isButtonPressed = false;
 	}
 	public void OnPlayerMove(SbiEvent e) {
-		isGuiding = false;
 		isButtonPressed = false;
+		StopGuiding();
 	}
 	public void OnPlayerChange(SbiEvent e) {
 		PlayerChangeEventData data = e.data as PlayerChangeEventData;
 		owner = data.player;
+		guideTimer.owner = data.player;
 	}
 	private void StartGuiding() {
+		guideTimer.StartGuiding();
 		Vector3 targetPosition = transform.position;
 		if(null != enemy) { targetPosition = enemy.transform.position; }
 		if(null == blizzard) {
@@ -76,5 +77,8 @@ public class BlizzardCaster : MonoBehaviour {
 		}
 		blizzard.SetActive(true);
 	}
-	private void StopGuiding() { blizzard.SetActive(false); }
+	private void StopGuiding() {
+		guideTimer.StopGuiding();
+		blizzard.SetActive(false);
+	}
 }

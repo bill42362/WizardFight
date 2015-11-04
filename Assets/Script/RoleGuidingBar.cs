@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RoleChantingBar : MonoBehaviour {
-	public bool isChanting = false;
+public class RoleGuidingBar : MonoBehaviour {
+	public bool isGuiding = false;
 	public GameObject player;
-	public ChantTimer chantTimer;
+	public GuideTimer guideTimer;
 	private EventCenter eventCenter;
 	private Slider slider;
 	private Image backgroundImage;
@@ -12,8 +12,8 @@ public class RoleChantingBar : MonoBehaviour {
 
 	public void Awake () {
 		eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
-		eventCenter.RegisterListener(eventCenter, "startChanting", gameObject, OnStartChanting);
-		eventCenter.RegisterListener(eventCenter, "stopChanting", gameObject, OnStopChanting);
+		eventCenter.RegisterListener(eventCenter, "startGuiding", gameObject, OnStartGuiding);
+		eventCenter.RegisterListener(eventCenter, "stopGuiding", gameObject, OnStopGuiding);
 		eventCenter.RegisterListener(eventCenter, "playerChange", gameObject, OnPlayerChange);
 		slider = GetComponent<Slider>();
 		Image[] images = GetComponentsInChildren<Image>();
@@ -24,8 +24,8 @@ public class RoleChantingBar : MonoBehaviour {
 		gameObject.SetActive(false);
 	}
 	public void Update () {
-		if(null != chantTimer) {
-			slider.value = (float)chantTimer.GetChantingProgress();
+		if(null != guideTimer) {
+			slider.value = 1f - (float)guideTimer.GetGuidingProgress();
 		}
 	}
 
@@ -33,20 +33,20 @@ public class RoleChantingBar : MonoBehaviour {
 		PlayerChangeEventData data = e.data as PlayerChangeEventData;
 		player = data.player;
 	}
-	public void OnStartChanting(SbiEvent e) {
-		ChantingEventData data = e.data as ChantingEventData;
+	public void OnStartGuiding(SbiEvent e) {
+		GuidingEventData data = e.data as GuidingEventData;
 		if(player == data.role) {
-			chantTimer = data.chantTimer;
-			SkillProperties sp = chantTimer.gameObject.GetComponent<SkillProperties>();
+			guideTimer = data.guideTimer;
+			SkillProperties sp = guideTimer.gameObject.GetComponent<SkillProperties>();
 			fillImage.color = sp.buttonColor;
 			backgroundImage.color = sp.buttonColor - new Color(0.5f, 0.5f, 0.5f, 0f);
 			gameObject.SetActive(true);
 		}
 	}
-	public void OnStopChanting(SbiEvent e) {
-		ChantingEventData data = e.data as ChantingEventData;
+	public void OnStopGuiding(SbiEvent e) {
+		GuidingEventData data = e.data as GuidingEventData;
 		if(player == data.role) {
-			chantTimer = null;
+			guideTimer = null;
 			gameObject.SetActive(false);
 		}
 	}
