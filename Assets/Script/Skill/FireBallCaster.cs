@@ -63,8 +63,9 @@ public class FireBallCaster : MonoBehaviour {
 		chantTimer.owner = data.player;
 	}
 	private void Cast() {
-		NetworkManager.Instance.Instantiate(
+		FireBallBullet fireBallBullet = NetworkManager.Instance.Instantiate(
 			"Prefab/Skill/FireBallBullet", owner.transform.position, owner.transform.rotation , 0
-		);
+		).GetComponent<FireBallBullet>();
+		fireBallBullet.owner = owner;
 	}
 }

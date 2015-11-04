@@ -11,7 +11,7 @@ public class BlizzardCaster : MonoBehaviour {
 	private EventCenter eventCenter;
 	private CoolDownTimer coolDownTimer;
 	private GuideTimer guideTimer;
-	private GameObject blizzard;
+	private Blizzard blizzard;
 
 	public void Awake () {
 		coolDownTimer = GetComponent<CoolDownTimer>();
@@ -63,22 +63,28 @@ public class BlizzardCaster : MonoBehaviour {
 		PlayerChangeEventData data = e.data as PlayerChangeEventData;
 		owner = data.player;
 		guideTimer.owner = data.player;
+		if(null != blizzard) { blizzard.owner = data.player; }
 	}
 	private void StartGuiding() {
 		guideTimer.StartGuiding();
+
 		Vector3 targetPosition = transform.position;
-		if(null != enemy) { targetPosition = enemy.transform.position; }
+		if(null != owner) { targetPosition = owner.transform.position; }
+		else if(null != enemy) { targetPosition = enemy.transform.position; }
+
 		if(null == blizzard) {
-			blizzard = Instantiate(
+			GameObject blizzardGameObject = Instantiate(
 				Resources.Load("Prefab/Skill/Blizzard"), targetPosition, transform.rotation
 			) as GameObject;
+			blizzard = blizzardGameObject.GetComponent<Blizzard>();
+			blizzard.owner = owner;
 		} else {
 			blizzard.transform.position = targetPosition;
 		}
-		blizzard.SetActive(true);
+		blizzard.gameObject.SetActive(true);
 	}
 	private void StopGuiding() {
 		guideTimer.StopGuiding();
-		blizzard.SetActive(false);
+		blizzard.gameObject.SetActive(false);
 	}
 }

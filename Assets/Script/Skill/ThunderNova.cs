@@ -12,4 +12,10 @@ public class ThunderNova : MonoBehaviour {
 		double timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 		if((startTime + lifeTime) < timestamp) { Destroy(gameObject); }
 	}
+	public void OnTriggerStay(Collider other) {
+		Role role = other.gameObject.GetComponent<Role>();
+		if((null != role) && (owner != role.gameObject)) {
+			print(role);
+		}
+	}
 }

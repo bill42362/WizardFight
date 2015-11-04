@@ -65,10 +65,10 @@ public class NetworkManager : Photon.PunBehaviour {
         }
     }
 
-    public void Instantiate(string v1, Vector3 vector3, Quaternion identity, int v2)
+    public GameObject Instantiate(string v1, Vector3 vector3, Quaternion identity, int v2)
     {
         Debug.Log("Instantiate: v1");
-        PhotonNetwork.Instantiate(v1, vector3, identity, v2);
+        return PhotonNetwork.Instantiate(v1, vector3, identity, v2);
     }
 
     public void CreateNewRoom()

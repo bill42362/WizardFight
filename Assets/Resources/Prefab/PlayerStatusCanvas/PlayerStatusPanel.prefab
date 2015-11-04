@@ -93,7 +93,7 @@ GameObject:
   - 224: {fileID: 22466992}
   - 114: {fileID: 11454126}
   - 114: {fileID: 11461772}
-  - 114: {fileID: 11467388}
+  - 114: {fileID: 11462618}
   m_Layer: 5
   m_Name: PlayerHealthBar
   m_TagString: Untagged
@@ -554,7 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   role: {fileID: 0}
---- !u!114 &11467388
+--- !u!114 &11462618
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
