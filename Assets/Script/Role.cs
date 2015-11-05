@@ -14,4 +14,7 @@ public class Role : MonoBehaviour {
 		PlayerChangeEventData data = e.data as PlayerChangeEventData;
 		lookAt.target = data.player;
 	}
+	public void TakeDamage(double d) {
+		health -= d;
+	}
 }

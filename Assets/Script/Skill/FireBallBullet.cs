@@ -6,6 +6,7 @@ public class FireBallBullet : MonoBehaviour {
 	public double lifeTime = 1000;
 	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 	private double startTime;
+	private bool doneDamage = false;
 
 	public void Start () {
 		GetComponent<Rigidbody>().velocity = transform.forward*(float)flyingSpeed;
@@ -18,7 +19,8 @@ public class FireBallBullet : MonoBehaviour {
 	public void OnTriggerStay(Collider other) {
 		Role role = other.gameObject.GetComponent<Role>();
 		if((null != role) && (owner != role.gameObject)) {
-			print(role);
+			role.TakeDamage(damage);
+			doneDamage = true;
 		}
 	}
 }
