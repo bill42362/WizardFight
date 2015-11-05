@@ -2,14 +2,6 @@
 using System.Collections;
 
 public class RoleBehaviour : Photon.PunBehaviour {
-
-	void Start () { }
-	
-	void Update () {
-        LookAt lookAt = this.GetComponent<LookAt>();
-        lookAt.target = GameObject.FindWithTag("Enemy");
-	}
-
     [PunRPC]
     void moveByLeftOrRight(bool isRight )
     {
