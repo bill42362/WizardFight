@@ -7,8 +7,10 @@ public class FireBallBullet : MonoBehaviour {
 	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 	private double startTime;
 	private bool doneDamage = false;
+	private PhotonView photonView;
 
 	public void Start () {
+		photonView = GetComponent<PhotonView>();
 		GetComponent<Rigidbody>().velocity = transform.forward*(float)flyingSpeed;
 		startTime = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 	}
@@ -18,7 +20,12 @@ public class FireBallBullet : MonoBehaviour {
 	}
 	public void OnTriggerStay(Collider other) {
 		Role role = other.gameObject.GetComponent<Role>();
-		if((null != role) && (owner != role.gameObject)) {
+		if(
+			(null != role)
+			&& (owner != role.gameObject)
+			&& (false == photonView.isMine)
+			&& (false == doneDamage)
+		) {
 			role.TakeDamage(damage);
 			doneDamage = true;
 		}

@@ -7,7 +7,6 @@ public class BlizzardCaster : MonoBehaviour {
 	public GameObject enemy;
 
 	private bool isButtonPressed = false;
-	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 	private EventCenter eventCenter;
 	private CoolDownTimer coolDownTimer;
 	private GuideTimer guideTimer;
@@ -30,7 +29,6 @@ public class BlizzardCaster : MonoBehaviour {
 			}
 			return;
 		}
-		double timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 		if(false == guideTimer.isGuiding) {
 			if(true == coolDownTimer.GetIsCoolDownFinished()) {
 				coolDownTimer.StartCoolDown();
