@@ -66,6 +66,13 @@ public class GameManager : MonoBehaviour {
                                        new Vector3(0, 0, positionZ),
                                        Quaternion.identity,
                                        0);
+        if ( NetworkManager.Instance.isOffline)
+        {
+            NetworkManager.Instance.Instantiate("unitychan",
+                               new Vector3(0, 0, 5),
+                               Quaternion.identity,
+                               0, true);
+        }
 		
     }
 }

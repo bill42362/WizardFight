@@ -64,6 +64,7 @@ public class FireBallCaster : MonoBehaviour {
 		FireBallBullet fireBallBullet = NetworkManager.Instance.Instantiate(
 			"Prefab/Skill/FireBallBullet", owner.transform.position, owner.transform.rotation , 0
 		).GetComponent<FireBallBullet>();
+
 		fireBallBullet.owner = owner;
 	}
 }

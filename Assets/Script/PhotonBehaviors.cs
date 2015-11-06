@@ -12,6 +12,14 @@ public class PhotonBehaviors : Photon.PunBehaviour
 	void Update () {
 	
 	}
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        if ( this.photonView.isMine)
+        {
+            Destroy(this.gameObject);
+        }
+    }
     public override void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         base.OnPhotonInstantiate(info);
@@ -48,4 +56,5 @@ public class PhotonBehaviors : Photon.PunBehaviour
                    .GetPhotonView()
                    .RPC("moveByLeftOrRight", PhotonTargets.All, true);
     }
+    
 }

@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 public class NetworkManager : Photon.PunBehaviour {
-
+    public bool isOffline
+    {
+        get
+        {
+            return PhotonNetwork.offlineMode;
+        }
+    }
     public void Start()
     {
     }
@@ -65,10 +71,14 @@ public class NetworkManager : Photon.PunBehaviour {
         }
     }
 
-    public GameObject Instantiate(string v1, Vector3 vector3, Quaternion identity, int v2)
+    public GameObject Instantiate(string v1, Vector3 vector3, Quaternion identity, int v2, bool isNeutral = false)
     {
-        Debug.Log("Instantiate: v1");
-        return PhotonNetwork.Instantiate(v1, vector3, identity, v2);
+        GameObject obj = PhotonNetwork.Instantiate(v1, vector3, identity, v2);
+        if (isNeutral)
+        {
+            obj.GetComponent<Faction>().SetNeutral();
+        }
+        return obj;
     }
 
     public void CreateNewRoom()
