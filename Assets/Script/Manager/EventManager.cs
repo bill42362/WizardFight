@@ -1,8 +1,33 @@
 using UnityEngine;
 using System.Collections;
 
-public class EventCenter : MonoBehaviour {
-	private Hearing[] hearings = new Hearing[0];
+public class EventManager : MonoBehaviour {
+
+    private static EventManager _instance = null;
+    protected EventManager()
+    {
+
+    }
+    public static EventManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = Object.FindObjectOfType(typeof(EventManager)) as EventManager;
+                if (_instance == null)
+                {
+                    GameObject gm = new GameObject("EventManager");
+                    DontDestroyOnLoad(gm);
+                    _instance = gm.AddComponent<EventManager>();
+                }
+            }
+            return _instance;
+        }
+    }
+
+
+    private Hearing[] hearings = new Hearing[0];
 	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 
 	public void CastEvent(Object caster, string type, SbiEventData data) {

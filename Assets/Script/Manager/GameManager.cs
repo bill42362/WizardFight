@@ -2,14 +2,13 @@
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
-    private static string GameVersion = "0.00001";
+    private static string gameVersion = "0.00001";
     private static GameManager _instance = null;
-    private string PlayerName = null;
+    private string playerName = null;
     private int PlayerOrderInRoom = 0;
     private GameObject PlayerCharacter = null;
-    private EventCenter eventCenter = null;
     protected GameManager() {
-        PlayerName = "username";
+        playerName = "username";
     }
     public static GameManager Instance
     {
@@ -41,7 +40,7 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     public void Start()
     {
-		eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
+		
     }
 
     // Update is called once per frame
@@ -51,23 +50,22 @@ public class GameManager : MonoBehaviour {
 
     public string GetPlayerName()
     {
-        return Instance.PlayerName;
+        return Instance.playerName;
     }
     public string GetGameVersion()
     {
-        return GameVersion;
+        return gameVersion;
     }
     public void onJoinRoom(int order)
     {
         Instance.PlayerOrderInRoom = order;
+        Debug.Log("On JoinRoom order = " + order);
 		bool isPlayerCharater = (order == 1);
         float positionZ = (isPlayerCharater) ? -5 : 5;
         NetworkManager.Instance.Instantiate("unitychan",
                                        new Vector3(0, 0, positionZ),
                                        Quaternion.identity,
                                        0);
-		eventCenter.CastEvent(
-			this, "playerChange", new PlayerChangeEventData(GetPlayerCharacter())
-		);
+		
     }
 }
