@@ -89,6 +89,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chantTime: 1000
   isChanting: 0
+  owner: {fileID: 0}
 --- !u!114 &11450238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,6 +131,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: chantTime
       value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: coolDownTime
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
