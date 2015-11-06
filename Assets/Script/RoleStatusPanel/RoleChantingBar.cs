@@ -5,16 +5,14 @@ public class RoleChantingBar : MonoBehaviour {
 	public bool isChanting = false;
 	public GameObject player;
 	public ChantTimer chantTimer;
-	private EventCenter eventCenter;
 	private Slider slider;
 	private Image backgroundImage;
 	private Image fillImage;
 
 	public void Awake () {
-		eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
-		eventCenter.RegisterListener(eventCenter, "startChanting", gameObject, OnStartChanting);
-		eventCenter.RegisterListener(eventCenter, "stopChanting", gameObject, OnStopChanting);
-		eventCenter.RegisterListener(eventCenter, "playerChange", gameObject, OnPlayerChange);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "startChanting", gameObject, OnStartChanting);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "stopChanting", gameObject, OnStopChanting);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "playerChange", gameObject, OnPlayerChange);
 		slider = GetComponent<Slider>();
 		Image[] images = GetComponentsInChildren<Image>();
 		for(int i = 0; i < images.Length; ++i) {

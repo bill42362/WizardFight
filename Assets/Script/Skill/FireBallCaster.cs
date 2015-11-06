@@ -6,7 +6,6 @@ public class FireBallCaster : MonoBehaviour {
 	public GameObject owner;
 
 	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
-	private EventCenter eventCenter;
 	private CoolDownTimer coolDownTimer;
 	private ChantTimer chantTimer;
 	private bool isButtonPressed = false;
@@ -14,12 +13,11 @@ public class FireBallCaster : MonoBehaviour {
 	void Awake () {
 		coolDownTimer = GetComponent<CoolDownTimer>();
 		chantTimer = GetComponent<ChantTimer>();
-		eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
-		eventCenter.RegisterListener(eventCenter, "skillButtonDown", gameObject, OnSkillButtonDown);
-		eventCenter.RegisterListener(eventCenter, "skillButtonUp", gameObject, OnSkillButtonUp);
-		eventCenter.RegisterListener(eventCenter, "leftButtonPressed", gameObject, OnPlayerMove);
-		eventCenter.RegisterListener(eventCenter, "rightButtonPressed", gameObject, OnPlayerMove);
-		eventCenter.RegisterListener(eventCenter, "playerChange", gameObject, OnPlayerChange);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonDown", gameObject, OnSkillButtonDown);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonUp", gameObject, OnSkillButtonUp);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "leftButtonPressed", gameObject, OnPlayerMove);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "rightButtonPressed", gameObject, OnPlayerMove);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "playerChange", gameObject, OnPlayerChange);
 	}
 	
 	void Update () {
