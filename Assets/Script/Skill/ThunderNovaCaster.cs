@@ -4,16 +4,14 @@ public class ThunderNovaCaster : MonoBehaviour {
 	public int skillIndex = 2;
 	public string skillName = "Thunder Nova";
 	public GameObject owner;
-	private EventCenter eventCenter;
 	private CoolDownTimer coolDownTimer;
 	private bool isButtonPressed = false;
 
 	public void Awake () {
 		coolDownTimer = GetComponent<CoolDownTimer>();
-		eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
-		eventCenter.RegisterListener(eventCenter, "skillButtonDown", gameObject, OnSkillButtonDown);
-		eventCenter.RegisterListener(eventCenter, "skillButtonUp", gameObject, OnSkillButtonUp);
-		eventCenter.RegisterListener(eventCenter, "playerChange", gameObject, OnPlayerChange);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonDown", gameObject, OnSkillButtonDown);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonUp", gameObject, OnSkillButtonUp);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "playerChange", gameObject, OnPlayerChange);
 	}
 	public void Update () {
 		if(

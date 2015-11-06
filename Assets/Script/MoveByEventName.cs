@@ -4,8 +4,7 @@ public class MoveByEventName : MonoBehaviour {
 	public Vector3 direction;
 	public void Awake () {
 		if(null != eventName) {
-			EventCenter eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
-			eventCenter.RegisterListener(eventCenter, eventName, gameObject, OnEventTriggered);
+			EventManager.Instance.RegisterListener(EventManager.Instance, eventName, gameObject, OnEventTriggered);
 		}
 	}
 	public void OnEventTriggered(SbiEvent e) {
