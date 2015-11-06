@@ -20,6 +20,13 @@ public class FireBallBullet : MonoBehaviour {
 	}
 	public void OnTriggerStay(Collider other) {
 		Role role = other.gameObject.GetComponent<Role>();
+		if(null != role) {
+			Debug.Log("FireBallBullet Hit!!!!");
+		}
+		if((null != role) && (owner != role.gameObject)
+		) {
+			Debug.Log("FireBallBullet Enemy!!!!");
+		}
 		if(
 			(null != role)
 			&& (owner != role.gameObject)
