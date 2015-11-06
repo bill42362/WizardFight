@@ -5,24 +5,22 @@ public class GuideTimer : MonoBehaviour {
 	public bool isGuiding = false;
 	public GameObject owner;
 
-	private EventCenter eventCenter;
 	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 	private double timeStartGuiding = 0;
 
 	void Awake () {
-		eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
 	}
 
 	public void StartGuiding() {
 		timeStartGuiding = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 		isGuiding = true;
 		GuidingEventData startData = new GuidingEventData("start", owner, this);
-		eventCenter.CastEvent(eventCenter, "startGuiding", startData);
+		EventManager.Instance.CastEvent(EventManager.Instance, "startGuiding", startData);
 	}
 	public void StopGuiding() {
 		isGuiding = false;
 		GuidingEventData stopData = new GuidingEventData("stop", owner, this);
-		eventCenter.CastEvent(eventCenter, "stopGuiding", stopData);
+		EventManager.Instance.CastEvent(EventManager.Instance, "stopGuiding", stopData);
 	}
 	public bool GetIsGuidingFinished() {
 		double timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;

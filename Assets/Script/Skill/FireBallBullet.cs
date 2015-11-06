@@ -3,7 +3,7 @@ public class FireBallBullet : MonoBehaviour {
 	public GameObject owner;
 	public double damage = 10;
 	public double flyingSpeed = 10;
-	public double lifeTime = 1000;
+	public double lifeTime = 3000;
 	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 	private double startTime;
 	private bool doneDamage = false;
@@ -20,6 +20,13 @@ public class FireBallBullet : MonoBehaviour {
 	}
 	public void OnTriggerStay(Collider other) {
 		Role role = other.gameObject.GetComponent<Role>();
+		if(null != role) {
+			Debug.Log("FireBallBullet Hit!!!!");
+		}
+		if((null != role) && (owner != role.gameObject)
+		) {
+			Debug.Log("FireBallBullet Enemy!!!!");
+		}
 		if(
 			(null != role)
 			&& (owner != role.gameObject)

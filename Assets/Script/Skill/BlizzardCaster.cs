@@ -7,7 +7,6 @@ public class BlizzardCaster : MonoBehaviour {
 	public GameObject enemy;
 
 	private bool isButtonPressed = false;
-	private EventCenter eventCenter;
 	private CoolDownTimer coolDownTimer;
 	private GuideTimer guideTimer;
 	private Blizzard blizzard;
@@ -15,12 +14,12 @@ public class BlizzardCaster : MonoBehaviour {
 	public void Awake () {
 		coolDownTimer = GetComponent<CoolDownTimer>();
 		guideTimer = GetComponent<GuideTimer>();
-		eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
-		eventCenter.RegisterListener(eventCenter, "skillButtonDown", gameObject, OnSkillButtonDown);
-		eventCenter.RegisterListener(eventCenter, "skillButtonUp", gameObject, OnSkillButtonUp);
-		eventCenter.RegisterListener(eventCenter, "leftButtonPressed", gameObject, OnPlayerMove);
-		eventCenter.RegisterListener(eventCenter, "rightButtonPressed", gameObject, OnPlayerMove);
-		eventCenter.RegisterListener(eventCenter, "playerChange", gameObject, OnPlayerChange);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonDown", gameObject, OnSkillButtonDown);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonUp", gameObject, OnSkillButtonUp);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "leftButtonPressed", gameObject, OnPlayerMove);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "rightButtonPressed", gameObject, OnPlayerMove);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "playerChange", gameObject, OnPlayerChange);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "enemyJoin", gameObject, OnEnemyJoin);
 	}
 	public void Update () {
 		if(false == isButtonPressed) {	
@@ -62,6 +61,11 @@ public class BlizzardCaster : MonoBehaviour {
 		owner = data.player;
 		guideTimer.owner = data.player;
 		if(null != blizzard) { blizzard.owner = data.player; }
+	}
+	public void OnEnemyJoin(SbiEvent e) {
+		PlayerChangeEventData data = e.data as PlayerChangeEventData;
+		enemy = data.player;
+		Debug.Log("EnemyJoin");
 	}
 	private void StartGuiding() {
 		guideTimer.StartGuiding();

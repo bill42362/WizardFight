@@ -4,14 +4,12 @@ using UnityEngine.UI;
 public class SkillButton : MonoBehaviour {
 	public int skillIndex = 0;
 	public GameObject skillCaster;
-	private EventCenter eventCenter;
 	private SkillProperties skillProperties;
 	private CoolDownTimer coolDownTimer;
 	private Text coolDownTimeText;
 	private RectTransform coolDownIndicatorRectTransform;
 
 	public void Awake () {
-		eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
 		GameObject playerSkillCasters = GameObject.FindWithTag("PlayerSkillCasters");
 		if(playerSkillCasters.transform.childCount > skillIndex) {
 			skillCaster = playerSkillCasters.transform.GetChild(skillIndex).gameObject;
@@ -47,12 +45,12 @@ public class SkillButton : MonoBehaviour {
 		}
 	}
 	public void OnPointerDown() {
-		eventCenter.CastEvent(
+		EventManager.Instance.CastEvent(
 			this, "skillButtonDown", new SkillButtonEventData("down", skillIndex)
 		);
 	}
 	public void OnPointerUp() {
-		eventCenter.CastEvent(
+		EventManager.Instance.CastEvent(
 			this, "skillButtonUp", new SkillButtonEventData("up", skillIndex)
 		);
 	}

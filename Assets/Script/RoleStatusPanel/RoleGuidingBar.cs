@@ -5,16 +5,14 @@ public class RoleGuidingBar : MonoBehaviour {
 	public bool isGuiding = false;
 	public GameObject player;
 	public GuideTimer guideTimer;
-	private EventCenter eventCenter;
 	private Slider slider;
 	private Image backgroundImage;
 	private Image fillImage;
 
 	public void Awake () {
-		eventCenter = GameObject.FindWithTag("EventCenter").GetComponent<EventCenter>();
-		eventCenter.RegisterListener(eventCenter, "startGuiding", gameObject, OnStartGuiding);
-		eventCenter.RegisterListener(eventCenter, "stopGuiding", gameObject, OnStopGuiding);
-		eventCenter.RegisterListener(eventCenter, "playerChange", gameObject, OnPlayerChange);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "startGuiding", gameObject, OnStartGuiding);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "stopGuiding", gameObject, OnStopGuiding);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "playerChange", gameObject, OnPlayerChange);
 		slider = GetComponent<Slider>();
 		Image[] images = GetComponentsInChildren<Image>();
 		for(int i = 0; i < images.Length; ++i) {
