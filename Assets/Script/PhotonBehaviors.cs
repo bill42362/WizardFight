@@ -26,7 +26,7 @@ public class PhotonBehaviors : Photon.PunBehaviour
 
         if ( this.photonView.isMine )
         {
-            Debug.Log("Entering OnPhotonInstantiate of mine");
+            //Debug.Log("Entering OnPhotonInstantiate of mine");
             GameObject me = this.gameObject;
             me.tag = "Player";
             GameManager.Instance.SetPlayerCharacter( me );
@@ -34,7 +34,7 @@ public class PhotonBehaviors : Photon.PunBehaviour
         }
         else
         {
-            Debug.Log("Entering OnPhotonInstantiate of others'");
+            //Debug.Log("Entering OnPhotonInstantiate of others'");
             GameManager.Instance
                        .GetPlayerCharacter()
                        .GetComponent<LookAt>()

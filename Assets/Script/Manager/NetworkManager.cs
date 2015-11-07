@@ -46,7 +46,7 @@ public class NetworkManager : Photon.PunBehaviour {
     }
     public void Match()
     {
-        Debug.Log("Match");
+        //Debug.Log("Match");
         if (PhotonNetwork.connectedAndReady && !PhotonNetwork.inRoom)
         {
            
@@ -91,33 +91,33 @@ public class NetworkManager : Photon.PunBehaviour {
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        Debug.Log("OnJoinRoom");
+        //Debug.Log("OnJoinRoom");
         GameManager.Instance.onJoinRoom(PhotonNetwork.room.playerCount);
     }
     public override void OnConnectedToPhoton()
     {
         base.OnConnectedToPhoton();
-        Debug.Log("OnConnectedToPhoton");
+        //Debug.Log("OnConnectedToPhoton");
 
     }
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("OnJoinedLobby");
+        //Debug.Log("OnJoinedLobby");
     }
     public override void OnPhotonRandomJoinFailed(object[] codeAndMsg)
     {
-        Debug.Log("OnPhotonRandomJoinFailed: " + codeAndMsg.ToString());
+        //Debug.Log("OnPhotonRandomJoinFailed: " + codeAndMsg.ToString());
         CreateNewRoom();
     }
     public override void OnPhotonCreateRoomFailed(object[] codeAndMsg)
     {
         base.OnPhotonCreateRoomFailed(codeAndMsg);
-        Debug.Log("OnPhotonCreateRoomFailed: " + codeAndMsg.ToString());
+        //Debug.Log("OnPhotonCreateRoomFailed: " + codeAndMsg.ToString());
     }
     public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
     {
         base.OnPhotonPlayerConnected(newPlayer);
-        Debug.Log("OnPhotonPlayerConnected: " + newPlayer.name );
+        //Debug.Log("OnPhotonPlayerConnected: " + newPlayer.name );
     }
 }

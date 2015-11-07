@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour {
     public void onJoinRoom(int order)
     {
         Instance.PlayerOrderInRoom = order;
-        Debug.Log("On JoinRoom order = " + order);
+        //Debug.Log("On JoinRoom order = " + order);
 		bool isPlayerCharater = (order == 1);
         float positionZ = (isPlayerCharater) ? -5 : 5;
         NetworkManager.Instance.Instantiate("unitychan",
