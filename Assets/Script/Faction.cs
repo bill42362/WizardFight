@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Faction : Photon.PunBehaviour {
 
-    private int owner = 1; // 0 = neutral;
+    public int owner = 1; // 0 = neutral;
     // Use this for initialization
     void Start () {
 	}

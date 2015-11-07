@@ -62,16 +62,17 @@ public class GameManager : MonoBehaviour {
         //Debug.Log("On JoinRoom order = " + order);
 		bool isPlayerCharater = (order == 1);
         float positionZ = (isPlayerCharater) ? -5 : 5;
-        NetworkManager.Instance.Instantiate("unitychan",
+        GameObject newPlayer = NetworkManager.Instance.Instantiate("unitychan",
                                        new Vector3(0, 0, positionZ),
                                        Quaternion.identity,
                                        0);
         if ( NetworkManager.Instance.isOffline)
         {
-            NetworkManager.Instance.Instantiate("unitychan",
+            GameObject neutral = NetworkManager.Instance.Instantiate("unitychan",
                                new Vector3(0, 0, 5),
                                Quaternion.identity,
                                0, true);
+			neutral.GetComponent<LookAt>().target = newPlayer;
         }
 		
     }
