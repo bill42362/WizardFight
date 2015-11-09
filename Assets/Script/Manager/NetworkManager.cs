@@ -7,18 +7,15 @@ public class NetworkManager : Photon.PunBehaviour {
             return PhotonNetwork.offlineMode;
         }
     }
-    public void Start()
-    {
-    }
-
-    // Update is called once per frame
-    public void Update()
-    {
-    }
     private static NetworkManager _instance = null;
     protected NetworkManager() {
         PhotonNetwork.offlineMode = true;
     }
+	public void Start () {
+		EventManager.Instance.RegisterListener(
+			EventManager.Instance, "connectButtonClick", gameObject, Connect
+		);
+	}
     public static NetworkManager Instance 
     {   get
         {
@@ -37,7 +34,7 @@ public class NetworkManager : Photon.PunBehaviour {
         }
     }
 
-    public void Connect()
+    public void Connect(SbiEvent e)
     {
         PhotonNetwork.offlineMode = false;
         if (!PhotonNetwork.connected)
@@ -97,8 +94,7 @@ public class NetworkManager : Photon.PunBehaviour {
     public override void OnConnectedToPhoton()
     {
         base.OnConnectedToPhoton();
-        //Debug.Log("OnConnectedToPhoton");
-
+		EventManager.Instance.CastEvent(this, "connectedToPhoton", null);
     }
 
     public override void OnJoinedLobby()

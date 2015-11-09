@@ -11,9 +11,6 @@ public class NetworkBehaviour : MonoBehaviour {
 	void Update () {
 	
 	}
-    public void Connect() {
-        NetworkManager.Instance.Connect();
-    }
     public void Match()
     {
         NetworkManager.Instance.Match();
