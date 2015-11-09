@@ -15,6 +15,12 @@ public class NetworkManager : Photon.PunBehaviour {
 		EventManager.Instance.RegisterListener(
 			EventManager.Instance, "connectButtonClick", gameObject, Connect
 		);
+		EventManager.Instance.RegisterListener(
+			EventManager.Instance, "matchButtonClick", gameObject, Match
+		);
+		EventManager.Instance.RegisterListener(
+			EventManager.Instance, "leaveButtonClick", gameObject, LeaveRoom
+		);
 	}
     public static NetworkManager Instance 
     {   get
@@ -41,19 +47,17 @@ public class NetworkManager : Photon.PunBehaviour {
             PhotonNetwork.ConnectUsingSettings(GameManager.Instance.GetGameVersion());
 
     }
-    public void Match()
+    public void Match(SbiEvent e)
     {
-        //Debug.Log("Match");
         if (PhotonNetwork.connectedAndReady && !PhotonNetwork.inRoom)
         {
-           
             PhotonNetwork.JoinRandomRoom();
         }
     }
     public RoomInfo[] GetRoomList() {
         return PhotonNetwork.GetRoomList();
             }
-    public void LeaveRoom()
+    public void LeaveRoom(SbiEvent e)
     {
         if (PhotonNetwork.inRoom)
         {
@@ -88,8 +92,8 @@ public class NetworkManager : Photon.PunBehaviour {
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        //Debug.Log("OnJoinRoom");
         GameManager.Instance.onJoinRoom(PhotonNetwork.room.playerCount);
+		EventManager.Instance.CastEvent(this, "joinedRoom", null);
     }
     public override void OnConnectedToPhoton()
     {
