@@ -19,7 +19,7 @@ public class BlizzardCaster : MonoBehaviour {
 		EventManager.Instance.RegisterListener(EventManager.Instance, "leftButtonPressed", gameObject, OnPlayerMove);
 		EventManager.Instance.RegisterListener(EventManager.Instance, "rightButtonPressed", gameObject, OnPlayerMove);
 		EventManager.Instance.RegisterListener(EventManager.Instance, "playerChange", gameObject, OnPlayerChange);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "enemyJoin", gameObject, OnEnemyJoin);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "enemyChange", gameObject, OnEnemyChange);
 	}
 	public void Update () {
 		if(false == isButtonPressed) {	
@@ -62,17 +62,16 @@ public class BlizzardCaster : MonoBehaviour {
 		guideTimer.owner = data.player;
 		if(null != blizzard) { blizzard.owner = data.player; }
 	}
-	public void OnEnemyJoin(SbiEvent e) {
+	public void OnEnemyChange(SbiEvent e) {
 		PlayerChangeEventData data = e.data as PlayerChangeEventData;
 		enemy = data.player;
-		Debug.Log("EnemyJoin");
 	}
 	private void StartGuiding() {
 		guideTimer.StartGuiding();
 
 		Vector3 targetPosition = transform.position;
 		if(null != owner) { targetPosition = owner.transform.position; }
-		else if(null != enemy) { targetPosition = enemy.transform.position; }
+		if(null != enemy) { targetPosition = enemy.transform.position; }
 
 		if(null == blizzard) {
 			GameObject blizzardGameObject = Instantiate(

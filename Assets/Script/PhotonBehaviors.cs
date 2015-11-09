@@ -30,7 +30,6 @@ public class PhotonBehaviors : Photon.PunBehaviour
             GameObject me = this.gameObject;
             me.tag = "Player";
             GameManager.Instance.SetPlayerCharacter( me );
-            EventManager.Instance.CastEvent(me, "playerChange", new PlayerChangeEventData(me) );
         }
         else
         {
@@ -39,7 +38,9 @@ public class PhotonBehaviors : Photon.PunBehaviour
                        .GetPlayerCharacter()
                        .GetComponent<LookAt>()
                        .target = this.gameObject;
-            EventManager.Instance.CastEvent(this.gameObject, "enemyChange", new PlayerChangeEventData(this.gameObject));
+            EventManager.Instance.CastEvent(
+				this, "enemyChange", new PlayerChangeEventData(gameObject)
+			);
         }
     }
     public void OnLeftClicked()

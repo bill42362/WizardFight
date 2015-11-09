@@ -66,6 +66,9 @@ public class GameManager : MonoBehaviour {
                                        new Vector3(0, 0, positionZ),
                                        Quaternion.identity,
                                        0);
+		EventManager.Instance.CastEvent(
+			this, "playerChange", new PlayerChangeEventData(newPlayer)
+		);
         if ( NetworkManager.Instance.isOffline)
         {
             GameObject neutral = NetworkManager.Instance.Instantiate("unitychan",
@@ -73,6 +76,9 @@ public class GameManager : MonoBehaviour {
                                Quaternion.identity,
                                0, true);
 			neutral.GetComponent<LookAt>().target = newPlayer;
+            EventManager.Instance.CastEvent(
+				this, "enemyChange", new PlayerChangeEventData(neutral)
+			);
         }
 		
     }
