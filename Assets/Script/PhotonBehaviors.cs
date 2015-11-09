@@ -3,59 +3,35 @@ using System.Collections;
 
 public class PhotonBehaviors : Photon.PunBehaviour
 {
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	public bool isMine = false;
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
-        if ( this.photonView.isMine)
+        if ( photonView.isMine )
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
     public override void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         base.OnPhotonInstantiate(info);
 
+		isMine = photonView.isMine;
         if ( this.photonView.isMine )
         {
-            //Debug.Log("Entering OnPhotonInstantiate of mine");
-            GameObject me = this.gameObject;
+            GameObject me = gameObject;
             me.tag = "Player";
             GameManager.Instance.SetPlayerCharacter( me );
         }
         else
         {
-            //Debug.Log("Entering OnPhotonInstantiate of others'");
             GameManager.Instance
                        .GetPlayerCharacter()
                        .GetComponent<LookAt>()
-                       .target = this.gameObject;
+                       .target = gameObject;
             EventManager.Instance.CastEvent(
 				this, "enemyChange", new PlayerChangeEventData(gameObject)
 			);
         }
     }
-    public void OnLeftClicked()
-    {
-        GameManager.Instance
-                   .GetPlayerCharacter()
-                   .GetPhotonView()
-                   .RPC("moveByLeftOrRight", PhotonTargets.All, false);
-    }
-    public void OnRightClicked()
-    {
-        GameManager.Instance
-                   .GetPlayerCharacter()
-                   .GetPhotonView()
-                   .RPC("moveByLeftOrRight", PhotonTargets.All, true);
-    }
-    
 }

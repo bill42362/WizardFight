@@ -28,7 +28,7 @@ GameObject:
   - 222: {fileID: 22264174}
   - 114: {fileID: 11401176}
   - 114: {fileID: 11458028}
-  - 114: {fileID: 11453776}
+  - 114: {fileID: 11430178}
   m_Layer: 5
   m_Name: EventButton
   m_TagString: Untagged
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11453776
+--- !u!114 &11430178
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -71,10 +71,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 170640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 701259a420cc24c389360d99ff505b47, type: 3}
+  m_Script: {fileID: 11500000, guid: 56467a1fa7e31478d81e0a7f8328c98a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventName: leftButtonPressed
+  eventName: 
 --- !u!114 &11458028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -147,7 +147,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: <
+  m_Text: '>'
 --- !u!222 &22234846
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -177,7 +177,7 @@ RectTransform:
   m_AnchorMax: {x: .5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: .5}
+  m_Pivot: {x: .5, y: .5}
 --- !u!224 &22494634
 RectTransform:
   m_ObjectHideFlags: 1

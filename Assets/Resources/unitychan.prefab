@@ -2100,7 +2100,6 @@ GameObject:
   - 114: {fileID: 11429940}
   - 114: {fileID: 11422476}
   - 114: {fileID: 11449456}
-  - 114: {fileID: 11400248}
   - 114: {fileID: 11413480}
   m_Layer: 0
   m_Name: unitychan
@@ -3465,7 +3464,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111490}
-  m_LocalRotation: {x: -.0937465429, y: .697855175, z: .707469046, w: .0608067475}
+  m_LocalRotation: {x: -.0937465355, y: .697855115, z: .707468987, w: .0608067364}
   m_LocalPosition: {x: -.0554340295, y: .00173068431, z: .0986537337}
   m_LocalScale: {x: 1.00000036, y: 1.0000006, z: 1.00000048}
   m_Children:
@@ -4862,17 +4861,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11400248
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 176840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6dca4b5e67603c49ab0ca70be6f7064, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11408332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4884,8 +4872,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb2e136d05614766815dc937672a13a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventName: leftButtonPressed
-  direction: {x: 0, y: 0, z: 0}
+  eventName: leftButtonClick
+  direction: {x: -1, y: 0, z: 0}
 --- !u!114 &11413480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4947,6 +4935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b878b6051849f74993378014ef38435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMine: 0
 --- !u!114 &11440018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4998,8 +4987,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb2e136d05614766815dc937672a13a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventName: rightButtonPressed
-  direction: {x: 0, y: 0, z: 0}
+  eventName: rightButtonClick
+  direction: {x: 1, y: 0, z: 0}
 --- !u!114 &11473794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6361,6 +6350,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_RotationModel.SynchronizeEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: eventName
+      value: rightButtonClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: direction.x
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
