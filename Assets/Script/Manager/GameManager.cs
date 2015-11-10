@@ -59,13 +59,17 @@ public class GameManager : MonoBehaviour {
     public void onJoinRoom(int order)
     {
         Instance.PlayerOrderInRoom = order;
-        //Debug.Log("On JoinRoom order = " + order);
 		bool isPlayerCharater = (order == 1);
         float positionZ = (isPlayerCharater) ? -5 : 5;
         GameObject newPlayer = NetworkManager.Instance.Instantiate("unitychan",
                                        new Vector3(0, 0, positionZ),
                                        Quaternion.identity,
                                        0);
+		newPlayer.name = "Enemy";
+		if(isPlayerCharater) {
+			newPlayer.name = "Player";
+			RoleEventController c = newPlayer.AddComponent<RoleEventController>();
+		}
 		EventManager.Instance.CastEvent(
 			this, "playerChange", new PlayerChangeEventData(newPlayer)
 		);
@@ -75,7 +79,9 @@ public class GameManager : MonoBehaviour {
                                new Vector3(0, 0, 5),
                                Quaternion.identity,
                                0, true);
+			neutral.name = "NeutralRole";
 			neutral.GetComponent<LookAt>().target = newPlayer;
+			newPlayer.GetComponent<LookAt>().target = neutral;
             EventManager.Instance.CastEvent(
 				this, "enemyChange", new PlayerChangeEventData(neutral)
 			);
