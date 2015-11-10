@@ -18,8 +18,8 @@ public class RoleGuidingBar : MonoBehaviour {
 			if("Background" == images[i].gameObject.name) { backgroundImage = images[i]; }
 			else if("Fill" == images[i].gameObject.name) { fillImage = images[i]; }
 		}
-		gameObject.SetActive(false);
 	}
+	public void Start () { gameObject.SetActive(false); }
 	public void Update () {
 		if(null != guideTimer) {
 			slider.value = 1f - (float)guideTimer.GetGuidingProgress();
