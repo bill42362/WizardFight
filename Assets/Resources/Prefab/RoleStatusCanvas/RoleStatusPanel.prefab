@@ -95,7 +95,7 @@ GameObject:
   - 114: {fileID: 11461772}
   - 114: {fileID: 11462618}
   m_Layer: 5
-  m_Name: PlayerHealthBar
+  m_Name: RoleHealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,7 +160,7 @@ GameObject:
   - 114: {fileID: 11458926}
   - 114: {fileID: 11416156}
   m_Layer: 5
-  m_Name: PlayerChantingBar
+  m_Name: RoleChantingBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,8 +176,9 @@ GameObject:
   - 224: {fileID: 22465858}
   - 222: {fileID: 22210788}
   - 114: {fileID: 11424844}
+  - 114: {fileID: 11431386}
   m_Layer: 5
-  m_Name: PlayerStatusPanel
+  m_Name: RoleStatusPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,7 +213,7 @@ GameObject:
   - 114: {fileID: 11434634}
   - 114: {fileID: 11440900}
   m_Layer: 5
-  m_Name: PlayerIcon
+  m_Name: RoleIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -230,7 +231,7 @@ GameObject:
   - 114: {fileID: 11406996}
   - 114: {fileID: 11493968}
   m_Layer: 5
-  m_Name: PlayerGuidingBar
+  m_Name: RoleGuidingBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,7 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGuiding: 0
-  player: {fileID: 0}
+  role: {fileID: 0}
   guideTimer: {fileID: 0}
 --- !u!114 &11407382
 MonoBehaviour:
@@ -338,6 +339,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11431386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad6e466ae3c0a489cb9d3d7854528bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roleChangeEventName: playerChange
+  role: {fileID: 0}
 --- !u!114 &11434634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -540,7 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isChanting: 0
-  player: {fileID: 0}
+  role: {fileID: 0}
   chantTimer: {fileID: 0}
 --- !u!114 &11461772
 MonoBehaviour:

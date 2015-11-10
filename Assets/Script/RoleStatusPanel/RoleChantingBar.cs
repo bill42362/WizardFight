@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class RoleChantingBar : MonoBehaviour {
 	public bool isChanting = false;
-	public GameObject player;
+	public GameObject role;
 	public ChantTimer chantTimer;
 	private Slider slider;
 	private Image backgroundImage;
@@ -12,7 +12,6 @@ public class RoleChantingBar : MonoBehaviour {
 	public void Awake () {
 		EventManager.Instance.RegisterListener(EventManager.Instance, "startChanting", gameObject, OnStartChanting);
 		EventManager.Instance.RegisterListener(EventManager.Instance, "stopChanting", gameObject, OnStopChanting);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "playerChange", gameObject, OnPlayerChange);
 		slider = GetComponent<Slider>();
 		Image[] images = GetComponentsInChildren<Image>();
 		for(int i = 0; i < images.Length; ++i) {
@@ -27,13 +26,9 @@ public class RoleChantingBar : MonoBehaviour {
 		}
 	}
 
-	public void OnPlayerChange(SbiEvent e) {
-		PlayerChangeEventData data = e.data as PlayerChangeEventData;
-		player = data.player;
-	}
 	public void OnStartChanting(SbiEvent e) {
 		ChantingEventData data = e.data as ChantingEventData;
-		if(player == data.role) {
+		if(role == data.role) {
 			chantTimer = data.chantTimer;
 			SkillProperties sp = chantTimer.gameObject.GetComponent<SkillProperties>();
 			fillImage.color = sp.buttonColor;
@@ -43,7 +38,7 @@ public class RoleChantingBar : MonoBehaviour {
 	}
 	public void OnStopChanting(SbiEvent e) {
 		ChantingEventData data = e.data as ChantingEventData;
-		if(player == data.role) {
+		if(role == data.role) {
 			chantTimer = null;
 			gameObject.SetActive(false);
 		}

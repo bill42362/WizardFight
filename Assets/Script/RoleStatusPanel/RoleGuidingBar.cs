@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class RoleGuidingBar : MonoBehaviour {
 	public bool isGuiding = false;
-	public GameObject player;
+	public GameObject role;
 	public GuideTimer guideTimer;
 	private Slider slider;
 	private Image backgroundImage;
@@ -12,7 +12,6 @@ public class RoleGuidingBar : MonoBehaviour {
 	public void Awake () {
 		EventManager.Instance.RegisterListener(EventManager.Instance, "startGuiding", gameObject, OnStartGuiding);
 		EventManager.Instance.RegisterListener(EventManager.Instance, "stopGuiding", gameObject, OnStopGuiding);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "playerChange", gameObject, OnPlayerChange);
 		slider = GetComponent<Slider>();
 		Image[] images = GetComponentsInChildren<Image>();
 		for(int i = 0; i < images.Length; ++i) {
@@ -27,13 +26,9 @@ public class RoleGuidingBar : MonoBehaviour {
 		}
 	}
 
-	public void OnPlayerChange(SbiEvent e) {
-		PlayerChangeEventData data = e.data as PlayerChangeEventData;
-		player = data.player;
-	}
 	public void OnStartGuiding(SbiEvent e) {
 		GuidingEventData data = e.data as GuidingEventData;
-		if(player == data.role) {
+		if(role == data.role) {
 			guideTimer = data.guideTimer;
 			SkillProperties sp = guideTimer.gameObject.GetComponent<SkillProperties>();
 			fillImage.color = sp.buttonColor;
@@ -43,7 +38,7 @@ public class RoleGuidingBar : MonoBehaviour {
 	}
 	public void OnStopGuiding(SbiEvent e) {
 		GuidingEventData data = e.data as GuidingEventData;
-		if(player == data.role) {
+		if(role == data.role) {
 			guideTimer = null;
 			gameObject.SetActive(false);
 		}
