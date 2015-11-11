@@ -68,7 +68,8 @@ public class GameManager : MonoBehaviour {
 		newPlayer.name = "Enemy";
 		if(isPlayerCharater) {
 			newPlayer.name = "Player";
-			RoleEventController c = newPlayer.AddComponent<RoleEventController>();
+			newPlayer.AddComponent<RoleEventController>();
+			newPlayer.AddComponent<LabelLookAtTarget>();
 		}
 		EventManager.Instance.CastEvent(
 			this, "playerChange", new PlayerChangeEventData(newPlayer)
