@@ -14,6 +14,7 @@ GameObject:
   - 136: {fileID: 13698934}
   - 114: {fileID: 11434464}
   - 114: {fileID: 11440818}
+  - 114: {fileID: 11448626}
   m_Layer: 0
   m_Name: Blizzard
   m_TagString: Untagged
@@ -107,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   damage: 10
-  damageCycle: 1
+  damageCycle: 1000
 --- !u!114 &11434464
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,6 +194,18 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &11448626
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 119770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c8dfce1d20a83c4284fa048f66a34f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: 1
 --- !u!136 &13698934
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1349,6 +1362,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: ForceModule.y.scalar
       value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: damageCycle
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
