@@ -7,8 +7,10 @@ public class ThunderNova : MonoBehaviour {
 	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 	private double startTime;
 	private bool doneDamage = false;
+	private Faction faction;
 
 	public void Start () {
+		faction = GetComponent<Faction>();
 		photonView = GetComponent<PhotonView>();
 		startTime = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 	}
@@ -18,10 +20,10 @@ public class ThunderNova : MonoBehaviour {
 	}
 	public void OnTriggerStay(Collider other) {
 		Role role = other.gameObject.GetComponent<Role>();
+		Faction otherFaction = other.gameObject.GetComponent<Faction>();
 		if(
 			(null != role)
-			&& (owner != role.gameObject)
-			&& (false == photonView.isMine)
+			&& (true == otherFaction.IsRival(faction))
 			&& (false == doneDamage)
 		) {
 			role.TakeDamage(damage);
