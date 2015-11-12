@@ -59,6 +59,8 @@ public class FireBallCaster : MonoBehaviour {
 		chantTimer.owner = data.player;
 	}
 	private void Cast() {
+		//CastingEventData castingData = new CastingEventData(owner);
+		//EventManager.Instance.CastEvent(EventManager.Instance, "casting", castingData);
 		FireBallBullet fireBallBullet = NetworkManager.Instance.Instantiate(
 			"Prefab/Skill/FireBallBullet", owner.transform.position, owner.transform.rotation , 0
 		).GetComponent<FireBallBullet>();
