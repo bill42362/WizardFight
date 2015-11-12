@@ -14,5 +14,9 @@ public class Role : MonoBehaviour {
 	}
 	public void TakeDamage(double d) {
 		health -= d;
+		if(0 >= health) {
+			DeadEventData deadData = new DeadEventData(gameObject);
+			EventManager.Instance.CastEvent(EventManager.Instance, "dead", deadData);
+		}
 	}
 }

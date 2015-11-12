@@ -13,6 +13,7 @@ public class PlayerAnimator : MonoBehaviour {
 		EventManager.Instance.RegisterListener(EventManager.Instance, "stopChanting", gameObject, OnStopChanting);
 		EventManager.Instance.RegisterListener(EventManager.Instance, "startGuiding", gameObject, OnStartGuiding);
 		EventManager.Instance.RegisterListener(EventManager.Instance, "stopGuiding", gameObject, OnStopGuiding);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "dead", gameObject, OnDead);
 	}
 	void Update () {
         animator.SetFloat("velocityX", rigidbody.velocity.x);
@@ -39,6 +40,12 @@ public class PlayerAnimator : MonoBehaviour {
 		GuidingEventData data = e.data as GuidingEventData;
 		if(gameObject == data.role) {
 			animator.SetBool("isGuiding", false);
+		}
+	}
+	public void OnDead(SbiEvent e) {
+		DeadEventData data = e.data as DeadEventData;
+		if(gameObject == data.role) {
+			animator.SetBool("isDead", true);
 		}
 	}
 }
