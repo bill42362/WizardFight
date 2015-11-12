@@ -1,8 +1,8 @@
 using UnityEngine;
 public class Blizzard : MonoBehaviour {
 	public GameObject owner;
-	public double damage = 10;
-	public double damageCycle = 1000;
+	public double damage = 1;
+	public double damageCycle = 100;
 	private PhotonView photonView;
 	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 	private double lastDamageTime = 0;

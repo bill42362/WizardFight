@@ -107,8 +107,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  damage: 10
-  damageCycle: 1000
+  damage: 1
+  damageCycle: 100
 --- !u!114 &11434464
 MonoBehaviour:
   m_ObjectHideFlags: 1
