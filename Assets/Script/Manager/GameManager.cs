@@ -65,16 +65,13 @@ public class GameManager : MonoBehaviour {
                                        new Vector3(0, 0, positionZ),
                                        Quaternion.identity,
                                        0);
-		newPlayer.name = "Enemy";
-		if(isPlayerCharater) {
-			newPlayer.name = "Player";
-			newPlayer.AddComponent<RoleEventController>();
-			newPlayer.AddComponent<LabelLookAtTarget>();
-			GameObject camera = GameObject.FindWithTag("MainCamera");
-			camera.transform.parent = newPlayer.transform;
-			camera.transform.localPosition = new Vector3(0, 5, -5);
-			camera.transform.eulerAngles = new Vector3(30, 0, 0);
-		}
+		newPlayer.name = "Player";
+		newPlayer.AddComponent<RoleEventController>();
+		newPlayer.AddComponent<LabelLookAtTarget>();
+		GameObject camera = GameObject.FindWithTag("MainCamera");
+		camera.transform.parent = newPlayer.transform;
+		camera.transform.localPosition = new Vector3(0, 5, -5);
+		camera.transform.eulerAngles = new Vector3(30, 0, 0);
 		EventManager.Instance.CastEvent(
 			this, "playerChange", new PlayerChangeEventData(newPlayer)
 		);
