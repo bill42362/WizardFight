@@ -19,7 +19,7 @@ public class Faction : Photon.PunBehaviour {
     public override void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         base.OnPhotonInstantiate(info);
-        if ( owner == -1 && !NetworkManager.Instance.isOffline )
+        if ( !NetworkManager.Instance.isOffline )
         {
             SetFaction(info.sender.ID);
         }
