@@ -29,11 +29,11 @@ public class FireBallBullet : MonoBehaviour {
 		) {
 			role.TakeDamageRPC(damage);
 			doneDamage = true;
+			Destroy(gameObject);
 			GameObject explodeGameObject = Instantiate(
 				Resources.Load("Prefab/Skill/Explosion"),
 				gameObject.transform.position,
 				transform.rotation) as GameObject;
-			Destroy(gameObject);
 		}
 	}
 }
