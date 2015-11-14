@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 public class NetworkManager : Photon.PunBehaviour {
     public bool isOffline
     {
@@ -10,6 +12,11 @@ public class NetworkManager : Photon.PunBehaviour {
     private static NetworkManager _instance = null;
     protected NetworkManager() {
         PhotonNetwork.offlineMode = true;
+        PhotonNetwork.autoCleanUpPlayerObjects = true;
+    }
+    private void clear()
+    {
+        readyCount = 0;
     }
 	public void Start () {
 		EventManager.Instance.RegisterListener(
@@ -54,6 +61,11 @@ public class NetworkManager : Photon.PunBehaviour {
             PhotonNetwork.JoinRandomRoom();
         }
     }
+    public bool isMatched( int maxPlayer = 2)
+    {
+        return (isOffline || (PhotonNetwork.inRoom && PhotonNetwork.playerList.Length == maxPlayer) );
+             
+    }
     public RoomInfo[] GetRoomList() {
         return PhotonNetwork.GetRoomList();
             }
@@ -61,6 +73,7 @@ public class NetworkManager : Photon.PunBehaviour {
     {
         if (PhotonNetwork.inRoom)
         {
+
             PhotonNetwork.LeaveRoom();
         }
     }
@@ -84,16 +97,19 @@ public class NetworkManager : Photon.PunBehaviour {
 
     public void CreateNewRoom()
     {
+        RoomOptions roomOptions = new RoomOptions() { isVisible = true,  maxPlayers = 2 };
         if (PhotonNetwork.connectedAndReady && !PhotonNetwork.inRoom)
         {
-            PhotonNetwork.CreateRoom(GameManager.Instance.GetPlayerName() + UnityEngine.Random.Range(1, 999));
+            PhotonNetwork.CreateRoom(GameManager.Instance.GetPlayerName() + UnityEngine.Random.Range(1, 999), 
+                                     roomOptions, TypedLobby.Default);
         }
     }
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        GameManager.Instance.onJoinRoom(PhotonNetwork.room.playerCount);
+        GameManager.Instance.onJoinRoom(PhotonNetwork.player.ID);
 		EventManager.Instance.CastEvent(this, "joinedRoom", null);
+        Debug.Log("OnJoinedRoom");
     }
     public override void OnConnectedToPhoton()
     {
@@ -110,6 +126,12 @@ public class NetworkManager : Photon.PunBehaviour {
         //Debug.Log("OnPhotonRandomJoinFailed: " + codeAndMsg.ToString());
         CreateNewRoom();
     }
+
+    public void SetPlayerProperties(ExitGames.Client.Photon.Hashtable props)
+    {
+        PhotonNetwork.player.SetCustomProperties(props);
+    }
+
     public override void OnPhotonCreateRoomFailed(object[] codeAndMsg)
     {
         base.OnPhotonCreateRoomFailed(codeAndMsg);
@@ -120,4 +142,42 @@ public class NetworkManager : Photon.PunBehaviour {
         base.OnPhotonPlayerConnected(newPlayer);
         //Debug.Log("OnPhotonPlayerConnected: " + newPlayer.name );
     }
+    public void Ready()
+    {
+        ExitGames.Client.Photon.Hashtable readyProperties = new ExitGames.Client.Photon.Hashtable();
+        readyProperties["ready"] = true;
+        PhotonNetwork.player.SetCustomProperties(readyProperties);
+    }
+    public override void OnPhotonPlayerPropertiesChanged(object[] playerAndUpdatedProps)
+    {
+        base.OnPhotonPlayerPropertiesChanged(playerAndUpdatedProps);
+        PhotonPlayer player = null;
+        for ( int i = 0; i < playerAndUpdatedProps.Length; i ++)
+        {
+            if ( i % 2 == 0 )
+            {
+                player = (PhotonPlayer)playerAndUpdatedProps[i];
+                continue;
+            }
+            ExitGames.Client.Photon.Hashtable updated = (ExitGames.Client.Photon.Hashtable)playerAndUpdatedProps[i];
+            if ( updated.ContainsKey("ready") && (bool) updated["ready"] )
+            {
+                readyCount += 1;
+                if ( readyCount == PhotonNetwork.room.maxPlayers)
+                {
+                    EventManager.Instance.CastEvent( this, "playerAllReady", null);
+                }
+            }
+            if (updated.ContainsKey("skills") )
+            {
+                GameManager.Instance.InstantiateSkillCasters((int[])updated["skills"]);
+            }
+        }
+    }
+    public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
+    {
+        base.OnPhotonPlayerDisconnected(otherPlayer);
+        LeaveRoom(null);
+    }
+    private int readyCount = 0; 
 }

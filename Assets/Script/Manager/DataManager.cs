@@ -32,4 +32,22 @@ public class DataManager : MonoBehaviour {
 	void Update () {
 	
 	}
+    public GameObject createSkillCasterByID( int id)
+    {
+        // FIXME 
+        Object prefab = null;
+        switch ( id )
+        {
+            case 0: //fireball
+                prefab = Resources.Load("Skills/FireBallCaster"); break;
+            case 1: //blizzard
+                prefab = Resources.Load("Skills/BlizzardCaster"); break;
+            case 2: //blizzard
+                prefab = Resources.Load("Skills/ThunderNovaCaster"); break;
+            default:
+                break;
+        }
+        return (GameObject)Instantiate(prefab, Vector3.zero, Quaternion.identity);
+    }
+
 }

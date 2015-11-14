@@ -5,8 +5,8 @@ public class GameManager : MonoBehaviour {
     private static string gameVersion = "0.00001";
     private static GameManager _instance = null;
     private string playerName = null;
-    private int PlayerOrderInRoom = 0;
     private GameObject PlayerCharacter = null;
+    private GameObject[] skillCasters = null;
     protected GameManager() {
         playerName = "username";
     }
@@ -58,9 +58,8 @@ public class GameManager : MonoBehaviour {
     }
     public void onJoinRoom(int order)
     {
-        Instance.PlayerOrderInRoom = order;
-		bool isPlayerCharater = (order == 1);
-        float positionZ = (isPlayerCharater) ? -5 : 5;
+
+        float positionZ = (PhotonNetwork.isMasterClient) ? -5 : 5;
         GameObject newPlayer = NetworkManager.Instance.Instantiate("unitychan",
                                        new Vector3(0, 0, positionZ),
                                        Quaternion.identity,
@@ -88,6 +87,39 @@ public class GameManager : MonoBehaviour {
 				this, "enemyChange", new PlayerChangeEventData(neutral)
 			);
         }
-		
+        SetGameProperties();
+        Ready();
+
     }
+    public void SetGameProperties()
+    {
+        ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable();
+        props.Add("name", playerName);
+        int[] skillIDs = { 0, 1, 2}; // debug: fireball blizzard and thunder nova;
+        //skillCasters = DataManager.Instance.createSkillCastersByIDs( skillIDs );
+        props.Add("skills", skillIDs);
+        NetworkManager.Instance.SetPlayerProperties(props);
+    }
+    public void Ready()
+    {
+        // TODO
+        NetworkManager.Instance.Ready();
+        EventManager.Instance.RegisterListener(NetworkManager.Instance, "playerAllReady", this, OnAllReady) ;
+    }
+    public void OnAllReady(SbiEvent e)
+    {
+        //TODO
+    }
+    public void InstantiateSkillCasters( int[] skillIDs )
+    {
+        // TODO
+        // EventManager.Instance.CastEvent(this, "playerSkillsReady", new PlayerSkillsReadyEventData();
+        skillCasters = new GameObject[skillIDs.Length];
+        foreach ( int i in skillIDs)
+        {
+            skillCasters[i] = DataManager.Instance.createSkillCasterByID(i);
+        }
+        EventManager.Instance.CastEvent(this, "playerSkillsReady", new PlayerSkillsReadyEventData( skillCasters));
+    }
+
 }
