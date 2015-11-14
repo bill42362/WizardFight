@@ -26,7 +26,7 @@ public class FireBallBullet : MonoBehaviour {
 			&& (true == otherFaction.IsRival(faction))
 			&& (false == doneDamage)
 		) {
-			role.TakeDamage(damage);
+			role.TakeDamageRPC(damage);
 			doneDamage = true;
 		}
 	}

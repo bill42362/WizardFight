@@ -4,14 +4,21 @@ public class Role : MonoBehaviour {
 	public double maxHealth = 100;
 	public double speed = 10;
 	private LookAt lookAt;
+	private PhotonView photonView;
 	public void Awake () {
         lookAt = GetComponent<LookAt>();
+        photonView = GetComponent<PhotonView>();
 		EventManager.Instance.RegisterListener(EventManager.Instance, "playerChange", gameObject, OnPlayerChange);
 	}
 	public void OnPlayerChange(SbiEvent e) {
 		PlayerChangeEventData data = e.data as PlayerChangeEventData;
 		lookAt.target = data.player;
 	}
+
+	public void TakeDamageRPC(double d) {
+		photonView.RPC("TakeDamage", PhotonTargets.AllBufferedViaServer, d);	
+	}
+	[PunRPC]
 	public void TakeDamage(double d) {
 		health -= d;
 		if(0 >= health) {

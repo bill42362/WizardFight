@@ -19,7 +19,7 @@ public class Blizzard : MonoBehaviour {
 		if((null != role) && (true == otherFaction.IsRival(faction))) {
 			double timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 			if(damageCycle <= (timestamp - lastDamageTime)) {
-				role.TakeDamage(damage);
+				role.TakeDamageRPC(damage);
 				lastDamageTime = timestamp;
 			}
 		}
