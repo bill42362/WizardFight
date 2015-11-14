@@ -37,4 +37,7 @@ MonoBehaviour:
   - TaggedPlayer
   - moveByLeftOrRight
   - TakeDamage
+  - StartCasting
+  - StopCasting
+  - OnEventTriggered
   DisableAutoOpenWizard: 1
