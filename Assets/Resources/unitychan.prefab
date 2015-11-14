@@ -2098,6 +2098,7 @@ GameObject:
   - 114: {fileID: 11429940}
   - 114: {fileID: 11422476}
   - 114: {fileID: 11413480}
+  - 114: {fileID: 11465396}
   m_Layer: 0
   m_Name: unitychan
   m_TagString: Enemy
@@ -4934,6 +4935,17 @@ MonoBehaviour:
   health: 100
   maxHealth: 100
   speed: 10
+--- !u!114 &11465396
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 176840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abc0aaf808d8545898f2af177963fc8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11473794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4946,7 +4958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PositionModel:
-    SynchronizeEnabled: 0
+    SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 1000
     InterpolateOption: 4
@@ -6215,7 +6227,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_PositionModel.SynchronizeEnabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_PositionModel.TeleportIfDistanceGreaterThan

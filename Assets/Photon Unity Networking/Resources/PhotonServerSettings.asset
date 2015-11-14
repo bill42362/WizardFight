@@ -40,4 +40,5 @@ MonoBehaviour:
   - StartCasting
   - StopCasting
   - OnEventTriggered
+  - RoleRPCMethod
   DisableAutoOpenWizard: 1
