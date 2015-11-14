@@ -16,10 +16,10 @@ public class RoleEventController : MonoBehaviour {
 			EventManager.Instance.RegisterListener(EventManager.Instance, e.Current.Key, gameObject, OnEventTriggered);
 		}
 	}
-	public void OnEventTriggered(string type) {
+	public void OnEventTriggered(SbiEvent e) {
 		float speed = 10;
 		if(null != role) { speed = (float)role.speed; }
-		Vector3 velocity = transform.localToWorldMatrix.MultiplyVector(eventPairs[type]*speed);
+		Vector3 velocity = transform.localToWorldMatrix.MultiplyVector(eventPairs[e.type]*speed);
 		if(null != rigidbody) { rigidbody.velocity = velocity; }
 	}
 }
