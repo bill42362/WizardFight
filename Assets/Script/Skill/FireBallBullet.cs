@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 public class FireBallBullet : MonoBehaviour {
 	public GameObject owner;
 	public double damage = 10;
@@ -28,6 +29,11 @@ public class FireBallBullet : MonoBehaviour {
 		) {
 			role.TakeDamageRPC(damage);
 			doneDamage = true;
+			Destroy(gameObject);
+			GameObject explodeGameObject = Instantiate(
+				Resources.Load("Prefab/Skill/Explosion"),
+				gameObject.transform.position,
+				transform.rotation) as GameObject;
 		}
 	}
 }
