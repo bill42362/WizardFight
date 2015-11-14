@@ -98,13 +98,14 @@ public class GameManager : MonoBehaviour {
         int[] skillIDs = { 0, 1, 2}; // debug: fireball blizzard and thunder nova;
         //skillCasters = DataManager.Instance.createSkillCastersByIDs( skillIDs );
         props.Add("skills", skillIDs);
+        InstantiateSkillCasters(skillIDs);
         NetworkManager.Instance.SetPlayerProperties(props);
     }
     public void Ready()
     {
         // TODO
         NetworkManager.Instance.Ready();
-        EventManager.Instance.RegisterListener(NetworkManager.Instance, "playerAllReady", this, OnAllReady) ;
+        EventManager.Instance.RegisterListener(NetworkManager.Instance, "playerAllReady", this.gameObject, OnAllReady) ;
     }
     public void OnAllReady(SbiEvent e)
     {
@@ -119,7 +120,7 @@ public class GameManager : MonoBehaviour {
         {
             skillCasters[i] = DataManager.Instance.createSkillCasterByID(i);
         }
-        EventManager.Instance.CastEvent(this, "playerSkillsReady", new PlayerSkillsReadyEventData( skillCasters));
+        EventManager.Instance.CastEvent(this, "playerSkillsReady", new PlayerSkillsReadyEventData(skillIDs, skillCasters));
     }
 
 }

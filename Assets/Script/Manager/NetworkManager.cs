@@ -168,10 +168,7 @@ public class NetworkManager : Photon.PunBehaviour {
                     EventManager.Instance.CastEvent( this, "playerAllReady", null);
                 }
             }
-            if (updated.ContainsKey("skills") )
-            {
-                GameManager.Instance.InstantiateSkillCasters((int[])updated["skills"]);
-            }
+
         }
     }
     public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
