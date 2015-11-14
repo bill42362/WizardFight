@@ -21,5 +21,6 @@ public class RoleEventController : MonoBehaviour {
 		if(null != role) { speed = (float)role.speed; }
 		Vector3 velocity = transform.localToWorldMatrix.MultiplyVector(eventPairs[e.type]*speed);
 		if(null != rigidbody) { rigidbody.velocity = velocity; }
+        this.GetComponent<PhotonTransformView>().SetSynchronizedValues(velocity, rigidbody.angularVelocity.magnitude);
 	}
 }
