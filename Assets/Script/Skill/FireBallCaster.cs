@@ -76,10 +76,10 @@ public class FireBallCaster : MonoBehaviour {
         GameObject target = owner.GetComponent<LookAt>().target;
         Quaternion direction = Quaternion.LookRotation(target.transform.position - owner.transform.position);
 
-		FireBallBullet fireBallBullet = NetworkManager.Instance.Instantiate(
-			"Prefab/Skill/FireBallBullet", owner.transform.position, direction, 0
-		).GetComponent<FireBallBullet>();
+		GameObject fireBallBulletGameObject = (GameObject)GameObject.Instantiate(
+			Resources.Load("Prefab/Skill/FireBallBullet"), owner.transform.position, direction
+		);
 
-		fireBallBullet.owner = owner;
+		fireBallBulletGameObject.GetComponent<FireBallBullet>().owner = owner;
 	}
 }
