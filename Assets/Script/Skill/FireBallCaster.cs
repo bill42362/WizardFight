@@ -5,11 +5,13 @@ public class FireBallCaster : MonoBehaviour {
 	public string skillName = "Fire Ball";
 	public GameObject owner;
 
+	private SkillProperties skillProperties;
 	private CoolDownTimer coolDownTimer;
 	private ChantTimer chantTimer;
 	private bool isButtonPressed = false;
 
 	void Awake () {
+		skillProperties = GetComponent<SkillProperties>();
 		coolDownTimer = GetComponent<CoolDownTimer>();
 		chantTimer = GetComponent<ChantTimer>();
 		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonDown", gameObject, OnSkillButtonDown);
@@ -17,6 +19,7 @@ public class FireBallCaster : MonoBehaviour {
 		EventManager.Instance.RegisterListener(EventManager.Instance, "leftButtonPressed", gameObject, OnPlayerMove);
 		EventManager.Instance.RegisterListener(EventManager.Instance, "rightButtonPressed", gameObject, OnPlayerMove);
 		EventManager.Instance.RegisterListener(EventManager.Instance, "playerChange", gameObject, OnPlayerChange);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "casting", gameObject, OnCasting);
 	}
 	
 	void Update () {
@@ -32,7 +35,7 @@ public class FireBallCaster : MonoBehaviour {
 			if(true == chantTimer.GetIsChantingFinished()) {
 				coolDownTimer.StartCoolDown();
 				chantTimer.StopChanting();
-				Cast();
+				CastRPC();
 			}
 		}
 	}
@@ -58,9 +61,16 @@ public class FireBallCaster : MonoBehaviour {
 		owner = data.player;
 		chantTimer.owner = data.player;
 	}
-	private void Cast() {
-        //CastingEventData castingData = new CastingEventData(owner);
-        //EventManager.Instance.CastEvent(EventManager.Instance, "casting", castingData);
+	private void CastRPC() {
+		if(null == gameObject.transform.parent) { return; }
+		SkillHandler handler = gameObject.transform.parent.gameObject.GetComponent<SkillHandler>();
+		handler.CastRPC(skillProperties.skillId);
+	}
+	private void OnCasting(SbiEvent e) {
+		CastingEventData data = (CastingEventData)e.data;
+		if((owner != data.role) || (skillProperties.skillId != data.skillId)) {
+			return;
+		}
         GameObject target = owner.GetComponent<LookAt>().target;
         Quaternion direction = Quaternion.LookRotation(target.transform.position - owner.transform.position);
 

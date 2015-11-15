@@ -2,20 +2,15 @@
 using System.Collections;
 
 public class SkillHandler : Photon.PunBehaviour{
-    Hashtable skillCasterTable = new Hashtable();
+    private GameObject owner;
+    public PhotonView photonView;
+    private Hashtable skillCasterTable = new Hashtable();
     void Awake()
     {
-        EventManager.Instance.RegisterListener(GameManager.Instance, "playerSkillsReady", this.gameObject, OnPlayerSkillsReady);
+		owner = gameObject.transform.parent.gameObject;
+		photonView = GetComponent<PhotonView>();
+        EventManager.Instance.RegisterListener(GameManager.Instance, "playerSkillsReady", gameObject, OnPlayerSkillsReady);
     }
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
     void OnPlayerSkillsReady(SbiEvent e)
     {
         PlayerSkillsReadyEventData data = (PlayerSkillsReadyEventData)e.data;
@@ -28,12 +23,13 @@ public class SkillHandler : Photon.PunBehaviour{
 
     }
 
+    public void CastRPC(int skillID) {
+		photonView.RPC("Cast", PhotonTargets.AllViaServer, skillID);
+	}
+
     [PunRPC]
-    void StartCasting( int skillID) {
-    }
-    [PunRPC]
-    void StopCasting( int skillID )
-    {
-   
+    public void Cast(int skillID) {
+		CastingEventData castingData = new CastingEventData("casting", owner, skillID);
+		EventManager.Instance.CastEvent(EventManager.Instance, "casting", castingData);
     }
 }
