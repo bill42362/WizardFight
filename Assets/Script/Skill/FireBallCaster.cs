@@ -80,6 +80,6 @@ public class FireBallCaster : MonoBehaviour {
 			Resources.Load("Prefab/Skill/FireBallBullet"), owner.transform.position, direction
 		);
 
-		fireBallBulletGameObject.GetComponent<FireBallBullet>().owner = owner;
+		fireBallBulletGameObject.GetComponent<Faction>().SetFaction(owner);
 	}
 }

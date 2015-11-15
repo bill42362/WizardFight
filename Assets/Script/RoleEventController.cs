@@ -16,11 +16,13 @@ public class RoleEventController : MonoBehaviour {
 			EventManager.Instance.RegisterListener(EventManager.Instance, e.Current.Key, gameObject, OnEventTriggered);
 		}
 	}
+	public void Update () {
+        GetComponent<PhotonTransformView>().SetSynchronizedValues(rigidbody.velocity, 0);
+	}
 	public void OnEventTriggered(SbiEvent e) {
 		float speed = 10;
 		if(null != role) { speed = (float)role.speed; }
 		Vector3 velocity = transform.localToWorldMatrix.MultiplyVector(eventPairs[e.type]*speed);
 		if(null != rigidbody) { rigidbody.velocity = velocity; }
-        this.GetComponent<PhotonTransformView>().SetSynchronizedValues(velocity, rigidbody.angularVelocity.magnitude);
 	}
 }
