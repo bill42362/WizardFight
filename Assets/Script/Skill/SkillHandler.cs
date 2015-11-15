@@ -11,16 +11,6 @@ public class SkillHandler : Photon.PunBehaviour{
 		photonView = GetComponent<PhotonView>();
         EventManager.Instance.RegisterListener(GameManager.Instance, "playerSkillsReady", gameObject, OnPlayerSkillsReady);
     }
-	void Start () {
-		int[] skillIds = {0, 1, 2};
-		GameObject[] skillCasters = {
-			(GameObject)Instantiate(Resources.Load("Prefab/Skill/FireBallCaster"), Vector3.zero, Quaternion.identity),
-			(GameObject)Instantiate(Resources.Load("Prefab/Skill/BlizzardCaster"), Vector3.zero, Quaternion.identity),
-			(GameObject)Instantiate(Resources.Load("Prefab/Skill/ThunderNovaCaster"), Vector3.zero, Quaternion.identity)
-		};
-		PlayerSkillsReadyEventData data = new PlayerSkillsReadyEventData(owner, skillIds, skillCasters);
-        EventManager.Instance.CastEvent(GameManager.Instance, "playerSkillsReady", data);
-	}
     public void OnPlayerSkillsReady(SbiEvent e)
     {
         PlayerSkillsReadyEventData data = (PlayerSkillsReadyEventData)e.data;
