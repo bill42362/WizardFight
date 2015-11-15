@@ -15,6 +15,7 @@ public class FireBallCaster : MonoBehaviour {
 		coolDownTimer = GetComponent<CoolDownTimer>();
 		chantTimer = GetComponent<ChantTimer>();
 		owner = GameManager.Instance.GetPlayerCharacter();
+		chantTimer.owner = owner;
 		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonDown", gameObject, OnSkillButtonDown);
 		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonUp", gameObject, OnSkillButtonUp);
 		EventManager.Instance.RegisterListener(EventManager.Instance, "leftButtonPressed", gameObject, OnPlayerMove);

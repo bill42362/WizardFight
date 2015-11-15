@@ -30,11 +30,11 @@ public class DataManager : MonoBehaviour {
         switch ( id )
         {
             case 0: //fireball
-                prefab = Resources.Load("Skills/FireBallCaster"); break;
+                prefab = Resources.Load("Prefab/Skill/FireBallCaster"); break;
             case 1: //blizzard
-                prefab = Resources.Load("Skills/BlizzardCaster"); break;
+                prefab = Resources.Load("Prefab/Skill/BlizzardCaster"); break;
             case 2: //blizzard
-                prefab = Resources.Load("Skills/ThunderNovaCaster"); break;
+                prefab = Resources.Load("Prefab/Skill/ThunderNovaCaster"); break;
             default:
                 break;
         }

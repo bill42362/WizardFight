@@ -10,21 +10,7 @@ public class SkillButton : MonoBehaviour {
 	private RectTransform coolDownIndicatorRectTransform;
 
 	public void Awake () {
-		GameObject playerSkillCasters = GameObject.FindWithTag("PlayerSkillCasters");
-		if(playerSkillCasters.transform.childCount > skillIndex) {
-			skillCaster = playerSkillCasters.transform.GetChild(skillIndex).gameObject;
-			skillProperties = skillCaster.GetComponent<SkillProperties>();
-			coolDownTimer = skillCaster.GetComponent<CoolDownTimer>();
-		}
-		if(null != skillProperties) {
-			GetComponentInChildren<Text>().text = skillProperties.skillName;
-			name = skillProperties.skillName + " Button";
-			GetComponent<Image>().color = skillProperties.buttonColor;
-		}
-		if(null != coolDownTimer) {
-			coolDownTimeText = GetComponentsInChildren<Text>()[1] as Text;
-			coolDownIndicatorRectTransform = (GetComponentsInChildren<Image>()[1] as Image).rectTransform;
-		}
+        EventManager.Instance.RegisterListener(GameManager.Instance, "playerSkillsReady", gameObject, OnPlayerSkillsReady);
 	}
 	public void Update () {
 		if(null != coolDownTimeText) {
@@ -44,6 +30,25 @@ public class SkillButton : MonoBehaviour {
 			}
 		}
 	}
+    public void OnPlayerSkillsReady(SbiEvent e) {
+        PlayerSkillsReadyEventData data = (PlayerSkillsReadyEventData)e.data;
+		if(GameManager.Instance.GetPlayerCharacter() != data.player) { return; }
+		GameObject[] playerSkillCasters = data.skillCasters;
+		if(playerSkillCasters.Length > skillIndex) {
+			skillCaster = playerSkillCasters[skillIndex];
+			skillProperties = skillCaster.GetComponent<SkillProperties>();
+			coolDownTimer = skillCaster.GetComponent<CoolDownTimer>();
+		}
+		if(null != skillProperties) {
+			GetComponentInChildren<Text>().text = skillProperties.skillName;
+			name = skillProperties.skillName + " Button";
+			GetComponent<Image>().color = skillProperties.buttonColor;
+		}
+		if(null != coolDownTimer) {
+			coolDownTimeText = GetComponentsInChildren<Text>()[1] as Text;
+			coolDownIndicatorRectTransform = (GetComponentsInChildren<Image>()[1] as Image).rectTransform;
+		}
+    }
 	public void OnPointerDown() {
 		EventManager.Instance.CastEvent(
 			this, "skillButtonDown", new SkillButtonEventData("down", skillIndex)

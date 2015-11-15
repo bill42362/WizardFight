@@ -8,9 +8,6 @@ public class ChantTimer : MonoBehaviour {
 	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 	private double timeStartChanting = 0;
 
-	void Awake () {
-	}
-
 	public void StartChanting() {
 		timeStartChanting = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 		isChanting = true;
