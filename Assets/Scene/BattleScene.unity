@@ -124,6 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0620018e2f6a4a2f8e95f63e8282530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  castedTypes: []
+  hearingTypes: []
 --- !u!1001 &29445086
 Prefab:
   m_ObjectHideFlags: 0

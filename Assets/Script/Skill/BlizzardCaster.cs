@@ -16,6 +16,7 @@ public class BlizzardCaster : MonoBehaviour {
 		skillProperties = GetComponent<SkillProperties>();
 		coolDownTimer = GetComponent<CoolDownTimer>();
 		guideTimer = GetComponent<GuideTimer>();
+		owner = GameManager.Instance.GetPlayerCharacter();
 		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonDown", gameObject, OnSkillButtonDown);
 		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonUp", gameObject, OnSkillButtonUp);
 		EventManager.Instance.RegisterListener(EventManager.Instance, "leftButtonPressed", gameObject, OnPlayerMove);

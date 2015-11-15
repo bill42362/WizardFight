@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b758abf6bfe6f47f9bd73b390e735420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillId: 1
   skillName: Blizzard
   buttonColor: {r: .20784314, g: .603921592, b: .80392158, a: .501960814}
 --- !u!1001 &100100000
@@ -144,6 +145,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: skillId
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

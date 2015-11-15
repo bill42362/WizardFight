@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b758abf6bfe6f47f9bd73b390e735420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillId: 2
   skillName: Thunder Nova
   buttonColor: {r: .80392158, g: .603921592, b: .20784314, a: .501960814}
 --- !u!114 &11440634
@@ -108,7 +109,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: skillId
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 172294}

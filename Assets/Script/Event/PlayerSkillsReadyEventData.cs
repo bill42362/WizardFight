@@ -2,10 +2,12 @@
 using System.Collections;
 
 public class PlayerSkillsReadyEventData : SbiEventData {
+    public GameObject player;
     public GameObject[] skillCasters;
     public int[] skillIDs;
-    public PlayerSkillsReadyEventData(int[] skillIDs, GameObject[] skillCasters)
+    public PlayerSkillsReadyEventData(GameObject p, int[] skillIDs, GameObject[] skillCasters)
     {
+        player = p;
         this.skillIDs = skillIDs;
         this.skillCasters = skillCasters;
     }

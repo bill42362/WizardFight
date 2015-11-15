@@ -113,14 +113,13 @@ public class GameManager : MonoBehaviour {
     }
     public void InstantiateSkillCasters( int[] skillIDs )
     {
-        // TODO
-        // EventManager.Instance.CastEvent(this, "playerSkillsReady", new PlayerSkillsReadyEventData();
         skillCasters = new GameObject[skillIDs.Length];
         foreach ( int i in skillIDs)
         {
             skillCasters[i] = DataManager.Instance.createSkillCasterByID(i);
         }
-        EventManager.Instance.CastEvent(this, "playerSkillsReady", new PlayerSkillsReadyEventData(skillIDs, skillCasters));
+		PlayerSkillsReadyEventData data = new PlayerSkillsReadyEventData(PlayerCharacter, skillIDs, skillCasters);
+        EventManager.Instance.CastEvent(this, "playerSkillsReady", data);
     }
 
 }
