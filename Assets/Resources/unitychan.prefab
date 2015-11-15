@@ -2099,7 +2099,7 @@ GameObject:
   - 114: {fileID: 11422476}
   - 114: {fileID: 11413480}
   - 114: {fileID: 11465396}
-  - 114: {fileID: 11404030}
+  - 114: {fileID: 11402210}
   m_Layer: 0
   m_Name: unitychan
   m_TagString: Enemy
@@ -4890,7 +4890,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11404030
+--- !u!114 &11402210
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -4948,7 +4948,7 @@ MonoBehaviour:
   ownershipTransfer: 0
   ObservedComponents:
   - {fileID: 11473794}
-  - {fileID: 11404030}
+  - {fileID: 11402210}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -6334,7 +6334,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: ObservedComponents.Array.data[1]
       value: 
-      objectReference: {fileID: 11404030}
+      objectReference: {fileID: 11402210}
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: Enemy
