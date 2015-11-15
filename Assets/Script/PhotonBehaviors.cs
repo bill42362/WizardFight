@@ -15,13 +15,13 @@ public class PhotonBehaviors : Photon.PunBehaviour
     public override void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         base.OnPhotonInstantiate(info);
-
+        GameManager.Instance.SetPlayerCharacter(info.sender.ID, gameObject);
 		isMine = photonView.isMine;
         if ( this.photonView.isMine )
         {
             GameObject me = gameObject;
             me.tag = "Player";
-            GameManager.Instance.SetPlayerCharacter( me );
+            GameManager.Instance.SetPlayerID(info.sender.ID);
         }
         else
         {

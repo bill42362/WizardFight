@@ -166,9 +166,14 @@ public class NetworkManager : Photon.PunBehaviour {
                 if ( readyCount == PhotonNetwork.room.maxPlayers)
                 {
                     EventManager.Instance.CastEvent( this, "playerAllReady", null);
+                    
                 }
             }
-
+            if (updated.ContainsKey("skills") )
+            {
+                int[] skills = (int[])updated["skills"];
+                GameManager.Instance.InstantiateSkillCasters(player.ID, skills);
+            }
         }
     }
     public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
