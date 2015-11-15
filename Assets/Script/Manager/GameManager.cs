@@ -5,9 +5,9 @@ public class GameManager : MonoBehaviour {
     private static string gameVersion = "0.00001";
     private static GameManager _instance = null;
     private string playerName = null;
-    private Hashtable Characters = new Hashtable();
-    private int PlayerID = -1;
-    private GameObject[] skillCasters = null;
+    private Hashtable characters = new Hashtable();
+    private int playerID = -1;
+    private Hashtable skillIDs = new Hashtable();
     protected GameManager() {
         playerName = "username";
     }
@@ -31,21 +31,21 @@ public class GameManager : MonoBehaviour {
 
     public void SetPlayerCharacter(int ID, GameObject me)
     {
-        Characters[ID] = me;
+        characters[ID] = me;
     }
     public void SetPlayerID(int ID)
     {
-        PlayerID = ID;
+        playerID = ID;
     }
     public int GetPlayerID()
     {
-        return PlayerID;
+        return playerID;
     }
     public GameObject GetPlayerCharacter(int ID = -1)
     {
         if (ID == -1)
-            ID = PlayerID;
-        return (GameObject)Characters[ID];
+            ID = playerID;
+        return (GameObject)characters[ID];
     }
 
     // Use this for initialization
@@ -120,16 +120,25 @@ public class GameManager : MonoBehaviour {
     public void OnAllReady(SbiEvent e)
     {
         //TODO
+        InstantiateSkillCasters();
     }
-    public void InstantiateSkillCasters( int ID, int[] skillIDs )
+    public void InstantiateSkillCasters( )
     {
-        skillCasters = new GameObject[skillIDs.Length];
-        foreach ( int i in skillIDs)
+        foreach( int pID in skillIDs)
         {
-            skillCasters[i] = DataManager.Instance.createSkillCasterByID(i);
+            int[] characterSkills = (int[])skillIDs[pID];
+            GameObject[] skillCaster = new GameObject[characterSkills.Length];
+            foreach (int sID in characterSkills)
+            {
+                skillCaster[sID] = DataManager.Instance.createSkillCasterByID(sID);
+            }
+            PlayerSkillsReadyEventData data = new PlayerSkillsReadyEventData(GetPlayerCharacter(pID), characterSkills, skillCaster);
+            EventManager.Instance.CastEvent(this, "playerSkillsReady", data);
         }
-		PlayerSkillsReadyEventData data = new PlayerSkillsReadyEventData( GetPlayerCharacter(ID), skillIDs, skillCasters);
-        EventManager.Instance.CastEvent(this, "playerSkillsReady", data);
+		
     }
-
+    public void SetSkillIDs(int ID, int[] skillIDs)
+    {
+        this.skillIDs[ID] = skillIDs;
+    }
 }

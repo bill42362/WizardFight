@@ -172,7 +172,7 @@ public class NetworkManager : Photon.PunBehaviour {
             if (updated.ContainsKey("skills") )
             {
                 int[] skills = (int[])updated["skills"];
-                GameManager.Instance.InstantiateSkillCasters(player.ID, skills);
+                GameManager.Instance.SetSkillIDs(player.ID, skills);
             }
         }
     }
