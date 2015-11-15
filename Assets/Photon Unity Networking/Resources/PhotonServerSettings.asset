@@ -43,4 +43,6 @@ MonoBehaviour:
   - RoleRPCMethod
   - SendRoleRPC
   - Cast
+  - StartGuiding
+  - StopGuiding
   DisableAutoOpenWizard: 1

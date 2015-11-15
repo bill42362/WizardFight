@@ -28,7 +28,7 @@ public class RoleGuidingBar : MonoBehaviour {
 
 	public void OnStartGuiding(SbiEvent e) {
 		GuidingEventData data = e.data as GuidingEventData;
-		if(role == data.role) {
+		if((role == data.role) && (null != data.guideTimer)) {
 			guideTimer = data.guideTimer;
 			SkillProperties sp = guideTimer.gameObject.GetComponent<SkillProperties>();
 			fillImage.color = sp.buttonColor;
@@ -38,7 +38,7 @@ public class RoleGuidingBar : MonoBehaviour {
 	}
 	public void OnStopGuiding(SbiEvent e) {
 		GuidingEventData data = e.data as GuidingEventData;
-		if(role == data.role) {
+		if((role == data.role) && (null != data.guideTimer)) {
 			guideTimer = null;
 			gameObject.SetActive(false);
 		}

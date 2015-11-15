@@ -26,10 +26,26 @@ public class SkillHandler : Photon.PunBehaviour{
     public void CastRPC(int skillID) {
 		photonView.RPC("Cast", PhotonTargets.AllViaServer, skillID);
 	}
+    public void StartGuidingRPC(int skillID) {
+		photonView.RPC("StartGuiding", PhotonTargets.AllViaServer, skillID);
+	}
+    public void StopGuidingRPC(int skillID) {
+		photonView.RPC("StopGuiding", PhotonTargets.AllViaServer, skillID);
+	}
 
     [PunRPC]
     public void Cast(int skillID) {
 		CastingEventData castingData = new CastingEventData("casting", owner, skillID);
 		EventManager.Instance.CastEvent(EventManager.Instance, "casting", castingData);
+    }
+    [PunRPC]
+    public void StartGuiding(int skillID) {
+		GuidingEventData guideData = new GuidingEventData("startGuiding", owner, skillID);
+		EventManager.Instance.CastEvent(EventManager.Instance, "startGuiding", guideData);
+    }
+    [PunRPC]
+    public void StopGuiding(int skillID) {
+		GuidingEventData guideData = new GuidingEventData("stopGuiding", owner, skillID);
+		EventManager.Instance.CastEvent(EventManager.Instance, "stopGuiding", guideData);
     }
 }
