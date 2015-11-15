@@ -40,12 +40,28 @@ public class SkillHandler : Photon.PunBehaviour{
     }
     [PunRPC]
     public void StartGuiding(int skillID) {
-		GuidingEventData guideData = new GuidingEventData("startGuiding", owner, skillID);
-		EventManager.Instance.CastEvent(EventManager.Instance, "startGuiding", guideData);
+		GuideTimer guideTimer = null;
+		foreach(SkillProperties p in GetComponentsInChildren<SkillProperties>()) {
+			if(skillID == p.skillId) {
+				guideTimer = p.gameObject.GetComponent<GuideTimer>();
+			}
+		}
+		if(null != guideTimer) {
+			GuidingEventData guideData = new GuidingEventData("startGuiding", owner, guideTimer, skillID);
+			EventManager.Instance.CastEvent(EventManager.Instance, "startGuiding", guideData);
+		}
     }
     [PunRPC]
     public void StopGuiding(int skillID) {
-		GuidingEventData guideData = new GuidingEventData("stopGuiding", owner, skillID);
-		EventManager.Instance.CastEvent(EventManager.Instance, "stopGuiding", guideData);
+		GuideTimer guideTimer = null;
+		foreach(SkillProperties p in GetComponentsInChildren<SkillProperties>()) {
+			if(skillID == p.skillId) {
+				guideTimer = p.gameObject.GetComponent<GuideTimer>();
+			}
+		}
+		if(null != guideTimer) {
+			GuidingEventData guideData = new GuidingEventData("stopGuiding", owner, guideTimer, skillID);
+			EventManager.Instance.CastEvent(EventManager.Instance, "stopGuiding", guideData);
+		}
     }
 }

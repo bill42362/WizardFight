@@ -10,9 +10,10 @@ public class GuidingEventData : SbiEventData {
 		role = r;
 		guideTimer = c;
 	}
-	public GuidingEventData(string t, GameObject r, int id) {
+	public GuidingEventData(string t, GameObject r, GuideTimer g, int id) {
 		type = t;
 		role = r;
+		guideTimer = g;
 		skillId = id;
 	}
 }
