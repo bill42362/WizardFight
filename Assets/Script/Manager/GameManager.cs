@@ -114,28 +114,41 @@ public class GameManager : MonoBehaviour {
     public void Ready()
     {
         // TODO
-        NetworkManager.Instance.Ready();
         EventManager.Instance.RegisterListener(NetworkManager.Instance, "playerAllReady", this.gameObject, OnAllReady) ;
+        NetworkManager.Instance.Ready();
+        InstantiatePlayerSkillCaster();
     }
     public void OnAllReady(SbiEvent e)
     {
         //TODO
-        InstantiateSkillCasters();
+        InstantiateOtherSkillCaster();
     }
-    public void InstantiateSkillCasters( )
+    public void InstantiatePlayerSkillCaster( )
     {
-        foreach( int pID in skillIDs)
+        InstantiateSkillCasters(playerID);
+
+    }
+    public void InstantiateOtherSkillCaster()
+    {
+        foreach( int pID in skillIDs.Keys )
         {
-            int[] characterSkills = (int[])skillIDs[pID];
-            GameObject[] skillCaster = new GameObject[characterSkills.Length];
-            foreach (int sID in characterSkills)
-            {
-                skillCaster[sID] = DataManager.Instance.createSkillCasterByID(sID);
-            }
-            PlayerSkillsReadyEventData data = new PlayerSkillsReadyEventData(GetPlayerCharacter(pID), characterSkills, skillCaster);
-            EventManager.Instance.CastEvent(this, "playerSkillsReady", data);
+            if (pID == playerID)
+                continue;
+            InstantiateSkillCasters(pID);
         }
-		
+
+
+    }
+    public void InstantiateSkillCasters(int pID)
+    {
+        int[] characterSkills = (int[])skillIDs[pID];
+        GameObject[] skillCaster = new GameObject[characterSkills.Length];
+        foreach (int sID in characterSkills)
+        {
+            skillCaster[sID] = DataManager.Instance.createSkillCasterByID(sID);
+        }
+        PlayerSkillsReadyEventData data = new PlayerSkillsReadyEventData(GetPlayerCharacter(pID), characterSkills, skillCaster);
+        EventManager.Instance.CastEvent(this, "playerSkillsReady", data);
     }
     public void SetSkillIDs(int ID, int[] skillIDs)
     {
