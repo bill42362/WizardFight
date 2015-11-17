@@ -86,9 +86,15 @@ public class NetworkManager : Photon.PunBehaviour {
         }
     }
 
-    public GameObject Instantiate(string v1, Vector3 vector3, Quaternion identity, int v2, bool isNeutral = false)
-    {
-        GameObject obj = PhotonNetwork.Instantiate(v1, vector3, identity, v2);
+    public GameObject Instantiate(
+		string prefabString,
+		Vector3 position, Quaternion rotation,
+		int group, object[] instantiationData,
+		bool isNeutral = false
+	) {
+        GameObject obj = PhotonNetwork.Instantiate(
+			prefabString, position, rotation, group, instantiationData
+		);
         if (isNeutral)
         {
             obj.GetComponent<Faction>().SetNeutral();

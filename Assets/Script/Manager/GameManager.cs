@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
     private static GameManager _instance = null;
     private Hashtable characters = new Hashtable();
     private Hashtable characterSkillIDs = new Hashtable();
+	private GameObject mainCamera = null;
     protected GameManager() { }
     public static GameManager Instance {
         get {
@@ -34,15 +35,16 @@ public class GameManager : MonoBehaviour {
     }
     public string GetPlayerName() { return Instance.playerName; }
     public string GetGameVersion() { return gameVersion; }
-    public void OnLeftRoom() { GameObject.FindWithTag("MainCamera").transform.parent = null; }
+    public void OnLeftRoom() { mainCamera.SetActive(true); }
     public void onJoinRoom(int playerId) {
 		this.playerID = playerId;
         SetGameProperties();
         float positionZ = (PhotonNetwork.isMasterClient) ? -5 : 5;
         GameObject newPlayer = NetworkManager.Instance.Instantiate(
-			"unitychan", new Vector3(0, 0, positionZ), Quaternion.identity, 0
+			"unitychan", new Vector3(0, 0, positionZ), Quaternion.identity, 0, null
 		);
 		newPlayer.name = "Player";
+		newPlayer.tag = "Player";
 		newPlayer.GetComponent<Role>().playerId = playerId;
 		newPlayer.AddComponent<RoleEventController>();
 		newPlayer.AddComponent<LabelLookAtTarget>();
@@ -50,18 +52,23 @@ public class GameManager : MonoBehaviour {
 			this, "playerChange", new PlayerChangeEventData(newPlayer)
 		);
 
-		GameObject camera = GameObject.FindWithTag("MainCamera");
-		camera.transform.parent = newPlayer.transform;
-		camera.transform.localPosition = new Vector3(0, 5, -5);
-		camera.transform.eulerAngles = new Vector3(30, 0, 0);
+		Camera camera = newPlayer.GetComponentsInChildren<Camera>(true)[0];
+		camera.gameObject.SetActive(true);
+		mainCamera = GameObject.FindWithTag("MainCamera");
+		mainCamera.SetActive(false);
 
         if(NetworkManager.Instance.isOffline) {
+			Hashtable instHashtable = new Hashtable();
+			instHashtable["isNeutral"] = true;
+			object[] instantiationData = new object[] {(Hashtable)instHashtable};
             GameObject neutral = NetworkManager.Instance.Instantiate(
-				"unitychan", new Vector3(0, 0, 5), Quaternion.identity, 0, true
+				"unitychan", new Vector3(0, 0, 5), Quaternion.identity, 0, instantiationData, true
 			);
 			neutral.name = "NeutralRole";
+			neutral.GetComponent<Role>().playerId = 2;
 			neutral.GetComponent<LookAt>().target = newPlayer;
 			newPlayer.GetComponent<LookAt>().target = neutral;
+			SetCharacterSkillIDs(2, new int[] {0, 1, 2});
             EventManager.Instance.CastEvent(
 				this, "enemyChange", new PlayerChangeEventData(neutral)
 			);
