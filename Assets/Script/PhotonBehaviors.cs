@@ -7,8 +7,8 @@ public class PhotonBehaviors : Photon.PunBehaviour
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
-        if ( photonView.isMine )
-        {
+        if ( photonView.isMine ) {
+			GameManager.Instance.OnLeftRoom();
             Destroy(gameObject);
         }
     }
@@ -17,14 +17,10 @@ public class PhotonBehaviors : Photon.PunBehaviour
         base.OnPhotonInstantiate(info);
         GameManager.Instance.SetPlayerCharacter(info.sender.ID, gameObject);
 		isMine = photonView.isMine;
-        if ( this.photonView.isMine )
-        {
-            GameObject me = gameObject;
-            me.tag = "Player";
+        if ( isMine ) {
+            gameObject.tag = "Player";
             GameManager.Instance.SetPlayerID(info.sender.ID);
-        }
-        else
-        {
+        } else {
             GameManager.Instance
                        .GetPlayerCharacter()
                        .GetComponent<LookAt>()

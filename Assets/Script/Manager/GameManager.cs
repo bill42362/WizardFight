@@ -67,6 +67,9 @@ public class GameManager : MonoBehaviour {
     {
         return gameVersion;
     }
+    public void OnLeftRoom() {
+		GameObject.FindWithTag("MainCamera").transform.parent = null;
+	}
     public void onJoinRoom(int order)
     {
 
