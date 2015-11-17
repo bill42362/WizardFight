@@ -9,6 +9,7 @@ public class NetworkManager : Photon.PunBehaviour {
             return PhotonNetwork.offlineMode;
         }
     }
+    private int readyCount = 0; 
     private static NetworkManager _instance = null;
     protected NetworkManager() {
         PhotonNetwork.offlineMode = true;
@@ -107,7 +108,7 @@ public class NetworkManager : Photon.PunBehaviour {
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        GameManager.Instance.onJoinRoom(PhotonNetwork.player.ID);
+        GameManager.Instance.onJoinRoom(PhotonNetwork.playerList.Length);
 		EventManager.Instance.CastEvent(this, "joinedRoom", null);
         Debug.Log("OnJoinedRoom");
     }
@@ -142,44 +143,19 @@ public class NetworkManager : Photon.PunBehaviour {
         base.OnPhotonPlayerConnected(newPlayer);
         //Debug.Log("OnPhotonPlayerConnected: " + newPlayer.name );
     }
-    public void Ready()
-    {
-        ExitGames.Client.Photon.Hashtable readyProperties = new ExitGames.Client.Photon.Hashtable();
-        readyProperties["ready"] = true;
-        PhotonNetwork.player.SetCustomProperties(readyProperties);
-    }
-    public override void OnPhotonPlayerPropertiesChanged(object[] playerAndUpdatedProps)
-    {
+    public override void OnPhotonPlayerPropertiesChanged(object[] playerAndUpdatedProps) {
         base.OnPhotonPlayerPropertiesChanged(playerAndUpdatedProps);
-        PhotonPlayer player = null;
-        for ( int i = 0; i < playerAndUpdatedProps.Length; i ++)
-        {
-            if ( i % 2 == 0 )
-            {
-                player = (PhotonPlayer)playerAndUpdatedProps[i];
-                continue;
-            }
-            ExitGames.Client.Photon.Hashtable updated = (ExitGames.Client.Photon.Hashtable)playerAndUpdatedProps[i];
-            if ( updated.ContainsKey("ready") && (bool) updated["ready"] )
-            {
-                readyCount += 1;
-                if ( readyCount == PhotonNetwork.room.maxPlayers)
-                {
-                    EventManager.Instance.CastEvent( this, "playerAllReady", null);
-                    
-                }
-            }
-            if (updated.ContainsKey("skills") )
-            {
-                int[] skills = (int[])updated["skills"];
-                GameManager.Instance.SetSkillIDs(player.ID, skills);
-            }
-        }
+		PhotonPlayer player = (PhotonPlayer)playerAndUpdatedProps[0];
+		ExitGames.Client.Photon.Hashtable updatedProps
+			= (ExitGames.Client.Photon.Hashtable)playerAndUpdatedProps[1];
+		if(updatedProps.ContainsKey("skillIds")) {
+			int[] skillIds = (int[])updatedProps["skillIds"];
+			GameManager.Instance.SetCharacterSkillIDs(player.ID, skillIds);
+		}
     }
     public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
     {
         base.OnPhotonPlayerDisconnected(otherPlayer);
         LeaveRoom(null);
     }
-    private int readyCount = 0; 
 }

@@ -2,27 +2,19 @@
 using System.Collections;
 
 public class SkillHandler : Photon.PunBehaviour{
-    private GameObject owner;
     public PhotonView photonView;
+    private GameObject owner;
     private Hashtable skillCasterTable = new Hashtable();
-    void Awake ()
-    {
+    void Awake () {
 		owner = gameObject.transform.parent.gameObject;
 		photonView = GetComponent<PhotonView>();
-        EventManager.Instance.RegisterListener(GameManager.Instance, "playerSkillsReady", gameObject, OnPlayerSkillsReady);
     }
-    public void OnPlayerSkillsReady(SbiEvent e)
-    {
-        PlayerSkillsReadyEventData data = (PlayerSkillsReadyEventData)e.data;
-		if(owner != data.player) { return; }
-        for ( int i = 0; i < data.skillIDs.Length; i++ )
-        {
-            GameObject obj = data.skillCasters[i];
-            skillCasterTable[i] = obj;
-            obj.transform.parent = this.gameObject.transform;
-        }
-
-    }
+	void Start () {
+		int playerId = owner.GetComponent<Role>().playerId;
+		foreach(GameObject caster in GameManager.Instance.GetCharacterSkillCastersById(playerId)) {
+			caster.transform.parent = transform;
+		}
+	}
 
     public void CastRPC(int skillID) {
 		photonView.RPC("Cast", PhotonTargets.AllViaServer, skillID);
