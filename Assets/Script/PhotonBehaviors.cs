@@ -37,6 +37,7 @@ public class PhotonBehaviors : Photon.PunBehaviour
             GetComponent<LookAt>().target = player;
 			int playerId = (GameManager.Instance.GetPlayerID() == 1) ? 2 : 1;
 			GetComponent<Role>().playerId = playerId;
+			GetComponent<Faction>().SetFaction(playerId);
 			GameManager.Instance.SetPlayerCharacter(playerId, gameObject);
             EventManager.Instance.CastEvent(
 				this, "enemyChange", new PlayerChangeEventData(gameObject)

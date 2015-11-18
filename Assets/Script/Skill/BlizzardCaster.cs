@@ -96,6 +96,7 @@ public class BlizzardCaster : MonoBehaviour {
 			GameObject blizzardGameObject = Instantiate(
 				Resources.Load("Prefab/Skill/Blizzard"), targetPosition, transform.rotation
 			) as GameObject;
+			blizzardGameObject.GetComponent<Faction>().SetFaction(Owner.GetComponent<Faction>());
 			blizzard = blizzardGameObject.GetComponent<Blizzard>();
 			blizzard.owner = Owner;
 		} else {

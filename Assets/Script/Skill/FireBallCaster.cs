@@ -75,18 +75,13 @@ public class FireBallCaster : MonoBehaviour {
 	}
 	private void OnCasting(SbiEvent e) {
 		CastingEventData data = (CastingEventData)e.data;
-		if((Owner != data.role) || (skillProperties.skillId != data.skillId)) {
-			return;
-		}
+		if((Owner != data.role) || (skillProperties.skillId != data.skillId)) { return; }
+
         GameObject target = Owner.GetComponent<LookAt>().target;
         Quaternion direction = Quaternion.LookRotation(target.transform.position - Owner.transform.position);
-
 		GameObject fireBallBulletGameObject = (GameObject)GameObject.Instantiate(
 			Resources.Load("Prefab/Skill/FireBallBullet"), Owner.transform.position, direction
 		);
-
-		fireBallBulletGameObject.GetComponent<Faction>().SetFaction(
-			Owner.GetComponent<Faction>().GetFaction()
-		);
+		fireBallBulletGameObject.GetComponent<Faction>().SetFaction(Owner.GetComponent<Faction>());
 	}
 }

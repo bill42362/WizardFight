@@ -3,23 +3,19 @@ using System.Collections;
 
 public class Faction : Photon.PunBehaviour {
 
-    public int owner = -1; // -1 == unset , 0 == neutral;
-    // Use this for initialization
+    public int ownerId = -1; // -1 == unset , 0 == neutral;
     void Start () {
-        if (owner == -1)
+        if (ownerId == -1)
             SetNeutral();
     }
-	// Update is called once per frame
-	void Update () {
-	}
     public void SetNeutral()
     {
-        owner = 0;
+        ownerId = 0;
     }
     public override void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         base.OnPhotonInstantiate(info);
-        if ( owner == -1 && !NetworkManager.Instance.isOffline )
+        if ( ownerId == -1 && !NetworkManager.Instance.isOffline )
         {
             SetFaction(info.sender.ID);
         }
@@ -27,14 +23,15 @@ public class Faction : Photon.PunBehaviour {
     
     public bool IsRival(Faction faction)
     {
-        return ( faction == null || owner != faction.owner );
+		return ( faction == null || ownerId != faction.ownerId );
     }
     public int GetFaction()
     {
-        return owner;
+        return ownerId;
     }
     public void SetFaction( int ownerid )
     {
-        this.owner = ownerid;
+        this.ownerId = ownerid;
     }
+    public void SetFaction(Faction ownerFaction) { ownerId = ownerFaction.ownerId; }
 }
