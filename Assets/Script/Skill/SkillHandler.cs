@@ -17,6 +17,7 @@ public class SkillHandler : Photon.PunBehaviour{
 	}
 
     public void CastRPC(int skillID) {
+		print("SkillHandler.CastRPC() owner: " + owner.ToString());
 		photonView.RPC("Cast", PhotonTargets.AllViaServer, skillID);
 	}
     public void StartGuidingRPC(int skillID) {
@@ -28,6 +29,7 @@ public class SkillHandler : Photon.PunBehaviour{
 
     [PunRPC]
     public void Cast(int skillID) {
+		print("SkillHandler.Cast() owner: " + owner.ToString());
 		CastingEventData castingData = new CastingEventData("casting", owner, skillID);
 		EventManager.Instance.CastEvent(EventManager.Instance, "casting", castingData);
     }

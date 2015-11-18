@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour {
         GameObject newPlayer = NetworkManager.Instance.Instantiate(
 			"unitychan", new Vector3(0, 0, positionZ), Quaternion.identity, 0, null
 		);
+		SetPlayerCharacter(playerId, newPlayer);
 		newPlayer.name = "Player";
 		newPlayer.tag = "Player";
 		newPlayer.GetComponent<Role>().playerId = playerId;

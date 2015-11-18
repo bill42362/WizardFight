@@ -15,7 +15,6 @@ public class PhotonBehaviors : Photon.PunBehaviour
     public override void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         base.OnPhotonInstantiate(info);
-        GameManager.Instance.SetPlayerCharacter(info.sender.ID, gameObject);
 		isMine = photonView.isMine;
         if (isMine && !NetworkManager.Instance.isOffline) {
 			// On line player.
@@ -25,15 +24,20 @@ public class PhotonBehaviors : Photon.PunBehaviour
 				Hashtable instHashtable = (Hashtable)instantiationData[0];
 				if(instHashtable.ContainsKey("isNeutral") && ((bool)instHashtable["isNeutral"] == true)) {
 					// Offline neutral.
+					GameManager.Instance.SetPlayerCharacter(2, gameObject);
 				}
 			} else {
 				// Offline player.
+				GameManager.Instance.SetPlayerCharacter(1, gameObject);
 			}
         } else {
 			// On line enemy.
-            GameManager.Instance.GetPlayerCharacter().GetComponent<LookAt>().target = gameObject;
+			GameObject player = GameManager.Instance.GetPlayerCharacter();
+            player.GetComponent<LookAt>().target = gameObject;
+            GetComponent<LookAt>().target = player;
 			int playerId = (GameManager.Instance.GetPlayerID() == 1) ? 2 : 1;
 			GetComponent<Role>().playerId = playerId;
+			GameManager.Instance.SetPlayerCharacter(playerId, gameObject);
             EventManager.Instance.CastEvent(
 				this, "enemyChange", new PlayerChangeEventData(gameObject)
 			);
