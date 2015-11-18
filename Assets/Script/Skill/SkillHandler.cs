@@ -11,9 +11,11 @@ public class SkillHandler : Photon.PunBehaviour{
     }
 	void Start () {
 		int playerId = owner.GetComponent<Role>().playerId;
-		foreach(GameObject caster in GameManager.Instance.GetCharacterSkillCastersById(playerId)) {
-			caster.transform.parent = transform;
-		}
+		GameObject[] skillCasters = GameManager.Instance.GetCharacterSkillCastersById(playerId);
+		foreach(GameObject caster in skillCasters) { caster.transform.parent = transform; }
+
+		PlayerSkillsReadyEventData data = new PlayerSkillsReadyEventData(owner, skillCasters);
+		EventManager.Instance.CastEvent(this, "playerSkillsReady", data);
 	}
 
     public void CastRPC(int skillID) {

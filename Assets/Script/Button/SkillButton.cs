@@ -10,7 +10,7 @@ public class SkillButton : MonoBehaviour {
 	private RectTransform coolDownIndicatorRectTransform;
 
 	public void Awake () {
-        EventManager.Instance.RegisterListener(GameManager.Instance, "playerSkillsReady", gameObject, OnPlayerSkillsReady);
+        EventManager.Instance.RegisterListener(EventManager.Instance, "playerSkillsReady", gameObject, OnPlayerSkillsReady);
 	}
 	public void Update () {
 		if(null != coolDownTimeText) {
