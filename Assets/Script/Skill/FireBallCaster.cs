@@ -6,12 +6,11 @@ public class FireBallCaster : MonoBehaviour {
 	public GameObject owner;
 	public GameObject Owner {
 		get {
-			if((null == owner) && (null != transform.parent) && (null != transform.parent.parent)) {
+			if(!owner && transform.parent && transform.parent.parent) {
 				owner = transform.parent.parent.gameObject;
 			}
 			return owner;
 		}
-		set { owner = value; }
 	}
 
 	private SkillProperties skillProperties;
@@ -23,14 +22,16 @@ public class FireBallCaster : MonoBehaviour {
 		skillProperties = GetComponent<SkillProperties>();
 		coolDownTimer = GetComponent<CoolDownTimer>();
 		chantTimer = GetComponent<ChantTimer>();
-		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonDown", gameObject, OnSkillButtonDown);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonUp", gameObject, OnSkillButtonUp);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "leftButtonPressed", gameObject, OnPlayerMove);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "rightButtonPressed", gameObject, OnPlayerMove);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "casting", gameObject, OnCasting);
+		EventManager eventManager = EventManager.Instance;
+		eventManager.RegisterListener(eventManager, "skillButtonDown", gameObject, OnSkillButtonDown);
+		eventManager.RegisterListener(eventManager, "skillButtonUp", gameObject, OnSkillButtonUp);
+		eventManager.RegisterListener(eventManager, "leftButtonPressed", gameObject, OnPlayerMove);
+		eventManager.RegisterListener(eventManager, "rightButtonPressed", gameObject, OnPlayerMove);
+		eventManager.RegisterListener(eventManager, "casting", gameObject, OnCasting);
 	}
 	
 	void Update () {
+		if(GameManager.Instance.GetPlayerCharacter() != owner) { return; }
 		if(false == isButtonPressed) {	
 			if(true == chantTimer.isChanting) { chantTimer.StopChanting(); }
 			return;

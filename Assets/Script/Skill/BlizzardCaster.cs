@@ -4,7 +4,14 @@ public class BlizzardCaster : MonoBehaviour {
 	public int skillIndex = 1;
 	public string skillName = "Blizzard";
 	public GameObject owner;
-	public GameObject enemy;
+	public GameObject Owner {
+		get {
+			if(!owner && transform.parent && transform.parent.parent) {
+				owner = transform.parent.parent.gameObject;
+			}
+			return owner;
+		}
+	}
 
 	private SkillProperties skillProperties;
 	private bool isButtonPressed = false;
@@ -16,17 +23,16 @@ public class BlizzardCaster : MonoBehaviour {
 		skillProperties = GetComponent<SkillProperties>();
 		coolDownTimer = GetComponent<CoolDownTimer>();
 		guideTimer = GetComponent<GuideTimer>();
-		owner = GameManager.Instance.GetPlayerCharacter();
-		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonDown", gameObject, OnSkillButtonDown);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "skillButtonUp", gameObject, OnSkillButtonUp);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "leftButtonPressed", gameObject, OnPlayerMove);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "rightButtonPressed", gameObject, OnPlayerMove);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "playerChange", gameObject, OnPlayerChange);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "enemyChange", gameObject, OnEnemyChange);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "startGuiding", gameObject, OnStartGuiding);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "stopGuiding", gameObject, OnStopGuiding);
+		EventManager eventManager = EventManager.Instance;
+		eventManager.RegisterListener(eventManager, "skillButtonDown", gameObject, OnSkillButtonDown);
+		eventManager.RegisterListener(eventManager, "skillButtonUp", gameObject, OnSkillButtonUp);
+		eventManager.RegisterListener(eventManager, "leftButtonPressed", gameObject, OnPlayerMove);
+		eventManager.RegisterListener(eventManager, "rightButtonPressed", gameObject, OnPlayerMove);
+		eventManager.RegisterListener(eventManager, "startGuiding", gameObject, OnStartGuiding);
+		eventManager.RegisterListener(eventManager, "stopGuiding", gameObject, OnStopGuiding);
 	}
 	public void Update () {
+		if(GameManager.Instance.GetPlayerCharacter() != owner) { return; }
 		if(false == isButtonPressed) {	
 			if(true == guideTimer.isGuiding) {
 				StopGuidingRPC();
@@ -45,6 +51,7 @@ public class BlizzardCaster : MonoBehaviour {
 		}
 	}
 	public void OnSkillButtonDown(SbiEvent e) {
+		if(GameManager.Instance.GetPlayerCharacter() != Owner) { return; }
 		SkillButtonEventData data = e.data as SkillButtonEventData;
 		if(skillIndex != data.index) {
 			if(true == guideTimer.isGuiding) { StopGuidingRPC(); }
@@ -53,51 +60,44 @@ public class BlizzardCaster : MonoBehaviour {
 		isButtonPressed = true;
 	}
 	public void OnSkillButtonUp(SbiEvent e) {
+		if(GameManager.Instance.GetPlayerCharacter() != Owner) { return; }
 		SkillButtonEventData data = e.data as SkillButtonEventData;
 		if(skillIndex != data.index) return;
 		isButtonPressed = false;
 	}
 	public void OnPlayerMove(SbiEvent e) {
+		if(GameManager.Instance.GetPlayerCharacter() != Owner) { return; }
 		isButtonPressed = false;
 		StopGuidingRPC();
-	}
-	public void OnPlayerChange(SbiEvent e) {
-		PlayerChangeEventData data = e.data as PlayerChangeEventData;
-		owner = data.player;
-		guideTimer.owner = data.player;
-		if(null != blizzard) { blizzard.owner = data.player; }
-	}
-	public void OnEnemyChange(SbiEvent e) {
-		PlayerChangeEventData data = e.data as PlayerChangeEventData;
-		enemy = data.player;
 	}
 	private void StartGuidingRPC() {
 		if(null == gameObject.transform.parent) { return; }
 		SkillHandler handler = gameObject.transform.parent.gameObject.GetComponent<SkillHandler>();
-		handler.StartGuiding(skillProperties.skillId);
+		handler.StartGuidingRPC(skillProperties.skillId);
 	}
 	private void StopGuidingRPC() {
 		if(null == gameObject.transform.parent) { return; }
+		guideTimer.StopGuiding();
 		SkillHandler handler = gameObject.transform.parent.gameObject.GetComponent<SkillHandler>();
 		handler.StopGuidingRPC(skillProperties.skillId);
 	}
 	private void OnStartGuiding(SbiEvent e) {
 		GuidingEventData data = (GuidingEventData)e.data;
-		if((owner != data.role) || (skillProperties.skillId != data.skillId)) {
+		if((Owner != data.role) || (skillProperties.skillId != data.skillId)) {
 			return;
 		}
 		guideTimer.StartGuiding();
 
+        GameObject target = Owner.GetComponent<LookAt>().target;
 		Vector3 targetPosition = transform.position;
-		if(null != owner) { targetPosition = owner.transform.position; }
-		if(null != enemy) { targetPosition = enemy.transform.position; }
+		if(null != target) { targetPosition = target.transform.position; }
 
 		if(null == blizzard) {
 			GameObject blizzardGameObject = Instantiate(
 				Resources.Load("Prefab/Skill/Blizzard"), targetPosition, transform.rotation
 			) as GameObject;
 			blizzard = blizzardGameObject.GetComponent<Blizzard>();
-			blizzard.owner = owner;
+			blizzard.owner = Owner;
 		} else {
 			blizzard.transform.position = targetPosition;
 		}
@@ -105,7 +105,7 @@ public class BlizzardCaster : MonoBehaviour {
 	}
 	private void OnStopGuiding(SbiEvent e) {
 		GuidingEventData data = (GuidingEventData)e.data;
-		if((owner != data.role) || (skillProperties.skillId != data.skillId)) {
+		if((Owner != data.role) || (skillProperties.skillId != data.skillId)) {
 			return;
 		}
 		guideTimer.StopGuiding();
