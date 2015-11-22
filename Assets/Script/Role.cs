@@ -17,7 +17,7 @@ public class Role : MonoBehaviour {
 	}
 
 	public void TakeDamageRPC(double d) {
-		if(GameManager.Instance.playerID != playerId) { return; }
+		if(!photonView.isMine) { return; }
 		photonView.RPC("TakeDamage", PhotonTargets.AllBufferedViaServer, d);	
 	}
 	[PunRPC]
