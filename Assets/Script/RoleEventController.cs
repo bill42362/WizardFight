@@ -47,7 +47,7 @@ public class RoleEventController : Photon.PunBehaviour {
     }
     public bool CanMove()
     {
-        return rigidbody.velocity.magnitude < 0.001;
+        return rigidbody.velocity.magnitude < 0.1;
        
     }
 }
