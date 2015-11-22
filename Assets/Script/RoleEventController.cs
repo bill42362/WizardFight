@@ -5,9 +5,8 @@ public class RoleEventController : Photon.PunBehaviour {
 	public Dictionary<string, Vector3> eventPairs = new Dictionary<string, Vector3>();
     public bool isControllable = false;
 	private Role role;
-    private Vector3 startPos;
+    private bool isLeft;
     private double startTime;
-    private Vector3 startVelo;
 	private Rigidbody rigidbody;
     private const float speed = 15;
     private const float acceleration = -30; 
@@ -24,14 +23,22 @@ public class RoleEventController : Photon.PunBehaviour {
 		}
 	}
 	public void Update () {
+        if ( startTime > 0 && PhotonNetwork.time >= startTime )
+        {
+            string type = (isLeft) ? "leftButtonClick" : "rightButtonClick";
+            Vector3 velocity = transform.localToWorldMatrix.MultiplyVector(eventPairs[type] * speed);
+            rigidbody.velocity = velocity;
+            startTime = -1f;
+        }
         GetComponent<PhotonTransformView>().SetSynchronizedValues(rigidbody.velocity, 0);
 
     }
 	public void OnEventTriggered(SbiEvent e) {
-        Vector3 velocity = transform.localToWorldMatrix.MultiplyVector(eventPairs[e.type] * speed);
+        bool isLeft = (e.type == "leftButtonClick");
+        
         if (CanMove())
         {
-            this.rigidbody.velocity = velocity;
+            this.photonView.RPC("StartMove",PhotonTargets.All, PhotonNetwork.time + 0.1 , isLeft);
         }
     }
 
@@ -39,5 +46,11 @@ public class RoleEventController : Photon.PunBehaviour {
     {
         return rigidbody.velocity.magnitude < 0.01;
        
+    }
+    [PunRPC]
+    public void StartMove( double startTime , bool isLeft)
+    {
+        this.startTime = startTime;
+        this.isLeft = isLeft;
     }
 }

@@ -46,4 +46,5 @@ MonoBehaviour:
   - StartGuiding
   - StopGuiding
   - MoveBySpeed
+  - StartMove
   DisableAutoOpenWizard: 1
