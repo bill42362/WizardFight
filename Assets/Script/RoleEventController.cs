@@ -22,11 +22,7 @@ public class RoleEventController : Photon.PunBehaviour {
 	}
 	public void OnEventTriggered(SbiEvent e) {
         float speed = 20;
-        bool direction = false;
-        if ( e.type == "leftButtonClick" )
-        {
-            direction = true;
-        }
+        Vector3 velocity = transform.localToWorldMatrix.MultiplyVector(eventPairs[e.type] * speed);
         if (CanMove())
         {
             this.photonView.RPC("MoveBySpeed", 
@@ -34,20 +30,20 @@ public class RoleEventController : Photon.PunBehaviour {
                                 transform.position.x, 
                                 transform.position.y, 
                                 transform.position.z, 
-                                speed , direction);
+                                velocity.x,
+                                velocity.y,
+                                velocity.z);
         }
     }
     [PunRPC]
-    public void MoveBySpeed(float x, float y, float z, float speed , bool isLeft)
+    public void MoveBySpeed(float x, float y, float z, float vx, float vy, float vz)
     {
-        transform.position.Set(x, y, z);
-        string type = (isLeft) ? "leftButtonClick" : "rightButtonClick"; 
-        Vector3 velocity = transform.localToWorldMatrix.MultiplyVector(eventPairs[type] * speed);
-        if (null != rigidbody) { rigidbody.velocity = velocity; }
+        transform.position = new Vector3(x, y, z);
+        if (null != rigidbody) { rigidbody.velocity = new Vector3( vx, vy, vz); }
     }
     public bool CanMove()
     {
-        return true;
+        return rigidbody.velocity.magnitude < 0.01;
        
     }
 }

@@ -50,6 +50,7 @@ public class SkillHandler : Photon.PunBehaviour{
                                                              createPosition, 
                                                              forward, 
                                                              createTime);
+        Debug.Log("CreatePosition: " + createPosition);
 		EventManager.Instance.CastEvent(EventManager.Instance, "casting", castingData);
     }
     [PunRPC]
