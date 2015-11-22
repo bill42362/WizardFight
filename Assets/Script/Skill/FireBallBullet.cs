@@ -34,7 +34,10 @@ public class FireBallBullet : MonoBehaviour {
 	public void Update() {
 		double timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 		if((startTime + lifeTime) < timestamp) { Destroy(gameObject); }
-        transform.position = createPosition + createForward * (float)flyingSpeed * (float)(PhotonNetwork.time - createTime);
+        float diffTime = (float)(PhotonNetwork.time - createTime);
+        transform.position = createPosition + createForward * (float)flyingSpeed * diffTime;
+
+
 	}
 	public void OnTriggerStay(Collider other) {
 		Role role = other.gameObject.GetComponent<Role>();

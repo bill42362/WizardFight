@@ -33,7 +33,7 @@ public class SkillHandler : Photon.PunBehaviour{
                         skillID, 
                         transform.position,
                         GetDirection(),
-                        PhotonNetwork.time);
+                        PhotonNetwork.time + 0.1);
 	}
     public void StartGuidingRPC(int skillID) {
 		photonView.RPC("StartGuiding", PhotonTargets.AllViaServer, skillID);
