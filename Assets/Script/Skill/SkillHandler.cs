@@ -1,25 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class SkillHandler : Photon.PunBehaviour{
-    public PhotonView photonView;
     private GameObject owner;
     private Hashtable skillCasterTable = new Hashtable();
     void Awake () {
 		owner = gameObject.transform.parent.gameObject;
-		photonView = GetComponent<PhotonView>();
+
     }
 	void Start () {
-		int playerId = owner.GetComponent<Role>().playerId;
-		GameObject[] skillCasters = GameManager.Instance.GetCharacterSkillCastersById(playerId);
-		foreach(GameObject caster in skillCasters) { caster.transform.parent = transform; }
-
-		PlayerSkillsReadyEventData data = new PlayerSkillsReadyEventData(owner, skillCasters);
-		EventManager.Instance.CastEvent(this, "playerSkillsReady", data);
+        SetSkillCasters();
 	}
 
+    private void SetSkillCasters()
+    {
+        int ownerID = GetOwnerID();
+        GameObject[] skillCasters = GameManager.Instance.GetCharacterSkillCastersById(ownerID);
+        foreach (GameObject caster in skillCasters) { caster.transform.parent = transform; }
+        PlayerSkillsReadyEventData data = new PlayerSkillsReadyEventData(owner, skillCasters);
+        EventManager.Instance.CastEvent(this, "playerSkillsReady", data);
+    }
+
+    private int GetOwnerID()
+    {
+        return owner.GetComponent<Role>().playerId;
+    }
+
     public void CastRPC(int skillID) {
-		photonView.RPC("Cast", PhotonTargets.AllViaServer, skillID);
+		photonView.RPC("Cast", 
+                        PhotonTargets.All, 
+                        skillID, 
+                        transform.position,
+                        transform.forward,
+                        PhotonNetwork.time);
 	}
     public void StartGuidingRPC(int skillID) {
 		photonView.RPC("StartGuiding", PhotonTargets.AllViaServer, skillID);
@@ -29,8 +43,13 @@ public class SkillHandler : Photon.PunBehaviour{
 	}
 
     [PunRPC]
-    public void Cast(int skillID) {
-		CastingEventData castingData = new CastingEventData("casting", owner, skillID);
+    public void Cast(int skillID, Vector3 createPosition, Vector3 forward ,double createTime) {
+		CastingEventData castingData = new CastingEventData("casting", 
+                                                             owner, 
+                                                             skillID, 
+                                                             createPosition, 
+                                                             forward, 
+                                                             createTime);
 		EventManager.Instance.CastEvent(EventManager.Instance, "casting", castingData);
     }
     [PunRPC]

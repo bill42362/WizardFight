@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class FireBallCaster : MonoBehaviour {
 	public int skillIndex = 0;
@@ -76,12 +77,30 @@ public class FireBallCaster : MonoBehaviour {
 	private void OnCasting(SbiEvent e) {
 		CastingEventData data = (CastingEventData)e.data;
 		if((Owner != data.role) || (skillProperties.skillId != data.skillId)) { return; }
+        Faction faction = GetFaction();
+        FireBallBullet.CreateInstance(data, faction);
 
-        GameObject target = Owner.GetComponent<LookAt>().target;
-        Quaternion direction = Quaternion.LookRotation(target.transform.position - Owner.transform.position);
-		GameObject fireBallBulletGameObject = (GameObject)GameObject.Instantiate(
-			Resources.Load("Prefab/Skill/FireBallBullet"), Owner.transform.position, direction
-		);
-		fireBallBulletGameObject.GetComponent<Faction>().SetFaction(Owner.GetComponent<Faction>());
 	}
+
+    private Faction GetFaction()
+    {
+        return Owner.GetComponent<Faction>();
+    }
+
+    private Vector3 GetPosition()
+    {
+
+        return Owner.transform.position;
+    }
+
+    private Quaternion GetDirection()
+    {
+        GameObject target = GetTarget();  //Owner.GetComponent<LookAt>().target;
+        return Quaternion.LookRotation(target.transform.position - Owner.transform.position);
+    }
+
+    private GameObject GetTarget()
+    {
+        return Owner.GetComponent<LookAt>().target;
+    }
 }
