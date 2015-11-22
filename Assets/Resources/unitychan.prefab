@@ -2118,6 +2118,8 @@ GameObject:
   - 114: {fileID: 11413480}
   - 114: {fileID: 11465396}
   - 114: {fileID: 11431364}
+  - 114: {fileID: 11415616}
+  - 114: {fileID: 11441980}
   m_Layer: 0
   m_Name: unitychan
   m_TagString: Enemy
@@ -4980,7 +4982,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d266dc8f9516a42409028443e8fb680d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  photonView: {fileID: 0}
 --- !u!114 &11413480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5008,16 +5009,77 @@ MonoBehaviour:
   group: 0
   prefixBackup: -1
   observed: {fileID: 0}
-  synchronization: 0
+  synchronization: 3
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 11441980}
+  - {fileID: 11415616}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
   isRuntimeInstantiated: 0
+--- !u!114 &11415616
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 176840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 1
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 10
+    InterpolateOption: 3
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 1
+    InterpolateMoveTowardsAcceleration: 2
+    InterpolateMoveTowardsDeceleration: 2
+    InterpolateSpeedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - time: -1
+        value: 0
+        inSlope: 0
+        outSlope: Infinity
+        tangentMode: 0
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 4
+        value: 4
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    ExtrapolateOption: 1
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+    DrawErrorGizmo: 1
+  m_RotationModel:
+    SynchronizeEnabled: 1
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!114 &11422476
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5070,6 +5132,19 @@ MonoBehaviour:
   health: 100
   maxHealth: 100
   speed: 10
+--- !u!114 &11441980
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 176840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
 --- !u!114 &11442744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6318,7 +6393,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: ObservedComponents.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Drag
@@ -6338,7 +6413,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_PositionModel.TeleportIfDistanceGreaterThan
-      value: 1000
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_PositionModel.InterpolateOption
@@ -6354,12 +6429,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: synchronization
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ObservedComponents.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11415616}
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: Enemy
@@ -6379,7 +6454,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: ObservedComponents.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11441980}
     - target: {fileID: 0}
       propertyPath: m_Controller
       value: 

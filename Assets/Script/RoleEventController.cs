@@ -24,53 +24,20 @@ public class RoleEventController : Photon.PunBehaviour {
 		}
 	}
 	public void Update () {
-        //GetComponent<PhotonTransformView>().SetSynchronizedValues(rigidbody.velocity, 0);
-        if ( isMoving) {
-            float diffTime = (float)(PhotonNetwork.time - startTime);
-            if (diffTime < 0)
-            {
-                return;
-            }
-            else if (diffTime > Mathf.Abs(speed / acceleration))
-            {
-                isMoving = false;
-            }
-            else
-            {
-                transform.position = startPos
-                                   + startVelo * diffTime
-                                   + 0.5f * acceleration * startVelo.normalized * diffTime * diffTime;
-            }
-        }
+        GetComponent<PhotonTransformView>().SetSynchronizedValues(rigidbody.velocity, 0);
+
     }
 	public void OnEventTriggered(SbiEvent e) {
         Vector3 velocity = transform.localToWorldMatrix.MultiplyVector(eventPairs[e.type] * speed);
         if (CanMove())
         {
-            this.photonView.RPC("MoveBySpeed", 
-                                PhotonTargets.All, 
-                                transform.position.x, 
-                                transform.position.y, 
-                                transform.position.z, 
-                                velocity.x,
-                                velocity.y,
-                                velocity.z,
-                                PhotonNetwork.time + 0.1);
+            this.rigidbody.velocity = velocity;
         }
     }
-    [PunRPC]
-    public void MoveBySpeed(float x, float y, float z, float vx, float vy, float vz, double time)
-    {
-        startPos = new Vector3(x, y, z);
-        startVelo = new Vector3(vx, vy, vz);
-        startTime = time;
-        isMoving = true;
-        Debug.Log("time:" + time);
 
-    }
     public bool CanMove()
     {
-        return !isMoving;
+        return rigidbody.velocity.magnitude < 0.01;
        
     }
 }
