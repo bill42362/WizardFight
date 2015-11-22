@@ -32,7 +32,7 @@ public class SkillHandler : Photon.PunBehaviour{
                         PhotonTargets.All, 
                         skillID, 
                         transform.position,
-                        transform.forward,
+                        GetDirection(),
                         PhotonNetwork.time);
 	}
     public void StartGuidingRPC(int skillID) {
@@ -79,4 +79,9 @@ public class SkillHandler : Photon.PunBehaviour{
 			EventManager.Instance.CastEvent(EventManager.Instance, "stopGuiding", guideData);
 		}
     }
+
+    public Vector3 GetDirection()
+    {
+        return (owner.GetComponent<LookAt>().target.transform.position - this.transform.position).normalized;
+    } 
 }

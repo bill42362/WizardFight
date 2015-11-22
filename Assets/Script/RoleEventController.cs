@@ -26,7 +26,7 @@ public class RoleEventController : Photon.PunBehaviour {
         if (CanMove())
         {
             this.photonView.RPC("MoveBySpeed", 
-                                PhotonTargets.AllViaServer, 
+                                PhotonTargets.All, 
                                 transform.position.x, 
                                 transform.position.y, 
                                 transform.position.z, 
