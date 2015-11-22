@@ -98,6 +98,7 @@ GameObject:
   - 222: {fileID: 22216368}
   - 114: {fileID: 11401380}
   - 114: {fileID: 11481766}
+  - 114: {fileID: 11427226}
   m_Layer: 5
   m_Name: SkillButton1
   m_TagString: Untagged
@@ -185,6 +186,7 @@ GameObject:
   - 222: {fileID: 22227946}
   - 114: {fileID: 11414048}
   - 114: {fileID: 11479418}
+  - 114: {fileID: 11491744}
   m_Layer: 5
   m_Name: SkillButton3
   m_TagString: Untagged
@@ -238,6 +240,7 @@ GameObject:
   - 222: {fileID: 22261990}
   - 114: {fileID: 11482938}
   - 114: {fileID: 11487368}
+  - 114: {fileID: 11466254}
   m_Layer: 5
   m_Name: SkillButton2
   m_TagString: Untagged
@@ -395,6 +398,7 @@ GameObject:
   - 224: {fileID: 22426410}
   - 222: {fileID: 22237316}
   - 114: {fileID: 11484992}
+  - 114: {fileID: 11406992}
   m_Layer: 5
   m_Name: SkillsSpan
   m_TagString: Untagged
@@ -478,6 +482,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Skill1
+--- !u!114 &11406992
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 191542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9cbd0fdbc7094023b3d22004bdedd36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerId: 1
 --- !u!114 &11407994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -769,6 +785,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Skill7
+--- !u!114 &11427226
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d83bd1bef661643e0a0717c76b794017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillIndex: 0
+  playerId: 1
 --- !u!114 &11427660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1155,6 +1184,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11466254
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d83bd1bef661643e0a0717c76b794017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillIndex: 1
+  playerId: 1
 --- !u!114 &11467308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1540,6 +1582,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &11491744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d83bd1bef661643e0a0717c76b794017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillIndex: 2
+  playerId: 1
 --- !u!222 &22202254
 CanvasRenderer:
   m_ObjectHideFlags: 1
