@@ -48,8 +48,8 @@ public class GameManager : MonoBehaviour {
 		newPlayer.tag = "Player";
 		newPlayer.GetComponent<Role>().playerId = playerId;
 		newPlayer.GetComponent<Faction>().SetFaction(playerId);
-		newPlayer.AddComponent<RoleEventController>();
-		newPlayer.AddComponent<LabelLookAtTarget>();
+        newPlayer.GetComponent<RoleEventController>().isControllable = true;
+        newPlayer.AddComponent<LabelLookAtTarget>();
 		EventManager.Instance.CastEvent(this, "playerChange", new PlayerChangeEventData(newPlayer));
 
 		Camera camera = newPlayer.GetComponentsInChildren<Camera>(true)[0];
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour {
 			neutral.GetComponent<Faction>().SetFaction(2);
 			neutral.GetComponent<LookAt>().target = newPlayer;
 			newPlayer.GetComponent<LookAt>().target = neutral;
-			SetCharacterSkillIDs(2, new int[] {0, 1, 2});
+            SetCharacterSkillIDs(2, new int[] {0, 1, 2});
 			EventManager.Instance.CastEvent(this, "enemyChange", new PlayerChangeEventData(neutral));
         }
     }
