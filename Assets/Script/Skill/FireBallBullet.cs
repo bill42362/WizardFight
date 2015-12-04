@@ -10,7 +10,7 @@ public class FireBallBullet : MonoBehaviour {
         return obj;
     }
 	public double damage = 10;
-	public double flyingSpeed = 10;
+	public double flyingSpeed = 20;
 	public double lifeTime = 3000;
     public Vector3 createPosition;
     public Vector3 createForward;
@@ -35,7 +35,7 @@ public class FireBallBullet : MonoBehaviour {
 		double timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 		if((startTime + lifeTime) < timestamp) { Destroy(gameObject); }
         float diffTime = (float)(PhotonNetwork.time - createTime);
-        transform.position = createPosition + createForward * (float)flyingSpeed * diffTime;
+        transform.position = createPosition + createForward * (float)(flyingSpeed * diffTime);
 
 
 	}

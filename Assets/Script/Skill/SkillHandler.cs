@@ -16,7 +16,8 @@ public class SkillHandler : Photon.PunBehaviour{
     private void SetSkillCasters()
     {
         int ownerID = GetOwnerID();
-        GameObject[] skillCasters = GameManager.Instance.GetCharacterSkillCastersById(ownerID);
+        // FIXME: How can you assure the skillCasters are loaded in GameManager now?
+        GameObject[] skillCasters = GameManager.Instance.GetCharacterSkillCasters(ownerID);
         foreach (GameObject caster in skillCasters) { caster.transform.parent = transform; }
         PlayerSkillsReadyEventData data = new PlayerSkillsReadyEventData(owner, skillCasters);
         EventManager.Instance.CastEvent(this, "playerSkillsReady", data);

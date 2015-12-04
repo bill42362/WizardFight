@@ -6,14 +6,12 @@ public class RoleEventController : Photon.PunBehaviour {
     public bool isControllable = false;
 	private Role role;
     private bool isLeft;
-    private double startTime;
-	private Rigidbody rigidbody;
+    private double startTime = -1;
     private const float speed = 15;
     private const float acceleration = -30; 
     private bool isMoving = false;
 	public void Start() { 
 		role = GetComponent<Role>();
-		rigidbody = GetComponent<Rigidbody>();
 
 		eventPairs["leftButtonClick"] = new Vector3(-1, 0, 0);
 		eventPairs["rightButtonClick"] = new Vector3(1, 0, 0);
@@ -23,33 +21,48 @@ public class RoleEventController : Photon.PunBehaviour {
 		}
 	}
 	public void Update () {
-        if ( startTime > 0 && PhotonNetwork.time >= startTime )
+        UpdateAnimation();
+        if ( isControllable ) {
+            UpdateVelocity();
+        }
+
+    }
+    private void UpdateVelocity()
+    {
+        GetComponent<PhotonTransformView>().SetSynchronizedValues(GetComponent<Rigidbody>().velocity, 0);
+    }
+    private void UpdateAnimation()
+    {
+        if (startTime > 0 && PhotonNetwork.time >= startTime)
         {
             string type = (isLeft) ? "leftButtonClick" : "rightButtonClick";
             Vector3 velocity = transform.localToWorldMatrix.MultiplyVector(eventPairs[type] * speed);
-            rigidbody.velocity = velocity;
+            GetComponent<Rigidbody>().velocity = velocity;
             startTime = -1f;
         }
-        GetComponent<PhotonTransformView>().SetSynchronizedValues(rigidbody.velocity, 0);
-
     }
+
 	public void OnEventTriggered(SbiEvent e) {
         bool isLeft = (e.type == "leftButtonClick");
         
         if (CanMove())
         {
-            this.photonView.RPC("StartMove",PhotonTargets.All, PhotonNetwork.time + 0.1 , isLeft);
+            float delay = NetworkManager.Instance.GetInputDelay();
+            this.photonView.RPC("StartMove",PhotonTargets.All, (float)PhotonNetwork.time + delay, isLeft);
         }
     }
 
     public bool CanMove()
     {
-        return rigidbody.velocity.magnitude < 0.01;
+        return startTime < 0 && GetComponent<Rigidbody>().velocity.magnitude < 0.01;
        
     }
     [PunRPC]
-    public void StartMove( double startTime , bool isLeft)
+    public void StartMove( float startTime , bool isLeft)
     {
+        if (!isControllable) { 
+            NetworkManager.Instance.UpdateInputDelay((float)PhotonNetwork.time - (float)startTime);
+        }
         this.startTime = startTime;
         this.isLeft = isLeft;
     }

@@ -163,10 +163,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11dec3531a310468eb3ad2a2c779cdb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
   damage: 10
-  flyingSpeed: 10
+  flyingSpeed: 30
   lifeTime: 3000
+  createPosition: {x: 0, y: 0, z: 0}
+  createForward: {x: 0, y: 0, z: 0}
+  createTime: 0
 --- !u!114 &11490640
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8dfce1d20a83c4284fa048f66a34f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: 1
+  ownerId: -1
 --- !u!135 &13562666
 SphereCollider:
   m_ObjectHideFlags: 1
