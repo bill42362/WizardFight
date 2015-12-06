@@ -194,7 +194,7 @@ public class NetworkManager : Photon.PunBehaviour
     public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
     {
         base.OnPhotonPlayerConnected(newPlayer);
-        Debug.Log("OnPhotonPlayerConnected: " + newPlayer.name );\
+        Debug.Log("OnPhotonPlayerConnected: " + newPlayer.name );
         GameManager.Instance.OnOtherPlayerJoinedRoom(newPlayer.ID, PhotonNetwork.playerList.Length);
         if (PhotonNetwork.isMasterClient)
         {

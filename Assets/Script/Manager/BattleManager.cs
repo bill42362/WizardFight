@@ -14,7 +14,7 @@ public class BattleManager : Photon.PunBehaviour {
             if (_instance == null)
             {
                 Debug.Log("Get BattleManager when the _instance is null! Do nothing and return.");
-                return;
+                return null;
             }
             return _instance;
         }

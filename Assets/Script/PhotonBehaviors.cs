@@ -33,8 +33,6 @@ public class PhotonBehaviors : Photon.PunBehaviour
             GameObject playerCharacter = GameManager.Instance.GetCharacter();
             if (ID == 0)
                 this.gameObject.name = "NeutralRole";
-            playerCharacter.GetComponent<LookAt>().target = this.gameObject;
-            GetComponent<LookAt>().target = playerCharacter;
             GameManager.Instance.SetCharacter(ID, this.gameObject);
             EventManager.Instance.CastEvent(this, "enemyChange", new PlayerChangeEventData(gameObject) );
         }
