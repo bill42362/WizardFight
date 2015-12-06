@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour {
 
     // ***** Character Public Methods *****
     public void InitializeGame() { }
-    public string GetPlayerName() { return playerName; }
     public GameObject GetPlayer() { return characters[PlayerId]; }
     public void SetOrder(int charaterId, int order) { characterOrder[charaterId] = order; }
     public void SetCharacter(int charaterId, GameObject character) {
