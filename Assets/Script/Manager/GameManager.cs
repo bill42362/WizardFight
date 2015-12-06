@@ -42,8 +42,9 @@ public class GameManager : MonoBehaviour {
 
     // ***** Character Public Methods *****
     public void InitializeGame() { }
+    public string GetPlayerName() { return playerName; }
     public GameObject GetPlayer() { return characters[PlayerId]; }
-    public void SetOrder(int ID , int order) { characterOrder[ID] = order; }
+    public void SetOrder(int charaterId, int order) { characterOrder[charaterId] = order; }
     public void SetCharacter(int charaterId, GameObject character) {
 		characters[charaterId] = character;
 		PlayerChangeEventData data = new PlayerChangeEventData(character);
@@ -66,10 +67,10 @@ public class GameManager : MonoBehaviour {
 		if(IsCharactersAndCastersReady()) { OnCharactersAndCastersReady(); }
 	}
 	private bool IsCharactersAndCastersReady() {
-		if(2 != characters.Keys.Count) { return false; }
-		if(2 != characterSkillCasters.Keys.Count) { return false; }
+		if(2 != characters.Count) { return false; }
+		if(2 != characterSkillCasters.Count) { return false; }
 		foreach(KeyValuePair<int, SkillCasterDictionary> casters in characterSkillCasters) {
-			if(5 != casters.Keys.Count) { return false; }
+			if(5 != casters.Value.Count) { return false; }
 		}
 		return true;
 	}
@@ -79,9 +80,9 @@ public class GameManager : MonoBehaviour {
 
     // ***** NetworkManager Coupling methods *****
     public void OnLeftRoom() { mainCamera.SetActive(true); }
-    public void OnPlayerJoinRoom(int playerOrder) {
+    public void OnPlayerJoinedRoom(int playerOrder) {
         SetOrder(PlayerId, playerOrder);
-        GameObject playerCharacter = InstantiateCharacter(playerID, playerOrder);
+        GameObject playerCharacter = InstantiateCharacter(PlayerId, playerOrder);
         Camera camera = playerCharacter.GetComponentsInChildren<Camera>(true)[0];
         camera.gameObject.SetActive(true);
         mainCamera = GameObject.FindWithTag("MainCamera");
@@ -95,20 +96,20 @@ public class GameManager : MonoBehaviour {
 		for(int i = 0; i < playerSkillIds.Length; ++i) {
 			NetworkManager.Instance.Instantiate(
 				DataManager.Instance.GetSkillCasterPrefabString(playerSkillIds[i]),
-				new Vector3(0, 0, positionZ),
+				Vector3.zero,
 				Quaternion.identity,
 				0,
-				CreateCasterInsiantiateData(ID, i)
+				CreateCasterInsiantiateData(PlayerId, i)
 			);
 		}
     }
-    public void OnOtherPlayerJoinRoom(int id, int order) { SetOrder(id, order); }
+    public void OnOtherPlayerJoinedRoom(int id, int order) { SetOrder(id, order); }
 
     // ***** Game Logic Public Methods *****
-    public GameObject InstantiateCharacter(int ID, int order) {
+    public GameObject InstantiateCharacter(int charaterId, int order) {
         float positionZ = (order == 1) ? -5 : 5;
         GameObject character = NetworkManager.Instance.Instantiate(
-			"unitychan", new Vector3(0, 0, positionZ), Quaternion.identity, 0, CreatePlayerInsiantiateData(ID)
+			"unitychan", new Vector3(0, 0, positionZ), Quaternion.identity, 0, CreatePlayerInsiantiateData(charaterId)
 		);
         return character;
     }
