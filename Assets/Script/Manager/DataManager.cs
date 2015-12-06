@@ -21,21 +21,21 @@ public class DataManager : MonoBehaviour {
 			return _instance;
 		}
 	}
-	public GameObject createSkillCasterByID( int id)
+	public string GetSkillCasterPrefabString( int id)
 	{
-		// FIXME 
-		Object prefab = null;
+        // FIXME 
+        string prefab = null;
 		switch ( id )
 		{
 			case 0: //fireball
-				prefab = Resources.Load("Prefab/Skill/FireBallCaster"); break;
+				prefab = "Prefab/Skill/FireBallCaster"; break;
 			case 1: //blizzard
-				prefab = Resources.Load("Prefab/Skill/BlizzardCaster"); break;
+				prefab = "Prefab/Skill/BlizzardCaster"; break;
 			case 2: //blizzard
-				prefab = Resources.Load("Prefab/Skill/ThunderNovaCaster"); break;
+				prefab = "Prefab/Skill/ThunderNovaCaster"; break;
 			default:
 				break;
 		}
-		return (GameObject)Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        return prefab;
 	}
 }

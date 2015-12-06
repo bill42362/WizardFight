@@ -7,7 +7,7 @@ public class NetworkManager : Photon.PunBehaviour
     private static NetworkManager _instance = null;
     protected NetworkManager()
     {
-        PhotonNetwork.logLevel = PhotonLogLevel.Full;
+        //PhotonNetwork.logLevel = PhotonLogLevel.Full;
         PhotonNetwork.offlineMode = true;
         PhotonNetwork.autoCleanUpPlayerObjects = true;
     }
@@ -43,7 +43,7 @@ public class NetworkManager : Photon.PunBehaviour
 
         PhotonNetwork.offlineMode = false;
         if (!PhotonNetwork.connected)
-            PhotonNetwork.ConnectUsingSettings(GameManager.Instance.GetGameVersion());
+            PhotonNetwork.ConnectUsingSettings(GameManager.gameVersion);
 
     }
     public void Match(SbiEvent e)
@@ -59,11 +59,7 @@ public class NetworkManager : Photon.PunBehaviour
         return (isOffline || (PhotonNetwork.inRoom && PhotonNetwork.playerList.Length == maxPlayer));
 
     }
-    public RoomInfo[] GetRoomList()
-    {
-        return PhotonNetwork.GetRoomList();
-    }
-    public void LeaveRoom(SbiEvent e)
+    public void Leave(SbiEvent e)
     {
         if (PhotonNetwork.inRoom)
         {
@@ -75,17 +71,10 @@ public class NetworkManager : Photon.PunBehaviour
         if (PhotonNetwork.connected)
         {
             PhotonNetwork.Disconnect();
+            PhotonNetwork.offlineMode = true;
         }
     }
-    public void CreateNewRoom()
-    {
-        RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = 2 };
-        if (PhotonNetwork.connectedAndReady && !PhotonNetwork.inRoom)
-        {
-            PhotonNetwork.CreateRoom(GameManager.Instance.GetPlayerName() + UnityEngine.Random.Range(1, 999),
-                                     roomOptions, TypedLobby.Default);
-        }
-    }
+
     public GameObject Instantiate(
         string prefabString,
         Vector3 position, Quaternion rotation,
@@ -98,17 +87,20 @@ public class NetworkManager : Photon.PunBehaviour
 
         return obj;
     }
-    public void SetPlayerProperties(ExitGames.Client.Photon.Hashtable props)
-    {
-        PhotonNetwork.player.SetCustomProperties(props);
-    }
-    public int GetPlayerID()
-    {
-        if (isOffline)
-            return 1;
-        return PhotonNetwork.player.ID;
-    }
 
+    public void Ready()
+    {
+        UpdateRoomProperty(PlayerID.ToString(), "ready");
+    }
+    public int PlayerID
+    {
+        get
+        {
+            if (isOffline)
+                return 1;
+            return PhotonNetwork.player.ID;
+        }
+    }
     // ***** Start and Update Behaviours *****
     public void Start()
     {
@@ -116,10 +108,10 @@ public class NetworkManager : Photon.PunBehaviour
             EventManager.Instance, "connectButtonClick", gameObject, Connect
         );
         EventManager.Instance.RegisterListener(
-            EventManager.Instance, "matchButtonClick", gameObject, Match
+            EventManager.Instance, "matchButtonClick", gameObject, Match 
         );
         EventManager.Instance.RegisterListener(
-            EventManager.Instance, "leaveButtonClick", gameObject, LeaveRoom
+            EventManager.Instance, "leaveButtonClick", gameObject, Leave
         );
     }
     public void Update()
@@ -128,26 +120,26 @@ public class NetworkManager : Photon.PunBehaviour
     }
 
     // ***** Public Networking Monitor Interface *****
-    public float GetInputDelay()
+    public float RPCDelay = 0.1f;
+    public void UpdateRPCDelay(float delay_offset)
     {
-        return input_delay;
-    }
-    public void UpdateInputDelay(float delay_offset)
-    {
-        input_delay = input_delay + DELAY_ESTIMATION_COEFF * delay_offset;
-        if (input_delay > MAX_INPUT_DELAY)
-            input_delay = MAX_INPUT_DELAY;
-        if (input_delay < MIN_INPUT_DELAY)
-            input_delay = MIN_INPUT_DELAY;
+        RPCDelay = RPCDelay + DELAY_ESTIMATION_COEFF * delay_offset;
+        if (RPCDelay > MAX_INPUT_DELAY)
+            RPCDelay = MAX_INPUT_DELAY;
+        if (RPCDelay < MIN_INPUT_DELAY)
+            RPCDelay = MIN_INPUT_DELAY;
     }
 
     // ***** Private Network Monitor Utilities *****
-    private int readyCount = 0;
-    private void clear()
+    private void CreateNewRoom()
     {
-        readyCount = 0;
+        RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = 2 };
+        if (PhotonNetwork.connectedAndReady && !PhotonNetwork.inRoom)
+        {
+            PhotonNetwork.CreateRoom(GameManager.Instance.GetPlayerName() + UnityEngine.Random.Range(1, 999),
+                                     roomOptions, TypedLobby.Default);
+        }
     }
-
     private float ping = 0.1f;
     private const float FLOW_CONTROL_BETA = 0.25f;
     private void UpdatePing()
@@ -157,26 +149,31 @@ public class NetworkManager : Photon.PunBehaviour
         //Debug.Log("Ping: " + ping);
     }
 
-    private float input_delay = 0.1f;
     private float DELAY_ESTIMATION_COEFF = 0.75f;
     private const float MAX_INPUT_DELAY = 0.2f;
     private const float MIN_INPUT_DELAY = 0.05f;
-
+    private void UpdateRoomProperty(string key, string value)
+    {
+        Debug.Log("UpdateRoomProperty: " + key + " to : " + value);
+        ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable();
+        props[key] = value;
+        PhotonNetwork.room.SetCustomProperties(props);
+    }
 
     // ***** Public Photon CallBacks *****
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        
-        GameManager.Instance.OnPlayerJoinRoom(PhotonNetwork.playerList.Length);
+        Debug.Log("OnJoinedRoom");
+        GameManager.Instance.OnPlayerJoinedRoom(PhotonNetwork.playerList.Length);
         EventManager.Instance.CastEvent(this, "joinedRoom", null);
-        //Debug.Log("OnJoinedRoom");
+
     }
     public override void OnConnectedToPhoton()
     {
         base.OnConnectedToPhoton();
         EventManager.Instance.CastEvent(this, "connectedToPhoton", null);
-        GameManager.Instance.InitializeGame();
+
 
     }
     public override void OnJoinedLobby()
@@ -186,19 +183,25 @@ public class NetworkManager : Photon.PunBehaviour
     public override void OnPhotonRandomJoinFailed(object[] codeAndMsg)
     {
         //Debug.Log("OnPhotonRandomJoinFailed: " + codeAndMsg.ToString());
-        CreateNewRoom();
+        CreateNewRoom(GameManager.Instance.maxPlayer);
     }
 
     public override void OnPhotonCreateRoomFailed(object[] codeAndMsg)
     {
         base.OnPhotonCreateRoomFailed(codeAndMsg);
-        //Debug.Log("OnPhotonCreateRoomFailed: " + codeAndMsg.ToString());
+        Debug.Log("OnPhotonCreateRoomFailed: " + codeAndMsg.ToString());
     }
     public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
     {
         base.OnPhotonPlayerConnected(newPlayer);
-        //Debug.Log("OnPhotonPlayerConnected: " + newPlayer.name );
+        Debug.Log("OnPhotonPlayerConnected: " + newPlayer.name );\
+        GameManager.Instance.OnOtherPlayerJoinedRoom(newPlayer.ID, PhotonNetwork.playerList.Length);
+        if (PhotonNetwork.isMasterClient)
+        {
+            BattleManager.CreateInstance();
+        }
     }
+    /*
     public override void OnPhotonPlayerPropertiesChanged(object[] playerAndUpdatedProps)
     {
         base.OnPhotonPlayerPropertiesChanged(playerAndUpdatedProps);
@@ -208,22 +211,24 @@ public class NetworkManager : Photon.PunBehaviour
             = (ExitGames.Client.Photon.Hashtable)playerAndUpdatedProps[1];
         if (updatedProps.ContainsKey("skillIds"))
         {
-            if (player.ID == GetPlayerID())
+            if (player.ID == PlayerID)
                 return;
             Debug.Log("SetCharacterSkillIDs");
             int[] skillIds = (int[])updatedProps["skillIds"];
             GameManager.Instance.SetCharacterSkillIDs(player.ID, skillIds);
         }
     }
+    */
     public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
     {
         base.OnPhotonPlayerDisconnected(otherPlayer);
-        LeaveRoom(null);
+        Leave(null);
     }
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
-        GameManager.Instance.OnLeftRoom();
+        //GameManager.Instance.OnLeftRoom();
     }
+
 
 }
