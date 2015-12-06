@@ -10,9 +10,9 @@ abstract public class SkillCasterBase : Photon.PunBehaviour {
         SetSkillColor();
     }
     public int index { set; get; }
-    public int skillID { get; }
-    public string skillName { get; }
-    public string skillColor { get; }
+    public readonly int skillID;
+    public readonly string skillName;
+    public readonly Color buttonColor;
     private GameObject _owner = null;
     public GameObject owner
     {
@@ -64,8 +64,8 @@ abstract public class SkillCasterBase : Photon.PunBehaviour {
         Init();
     }
     // Use this for initialization
-    abstract void Start();
+    abstract public void Start();
 
     // Update is called once per frame
-    abstract void Update();
+    abstract public void Update();
 }

@@ -33,7 +33,6 @@ public class SkillButton : MonoBehaviour {
     public void OnCasterReady(SbiEvent e) {
         CasterReadyEventData data = (CasterReadyEventData)e.data;
 		if(GameManager.Instance.GetPlayer() != data.player) { return; }
-		GameObject[] playerSkillCasters = data.skillCasters;
 		if(skillIndex == data.skillIndex) {
 			skillCaster = data.skillCaster;
 			skillCasterBase = skillCaster.GetComponent<SkillCasterBase>();
