@@ -4,13 +4,13 @@ using UnityEngine.UI;
 public class SkillButton : MonoBehaviour {
 	public int skillIndex = 0;
 	public GameObject skillCaster;
-	private SkillProperties skillProperties;
+	private SkillCasterBase skillCasterBase;
 	private CoolDownTimer coolDownTimer;
 	private Text coolDownTimeText;
 	private RectTransform coolDownIndicatorRectTransform;
 
 	public void Awake () {
-        EventManager.Instance.RegisterListener(EventManager.Instance, "playerSkillsReady", gameObject, OnPlayerSkillsReady);
+        EventManager.Instance.RegisterListener(EventManager.Instance, "casterReady", gameObject, OnCasterReady);
 	}
 	public void Update () {
 		if(null != coolDownTimeText) {
@@ -30,19 +30,19 @@ public class SkillButton : MonoBehaviour {
 			}
 		}
 	}
-    public void OnPlayerSkillsReady(SbiEvent e) {
-        PlayerSkillsReadyEventData data = (PlayerSkillsReadyEventData)e.data;
-		if(GameManager.Instance.GetCharacter() != data.player) { return; }
+    public void OnCasterReady(SbiEvent e) {
+        CasterReadyEventData data = (CasterReadyEventData)e.data;
+		if(GameManager.Instance.GetPlayer() != data.player) { return; }
 		GameObject[] playerSkillCasters = data.skillCasters;
-		if(playerSkillCasters.Length > skillIndex) {
-			skillCaster = playerSkillCasters[skillIndex];
-			skillProperties = skillCaster.GetComponent<SkillProperties>();
+		if(skillIndex == data.skillIndex) {
+			skillCaster = data.skillCaster;
+			skillCasterBase = skillCaster.GetComponent<SkillCasterBase>();
 			coolDownTimer = skillCaster.GetComponent<CoolDownTimer>();
 		}
-		if(null != skillProperties) {
-			GetComponentInChildren<Text>().text = skillProperties.skillName;
-			name = skillProperties.skillName + " Button";
-			GetComponent<Image>().color = skillProperties.buttonColor;
+		if(null != skillCasterBase) {
+			GetComponentInChildren<Text>().text = skillCasterBase.skillName;
+			name = skillCasterBase.skillName + " Button";
+			GetComponent<Image>().color = skillCasterBase.buttonColor;
 		}
 		if(null != coolDownTimer) {
 			coolDownTimeText = GetComponentsInChildren<Text>()[1] as Text;

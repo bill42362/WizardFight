@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using SkillCasterDictionary = Dictionary< int , GameObject >;
+using SkillCasterDictionary = System.Collections.Generic.Dictionary<int , UnityEngine.GameObject>;
 public class GameManager : MonoBehaviour {
     //  ***** Singleton Related *****
     private static GameManager _instance = null;
@@ -42,20 +42,25 @@ public class GameManager : MonoBehaviour {
 
     // ***** Character Public Methods *****
     public void InitializeGame() { }
+    public GameObject GetPlayer() { return characters[PlayerId]; }
     public void SetOrder(int ID , int order) { characterOrder[ID] = order; }
-    public void SetCharacter(int playerId, GameObject character) {
-		characters[playerId] = character;
+    public void SetCharacter(int charaterId, GameObject character) {
+		characters[charaterId] = character;
 		PlayerChangeEventData data = new PlayerChangeEventData(character);
-		EventManager.Instance.CastEvent(this, "characterReady", data);
+		if(charaterId == PlayerId) {
+			EventManager.Instance.CastEvent(this, "playerChange", data);
+		} else {
+			EventManager.Instance.CastEvent(this, "enemyChange", data);
+		}
 		if(IsCharactersAndCastersReady()) { OnCharactersAndCastersReady(); }
 	}
-    public void SetSkillCaster(int playerId, int skillIndex, GameObject skillCaster) {
-		if(null == characterSkillCasters[playerId]) {
-			characterSkillCasters[playerId] = new Dictionary<int, GameObject>();
+    public void SetSkillCaster(int charaterId, int skillIndex, GameObject skillCaster) {
+		if(null == characterSkillCasters[charaterId]) {
+			characterSkillCasters[charaterId] = new Dictionary<int, GameObject>();
 		}
-		characterSkillCasters[playerId][skillIndex] = skillCaster;
-		PlayerSkillReadyEventData data = new PlayerSkillReadyEventData(
-			characters[playerId], skillIndex, skillCaster
+		characterSkillCasters[charaterId][skillIndex] = skillCaster;
+		CasterReadyEventData data = new CasterReadyEventData(
+			characters[charaterId], skillIndex, skillCaster
 		);
 		EventManager.Instance.CastEvent(this, "casterReady", data);
 		if(IsCharactersAndCastersReady()) { OnCharactersAndCastersReady(); }
@@ -110,7 +115,7 @@ public class GameManager : MonoBehaviour {
     private object[] CreatePlayerInsiantiateData(int playerId) {
         return new object[] {(object)playerId};
     }
-    private object[] CreateCasterInsiantiateData(int playerId, int skillIndex) {
-        return new object[] {(object)playerId, (object)skillIndex};
+    private object[] CreateCasterInsiantiateData(int charaterId, int skillIndex) {
+        return new object[] {(object)charaterId, (object)skillIndex};
     }
 }
