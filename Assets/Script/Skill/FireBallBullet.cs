@@ -10,7 +10,7 @@ public class FireBallBullet : MonoBehaviour {
         return obj;
     }
 	public double damage = 10;
-	public double flyingSpeed = 20;
+	public double flyingSpeed = 10;
 	public double lifeTime = 3000;
     public Vector3 createPosition;
     public Vector3 createForward;

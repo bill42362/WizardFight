@@ -32,7 +32,7 @@ public class FireBallCaster : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(GameManager.Instance.GetPlayerCharacter() != owner) { return; }
+		if(GameManager.Instance.GetPlayerCharacter() != Owner) { return; }
 		if(false == isButtonPressed) {	
 			if(true == chantTimer.isChanting) { chantTimer.StopChanting(); }
 			return;

@@ -7,6 +7,7 @@ public class NetworkManager : Photon.PunBehaviour
     private static NetworkManager _instance = null;
     protected NetworkManager()
     {
+        PhotonNetwork.logLevel = PhotonLogLevel.Full;
         PhotonNetwork.offlineMode = true;
         PhotonNetwork.autoCleanUpPlayerObjects = true;
     }
@@ -166,7 +167,7 @@ public class NetworkManager : Photon.PunBehaviour
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        GameManager.Instance.InitializeGame();
+        
         GameManager.Instance.OnPlayerJoinRoom(PhotonNetwork.playerList.Length);
         EventManager.Instance.CastEvent(this, "joinedRoom", null);
         //Debug.Log("OnJoinedRoom");
@@ -175,7 +176,8 @@ public class NetworkManager : Photon.PunBehaviour
     {
         base.OnConnectedToPhoton();
         EventManager.Instance.CastEvent(this, "connectedToPhoton", null);
-        
+        GameManager.Instance.InitializeGame();
+
     }
     public override void OnJoinedLobby()
     {
@@ -201,10 +203,14 @@ public class NetworkManager : Photon.PunBehaviour
     {
         base.OnPhotonPlayerPropertiesChanged(playerAndUpdatedProps);
         PhotonPlayer player = (PhotonPlayer)playerAndUpdatedProps[0];
+
         ExitGames.Client.Photon.Hashtable updatedProps
             = (ExitGames.Client.Photon.Hashtable)playerAndUpdatedProps[1];
         if (updatedProps.ContainsKey("skillIds"))
         {
+            if (player.ID == GetPlayerID())
+                return;
+            Debug.Log("SetCharacterSkillIDs");
             int[] skillIds = (int[])updatedProps["skillIds"];
             GameManager.Instance.SetCharacterSkillIDs(player.ID, skillIds);
         }

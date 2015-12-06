@@ -6,7 +6,6 @@ public class GameManager : MonoBehaviour {
     //  ***** Singleton Related *****
     private static GameManager _instance = null;
     protected GameManager() {
-        InitializeGame();
     }
     public static GameManager Instance
     {
