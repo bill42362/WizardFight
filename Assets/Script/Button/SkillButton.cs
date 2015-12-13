@@ -30,15 +30,16 @@ public class SkillButton : MonoBehaviour {
 		}
 	}
     public void OnCasterReady(SbiEvent e) {
-        Debug.Log("OnCasterReady");
+
         CasterReadyEventData data = (CasterReadyEventData)e.data;
 		if(GameManager.Instance.GetPlayer() != data.player) { return; }
 		if(skillIndex == data.skillIndex) {
 			skillCasterBase = data.skillCaster.GetComponent<SkillCasterBase>();
-            coolDownTimer = skillCasterBase.GetTimerByType("cooldown");
+            coolDownTimer = skillCasterBase.GetTimerByType("Cooldown");
 		}
 		if(null != skillCasterBase) {
-			GetComponentInChildren<Text>().text = skillCasterBase.skillName;
+            Debug.Log("OnCasterReady color:" + skillCasterBase.buttonColor.ToString() );
+            GetComponentInChildren<Text>().text = skillCasterBase.skillName;
 			name = skillCasterBase.skillName + " Button";
 			GetComponent<Image>().color = skillCasterBase.buttonColor;
 		}

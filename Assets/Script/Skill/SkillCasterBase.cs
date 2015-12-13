@@ -19,7 +19,7 @@ abstract public class SkillCasterBase : Photon.PunBehaviour {
     {
         get {
             if ( _owner == null)
-                _owner = this.gameObject.transform.parent.gameObject;
+                _owner = this.gameObject.transform.parent.parent.gameObject;
             return _owner;
         }
     }

@@ -31,6 +31,8 @@ public class FireBallCaster : SkillCasterBase{
     }
 
 	private void StartChant() {
+        if (target == null)
+            return;
         photonView.RPC("StartChantRPC",
                         PhotonTargets.All,
                         PhotonNetwork.time + 0.1);
