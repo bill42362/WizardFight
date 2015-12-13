@@ -11,9 +11,9 @@ abstract public class SkillCasterBase : Photon.PunBehaviour {
     }
     public int index { set; get; }
     public bool isControllable = false;
-    public readonly int skillID;
-    public readonly string skillName;
-    public readonly Color buttonColor;
+    public int skillID;
+    public string skillName;
+    public Color buttonColor;
     private GameObject _owner = null;
     public GameObject owner
     {
