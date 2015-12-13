@@ -1,34 +1,67 @@
 using UnityEngine;
 
 public class ChantTimer : MonoBehaviour {
-	public double chantTime = 1000;
 	public bool isChanting = false;
 	public GameObject owner;
 
-	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+	private double epochStart = 0.0;
 	private double timeStartChanting = 0;
+    private double timeFinishChanting = 0;
+    public bool shouldChanting
+    {
+        get
+        {
+            return (PhotonNetwork.time > timeStartChanting && PhotonNetwork.time < timeFinishChanting);
+        }
+    }
+    public void Update()
+    {
+        if ( !isChanting && shouldChanting )
+        {
+            StartChanting();
+            return;
+        }
+        if ( isChanting && !shouldChanting )
+        {
+            FinishChanting();
+        }
+    }
+    public void InitChanting(double startTime, double endTime)
+    {
+        timeStartChanting = startTime;
+        timeFinishChanting = endTime;
+    }
+	private void StartChanting() {
 
-	public void StartChanting() {
-		timeStartChanting = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
-		isChanting = true;
+        isChanting = true;
 		ChantingEventData startData = new ChantingEventData("start", owner, this);
 		EventManager.Instance.CastEvent(EventManager.Instance, "startChanting", startData);
 	}
-	public void StopChanting() {
+	private void StopChanting() {
 		isChanting = false;
 		ChantingEventData stopData = new ChantingEventData("stop", owner, this);
 		EventManager.Instance.CastEvent(EventManager.Instance, "stopChanting", stopData);
 	}
-	public bool GetIsChantingFinished() {
-		double timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
-		return (timeStartChanting + chantTime) < timestamp;
-	}
+    public void FinishChanting()
+    {
+        EventManager.Instance.CastEvent(this, "finishChanting", null);
+        StopChanting();
+    }
+    public void CancelChanting()
+    {
+        timeFinishChanting = timeStartChanting;
+        StopChanting();
+    }
 	public double GetRemainChantTime() {
-		double timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
-		return 0.001*(timeStartChanting + chantTime - timestamp);
+        if (!isChanting)
+            return 0;
+        double timestamp = PhotonNetwork.time;
+		return (timeFinishChanting - timestamp);
 	}
 	public double GetChantingProgress() {
-		double timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
-		return (timestamp - timeStartChanting)/chantTime;
+        if (!isChanting)
+            return 0;
+		double timestamp = PhotonNetwork.time;
+		return (timestamp - timeStartChanting)/(timeFinishChanting - timeStartChanting);
 	}
 }
