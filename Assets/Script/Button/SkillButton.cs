@@ -30,6 +30,7 @@ public class SkillButton : MonoBehaviour {
 		}
 	}
     public void OnCasterReady(SbiEvent e) {
+        Debug.Log("OnCasterReady");
         CasterReadyEventData data = (CasterReadyEventData)e.data;
 		if(GameManager.Instance.GetPlayer() != data.player) { return; }
 		if(skillIndex == data.skillIndex) {

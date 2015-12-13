@@ -54,6 +54,7 @@ abstract public class SkillCasterBase : Photon.PunBehaviour {
     protected abstract void OnPlayerMove(SbiEvent e);
     public override void OnPhotonInstantiate(PhotonMessageInfo info)
     {
+        Debug.Log("OnPhotonInstantiate: skillCasterBase with " + skillName);
         base.OnPhotonInstantiate(info);
         object[] instantiationData = GetComponent<PhotonView>().instantiationData;
         int ownerID = (int)instantiationData[0];

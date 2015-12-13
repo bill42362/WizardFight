@@ -10,10 +10,10 @@ GameObject:
   - 4: {fileID: 407756}
   - 33: {fileID: 3320532}
   - 23: {fileID: 2353220}
-  - 114: {fileID: 11490276}
-  - 114: {fileID: 11450238}
-  - 114: {fileID: 11424094}
-  - 114: {fileID: 11447766}
+  - 114: {fileID: 11465518}
+  - 114: {fileID: 11441750}
+  - 114: {fileID: 11436084}
+  - 114: {fileID: 11433020}
   m_Layer: 0
   m_Name: FireBallCaster
   m_TagString: Untagged
@@ -51,7 +51,9 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -64,7 +66,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 147120}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &11424094
+--- !u!114 &11433020
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -72,11 +74,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 147120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7738530b57fbc454480ff51621d887ef, type: 3}
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coolDownTime: 8000
---- !u!114 &11447766
+  ownerId: 0
+  group: 0
+  prefixBackup: -1
+  observed: {fileID: 0}
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  isRuntimeInstantiated: 0
+--- !u!114 &11436084
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -84,13 +99,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 147120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9744f9c7ed8145eca2f3123cf747c7f, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f7722cf26941408aad3284dfbe093dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chantTime: 1000
-  isChanting: 0
+  isTiming: 0
+  type: Cooldown
   owner: {fileID: 0}
---- !u!114 &11450238
+  startEventName: 
+  finishEventName: 
+  stopEventName: 
+--- !u!114 &11441750
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -98,12 +116,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 147120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b758abf6bfe6f47f9bd73b390e735420, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f7722cf26941408aad3284dfbe093dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillName: Fire Ball
-  buttonColor: {r: .784313738, g: .392156869, b: .196078435, a: .501960814}
---- !u!114 &11490276
+  isTiming: 0
+  type: Chant
+  owner: {fileID: 0}
+  startEventName: 
+  finishEventName: 
+  stopEventName: 
+--- !u!114 &11465518
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -114,9 +136,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e544a5bb41af1489ab15a173b8feb949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillIndex: 0
+  isControllable: 0
+  skillID: 0
   skillName: Fire Ball
-  owner: {fileID: 0}
+  buttonColor: {r: 201, g: 150, b: 50, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -135,6 +158,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: coolDownTime
       value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: type
+      value: Cooldown
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

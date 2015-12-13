@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour {
     // ***** Player Information *****
     public string playerName = "username";
     public int PlayerId { get { return NetworkManager.Instance.PlayerID; } }
-    public int[] playerSkillIds = {0, 1, 2};
+    public int[] playerSkillIds = {0};
     private GameObject mainCamera = null;
 
     // ***** Character Information *****
@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour {
 			characters[charaterId], skillIndex, skillCaster
 		);
 		EventManager.Instance.CastEvent(this, "casterReady", data);
+        Debug.Log("Cast Event: casterReady()");
 		if(IsCharactersAndCastersReady()) { OnCharactersAndCastersReady(); }
 	}
 	private bool IsCharactersAndCastersReady() {
@@ -87,6 +88,7 @@ public class GameManager : MonoBehaviour {
     // ***** NetworkManager Coupling methods *****
     public void OnLeftRoom() { mainCamera.SetActive(true); }
     public void OnPlayerJoinedRoom(int playerOrder) {
+
         SetOrder(PlayerId, playerOrder);
         GameObject playerCharacter = InstantiateCharacter(PlayerId, playerOrder);
         Camera camera = playerCharacter.GetComponentsInChildren<Camera>(true)[0];
@@ -100,6 +102,7 @@ public class GameManager : MonoBehaviour {
         }
 
 		for(int i = 0; i < playerSkillIds.Length; ++i) {
+            Debug.Log("Instantiate skillcaster with index : " + i);
 			NetworkManager.Instance.Instantiate(
 				DataManager.Instance.GetSkillCasterPrefabString(playerSkillIds[i]),
 				Vector3.zero,
