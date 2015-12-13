@@ -3,17 +3,17 @@ using UnityEngine.UI;
 
 public class SkillButton : MonoBehaviour {
 	public int skillIndex = 0;
-	private SkillCasterBase skillCasterBase;
-	private Timer coolDownTimer;
-	private Text coolDownTimeText;
-	private RectTransform coolDownIndicatorRectTransform;
+	public SkillCasterBase skillCasterBase;
+	public Timer coolDownTimer;
+	public Text coolDownTimeText;
+	public RectTransform coolDownIndicatorRectTransform;
 
 	public void Awake () {
         EventManager.Instance.RegisterListener(EventManager.Instance, "casterReady", gameObject, OnCasterReady);
 	}
 	public void Update () {
-		if( null != coolDownTimeText) {
-			if( coolDownTimer != null && !coolDownTimer.isTiming ) {
+		if(null != coolDownTimeText) {
+			if((coolDownTimer != null) && coolDownTimer.isTiming) {
 				float remainCoolDownTime = (float)coolDownTimer.GetRemainTime();
 				if(1.0 < remainCoolDownTime) {
 					coolDownTimeText.text = remainCoolDownTime.ToString("#");
@@ -22,7 +22,7 @@ public class SkillButton : MonoBehaviour {
 				}
 				float coolDownTime = (float)coolDownTimer.duration;
 				Vector2 anchorMin = coolDownIndicatorRectTransform.anchorMin;
-				anchorMin.x = (1 - 1000*remainCoolDownTime/coolDownTime);
+				anchorMin.x = (1 - remainCoolDownTime/coolDownTime);
 				coolDownIndicatorRectTransform.anchorMin = anchorMin;
 			} else {
 				coolDownTimeText.text = "";
@@ -30,7 +30,6 @@ public class SkillButton : MonoBehaviour {
 		}
 	}
     public void OnCasterReady(SbiEvent e) {
-
         CasterReadyEventData data = (CasterReadyEventData)e.data;
 		if(GameManager.Instance.GetPlayer() != data.player) { return; }
 		if(skillIndex == data.skillIndex) {
