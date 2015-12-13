@@ -11,9 +11,8 @@ GameObject:
   - 33: {fileID: 3388786}
   - 23: {fileID: 2333626}
   - 114: {fileID: 11484606}
-  - 114: {fileID: 11486138}
-  - 114: {fileID: 11453910}
-  - 114: {fileID: 11448530}
+  - 114: {fileID: 11492906}
+  - 114: {fileID: 11454036}
   m_Layer: 0
   m_Name: BlizzardCaster
   m_TagString: Untagged
@@ -51,7 +50,9 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -64,7 +65,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142832}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &11448530
+--- !u!114 &11454036
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -72,24 +73,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 142832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62cff7306f1f841dc855a77353efeba4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f7722cf26941408aad3284dfbe093dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guideTime: 10000
-  isGuiding: 0
+  isTiming: 0
+  type: Cooldown
   owner: {fileID: 0}
---- !u!114 &11453910
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 142832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7738530b57fbc454480ff51621d887ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coolDownTime: 15000
+  startEventName: 
+  finishEventName: 
+  stopEventName: 
 --- !u!114 &11484606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,11 +93,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbe8931054ec4f928e0635167c25f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillIndex: 1
-  skillName: 426c697a7a617264
-  owner: {fileID: 0}
-  enemy: {fileID: 0}
---- !u!114 &11486138
+  isControllable: 0
+  skillID: 2
+  skillName: Blizzard
+  buttonColor: {r: 50, g: 150, b: 201, a: 1}
+--- !u!114 &11492906
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -113,12 +105,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 142832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b758abf6bfe6f47f9bd73b390e735420, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f7722cf26941408aad3284dfbe093dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillId: 1
-  skillName: Blizzard
-  buttonColor: {r: .20784314, g: .603921592, b: .80392158, a: .501960814}
+  isTiming: 0
+  type: Guide
+  owner: {fileID: 0}
+  startEventName: 
+  finishEventName: 
+  stopEventName: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -149,6 +144,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: skillId
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: type
+      value: Cooldown
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

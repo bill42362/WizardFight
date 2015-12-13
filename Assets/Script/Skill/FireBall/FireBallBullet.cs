@@ -15,7 +15,7 @@ public class FireBallBullet : MonoBehaviour {
     public Vector3 createPosition;
     public Vector3 createForward;
     public double createTime;
-	private System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+
 	private bool doneDamage = false;
 	private Faction faction;
     private FireBallCaster caster;

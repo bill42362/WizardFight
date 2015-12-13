@@ -52,4 +52,6 @@ MonoBehaviour:
   - FinishChantRPC
   - OnBulletHitRPC
   - StartChantRPC
+  - StartGuideRPC
+  - StopGuideRPC
   DisableAutoOpenWizard: 1

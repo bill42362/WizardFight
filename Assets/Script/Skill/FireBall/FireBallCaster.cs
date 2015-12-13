@@ -45,8 +45,8 @@ public class FireBallCaster : SkillCasterBase{
     }
     private void CancelChant()
     {
-        photonView.RPC("FinishChantRPC",
-                PhotonTargets.All);
+        if ( chantTimer.isTiming )
+            photonView.RPC("CancelChantRPC", PhotonTargets.All);
     }
     [PunRPC]
     public void StartChantRPC(  double startTime )
@@ -98,24 +98,16 @@ public class FireBallCaster : SkillCasterBase{
 
     protected override void Init()
     {
-        Timer[] timers = GetComponents<Timer>();
-        foreach( Timer timer in timers )
-        {
-            if (timer.type == "Chant")
-            {
-                this.chantTimer = timer;
-                chantTimer.startEventName = "startChant";
-                chantTimer.finishEventName = "finishChant";
-                chantTimer.stopEventName = "stopChant";
-            }
-            if (timer.type == "Cooldown")
-            {
-                this.cooldownTimer = timer;
-                cooldownTimer.startEventName = null;
-                cooldownTimer.finishEventName = null;
-                cooldownTimer.stopEventName = null;
-            }
-        }
+        chantTimer = GetTimerByType("Guide");
+        chantTimer.startEventName = "startChant";
+        chantTimer.finishEventName = "finishChant";
+        chantTimer.stopEventName = "stopChant";
+        cooldownTimer = GetTimerByType("Cooldown");
+        cooldownTimer.startEventName = null;
+        cooldownTimer.finishEventName = null;
+        cooldownTimer.stopEventName = null;
+        
+ 
 
         if (isControllable)
         {
