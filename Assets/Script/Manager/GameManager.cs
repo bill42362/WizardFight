@@ -52,36 +52,51 @@ public class GameManager : MonoBehaviour {
 		} else {
 			EventManager.Instance.CastEvent(this, "enemyChange", data);
 		}
+		Debug.Log("SetCharacter()");
+		if(IsCharaterCastersReady(charaterId)) { OnCharatersCasterReady(charaterId); }
 		if(IsCharactersAndCastersReady()) { OnCharactersAndCastersReady(); }
 	}
     public void SetSkillCaster(int charaterId, int skillIndex, GameObject skillCaster) {
-		if(null == characterSkillCasters[charaterId]) {
+		if(!characterSkillCasters.ContainsKey(charaterId)) {
 			characterSkillCasters[charaterId] = new Dictionary<int, GameObject>();
 		}
 		characterSkillCasters[charaterId][skillIndex] = skillCaster;
-		CasterReadyEventData data = new CasterReadyEventData(
-			characters[charaterId], skillIndex, skillCaster
-		);
-		EventManager.Instance.CastEvent(this, "casterReady", data);
-        Debug.Log("Cast Event: casterReady()");
+		Debug.Log("SetSkillCaster()");
+		if(IsCharaterCastersReady(charaterId)) { OnCharatersCasterReady(charaterId); }
 		if(IsCharactersAndCastersReady()) { OnCharactersAndCastersReady(); }
 	}
-	private bool IsCharactersAndCastersReady() {
-		if(2 != characters.Count) { return false; }
-		if(2 != characterSkillCasters.Count) { return false; }
-		foreach(KeyValuePair<int, SkillCasterDictionary> casters in characterSkillCasters) {
-			if(5 != casters.Value.Count) { return false; }
+	private bool IsCharaterCastersReady(int charaterId) {
+		if(!characters.ContainsKey(charaterId)) { return false; }
+		if(playerSkillIds.Length != characterSkillCasters[charaterId].Keys.Count) {
+			return false;
 		}
 		return true;
 	}
-	private void OnCharactersAndCastersReady() {
-		foreach(int charaterId in characters.Keys) {
-			GameObject skillHandler = new GameObject("SkillHandler");
-			skillHandler.transform.parent = characters[charaterId].transform;
-			foreach(int casterIndex in characterSkillCasters[charaterId].Keys) {
-				characterSkillCasters[charaterId][casterIndex].transform.parent = skillHandler.transform;
-			}
+	private bool IsCharactersAndCastersReady() {
+		if(maxPlayer != characters.Count) { return false; }
+		if(maxPlayer != characterSkillCasters.Count) { return false; }
+		foreach(KeyValuePair<int, SkillCasterDictionary> casters in characterSkillCasters) {
+			if(playerSkillIds.Length != casters.Value.Count) { return false; }
 		}
+		return true;
+	}
+	private void OnCharatersCasterReady(int charaterId) {
+		Debug.Log("OnCharatersCasterReady(): charaterId" + charaterId);
+		GameObject skillHandler = new GameObject("SkillHandler");
+		skillHandler.transform.parent = characters[charaterId].transform;
+		foreach(int casterIndex in characterSkillCasters[charaterId].Keys) {
+			Debug.Log("OnCharatersCasterReady():" + casterIndex);
+			GameObject caster = characterSkillCasters[charaterId][casterIndex];
+			caster.transform.parent = skillHandler.transform;
+
+			Debug.Log("Cast Event: casterReady()");
+			CasterReadyEventData data = new CasterReadyEventData(
+				characters[charaterId], casterIndex, caster
+			);
+			EventManager.Instance.CastEvent(this, "casterReady", data);
+		}
+	}
+	private void OnCharactersAndCastersReady() {
 		NetworkManager.Instance.Ready();
 	}
 
