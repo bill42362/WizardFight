@@ -49,6 +49,9 @@ abstract public class SkillCasterBase : Photon.PunBehaviour {
         int ownerID = (int)instantiationData[0];
         index = (int)instantiationData[1];
         GameManager.Instance.SetSkillCaster(ownerID, index, gameObject);
+        if (ownerID == NetworkManager.Instance.PlayerID) 
+            RegisterEssentialListeners();
+        Init();
     }
     private void RegisterEssentialListeners()
     {
@@ -58,14 +61,5 @@ abstract public class SkillCasterBase : Photon.PunBehaviour {
         eventManager.RegisterListener(eventManager, "leftButtonPressed", gameObject, OnPlayerMove);
         eventManager.RegisterListener(eventManager, "rightButtonPressed", gameObject, OnPlayerMove);
     }
-    void Awake()
-    {
-        RegisterEssentialListeners();
-        Init();
-    }
-    // Use this for initialization
-    abstract public void Start();
 
-    // Update is called once per frame
-    abstract public void Update();
 }
