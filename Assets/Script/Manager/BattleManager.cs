@@ -26,8 +26,8 @@ public class BattleManager : Photon.PunBehaviour {
             Debug.Log("Create BattleManager when the _instance is not null! Do nothing and return.");
             return;
         }
-        GameObject bm = new GameObject("BattleManager");
-        _instance = bm.AddComponent<BattleManager>();
+        GameObject bm = NetworkManager.Instance.Instantiate("BattleManager", Vector3.zero, Quaternion.identity, 0, null);
+        _instance = bm.GetComponent<BattleManager>();
     }
 
     private int readyCount = 0;
