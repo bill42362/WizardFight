@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour {
 	public bool isTiming = false;
+    public string type = "";
 	public GameObject owner;
 	public string startEventName;
 	public string finishEventName;
 	public string stopEventName;
-
+    public double duration
+    {
+        get { return finishTime - startTime; }
+    }
 	private double startTime = 0;
     private double finishTime = 0;
     private bool shouldTiming {
@@ -44,19 +48,22 @@ public class Timer : MonoBehaviour {
 	}
 
     private void FinishTiming() {
-        EventManager.Instance.CastEvent(this, finishEventName, null);
+        if (finishEventName != null)
+            EventManager.Instance.CastEvent(this, finishEventName, null);
         StopTiming();
     }
 	private void StartTiming() {
         isTiming = true;
 		TimerEventData startData = new TimerEventData("start", owner, this);
-		EventManager.Instance.CastEvent(EventManager.Instance, startEventName, startData);
+        if ( startEventName != null )
+		    EventManager.Instance.CastEvent(EventManager.Instance, startEventName, startData);
 	}
 	private void StopTiming() {
 		if(isTiming) {
 			isTiming = false;
 			TimerEventData stopData = new TimerEventData("stop", owner, this);
-			EventManager.Instance.CastEvent(EventManager.Instance, stopEventName, stopData);
+            if (stopEventName != null)
+                EventManager.Instance.CastEvent(EventManager.Instance, stopEventName, stopData);
 		}
 	}
 }

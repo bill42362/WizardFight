@@ -19,25 +19,25 @@ public class PlayerAnimator : MonoBehaviour {
         animator.SetFloat("velocityX", rigidbody.velocity.x);
 	}
 	public void OnStartChanting(SbiEvent e) {
-		ChantingEventData data = e.data as ChantingEventData;
+		TimerEventData data = e.data as TimerEventData;
 		if(gameObject == data.role) {
 			animator.SetBool("isChanting", true);
 		}
 	}
 	public void OnStopChanting(SbiEvent e) {
-		ChantingEventData data = e.data as ChantingEventData;
+        TimerEventData data = e.data as TimerEventData;
 		if(gameObject == data.role) {
 			animator.SetBool("isChanting", false);
 		}
 	}
 	public void OnStartGuiding(SbiEvent e) {
-		GuidingEventData data = e.data as GuidingEventData;
+        TimerEventData data = e.data as TimerEventData;
 		if(gameObject == data.role) {
 			animator.SetBool("isGuiding", true);
 		}
 	}
 	public void OnStopGuiding(SbiEvent e) {
-		GuidingEventData data = e.data as GuidingEventData;
+        TimerEventData data = e.data as TimerEventData;
 		if(gameObject == data.role) {
 			animator.SetBool("isGuiding", false);
 		}

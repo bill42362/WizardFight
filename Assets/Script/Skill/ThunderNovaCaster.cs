@@ -1,6 +1,7 @@
 using UnityEngine;
 
 public class ThunderNovaCaster : MonoBehaviour {
+    /*
 	public int skillIndex = 2;
 	public string skillName = "Thunder Nova";
 	public GameObject owner;
@@ -45,4 +46,5 @@ public class ThunderNovaCaster : MonoBehaviour {
 		ThunderNova nova = novaGameObject.GetComponent<ThunderNova>();
 		nova.owner = owner;
 	}
+    */
 }

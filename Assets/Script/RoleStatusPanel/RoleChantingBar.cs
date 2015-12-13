@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class RoleChantingBar : MonoBehaviour {
 	public bool isChanting = false;
 	public GameObject role;
-	public ChantTimer chantTimer;
+	public Timer chantTimer;
 	private Slider slider;
 	private Image backgroundImage;
 	private Image fillImage;
@@ -22,22 +22,21 @@ public class RoleChantingBar : MonoBehaviour {
 	public void Start () { gameObject.SetActive(false); }
 	public void Update () {
 		if(null != chantTimer) {
-			slider.value = (float)chantTimer.GetChantingProgress();
+			slider.value = (float)chantTimer.GetProgress();
 		}
 	}
 
 	public void OnStartChanting(SbiEvent e) {
-		ChantingEventData data = e.data as ChantingEventData;
+		TimerEventData data = e.data as TimerEventData;
 		if(role == data.role) {
-			chantTimer = data.chantTimer;
-			SkillProperties sp = chantTimer.gameObject.GetComponent<SkillProperties>();
-			fillImage.color = sp.buttonColor;
-			backgroundImage.color = sp.buttonColor - new Color(0.5f, 0.5f, 0.5f, 0f);
+			chantTimer = data.timer;
+			fillImage.color = chantTimer.gameObject.GetComponent<SkillCasterBase>().buttonColor;
+			backgroundImage.color = fillImage.color - new Color(0.5f, 0.5f, 0.5f, 0f);
 			gameObject.SetActive(true);
 		}
 	}
 	public void OnStopChanting(SbiEvent e) {
-		ChantingEventData data = e.data as ChantingEventData;
+        TimerEventData data = e.data as TimerEventData;
 		if(role == data.role) {
 			chantTimer = null;
 			gameObject.SetActive(false);

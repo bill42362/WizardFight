@@ -136,7 +136,7 @@ public class NetworkManager : Photon.PunBehaviour
         RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = (byte)max };
         if (PhotonNetwork.connectedAndReady && !PhotonNetwork.inRoom)
         {
-            PhotonNetwork.CreateRoom(GameManager.Instance.GetPlayerName() + UnityEngine.Random.Range(1, 999),
+            PhotonNetwork.CreateRoom(GameManager.Instance.playerName + UnityEngine.Random.Range(1, 999),
                                      roomOptions, TypedLobby.Default);
         }
     }

@@ -35,6 +35,16 @@ abstract public class SkillCasterBase : Photon.PunBehaviour {
     {
         get { return this.owner.transform.position; }
     }
+    public Timer GetTimerByType(string name )
+    {
+        Timer[] timers = GetComponents<Timer>();
+        foreach( Timer timer in timers)
+        {
+            if (timer.type == name)
+                return timer;
+        }
+        return null;
+    }
     protected abstract void SetSkillID();
     protected abstract void SetSkillName();
     protected abstract void SetSkillColor();

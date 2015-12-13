@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class FireBallCaster : SkillCasterBase{
     private double chantTime = 1;
+    private double cooldownTime = 8;
     private double createTime = 0;
-	private CoolDownTimer coolDownTimer;
-	private ChantTimer chantTimer;
+	private Timer cooldownTimer;
+	private Timer chantTimer;
 	private bool isButtonPressed = false;
     private GameObject bullet = null;
 	
@@ -38,7 +39,7 @@ public class FireBallCaster : SkillCasterBase{
     {
         photonView.RPC("FinishChantRPC",
                         PhotonTargets.All,
-                        chantTimer.GetEndTime() ,
+                        chantTimer.GetFinishTime() ,
                         position,
                         direction );
     }
@@ -56,6 +57,7 @@ public class FireBallCaster : SkillCasterBase{
     [PunRPC]
     public void FinishChantRPC( double createTime , Vector3 createPosition, Vector3 direction )
     {
+        cooldownTimer.InitTiming(PhotonNetwork.time, createTime + cooldownTime);
         bullet = FireBallBullet.CreateInstance(createTime, createPosition, direction, faction, this);
         this.createTime = createTime;
         if (createTime > PhotonNetwork.time) 
@@ -96,8 +98,25 @@ public class FireBallCaster : SkillCasterBase{
 
     protected override void Init()
     {
-        coolDownTimer = GetComponent<CoolDownTimer>();
-        chantTimer = GetComponent<ChantTimer>();
+        Timer[] timers = GetComponents<Timer>();
+        foreach( Timer timer in timers )
+        {
+            if (timer.type == "Chant")
+            {
+                this.chantTimer = timer;
+                chantTimer.startEventName = "startChant";
+                chantTimer.finishEventName = "finishChant";
+                chantTimer.stopEventName = "stopChant";
+            }
+            if (timer.type == "Cooldown")
+            {
+                this.cooldownTimer = timer;
+                cooldownTimer.startEventName = null;
+                cooldownTimer.finishEventName = null;
+                cooldownTimer.stopEventName = null;
+            }
+        }
+
         if (isControllable)
         {
             EventManager eventManager = EventManager.Instance;
@@ -113,7 +132,7 @@ public class FireBallCaster : SkillCasterBase{
             CancelChant();
             return;
         }
-        if ( coolDownTimer.GetIsCoolDownFinished() )
+        if ( !cooldownTimer.isTiming )
         {
             StartChant();
         }

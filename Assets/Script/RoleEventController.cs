@@ -47,7 +47,7 @@ public class RoleEventController : Photon.PunBehaviour {
         
         if (CanMove())
         {
-            float delay = NetworkManager.Instance.GetInputDelay();
+            float delay = NetworkManager.Instance.RPCDelay;
             this.photonView.RPC("StartMove",PhotonTargets.All, (float)PhotonNetwork.time + delay, isLeft);
         }
     }
@@ -61,7 +61,7 @@ public class RoleEventController : Photon.PunBehaviour {
     public void StartMove( float startTime , bool isLeft)
     {
         if (!isControllable) { 
-            NetworkManager.Instance.UpdateInputDelay((float)PhotonNetwork.time - (float)startTime);
+            NetworkManager.Instance.UpdateRPCDelay((float)PhotonNetwork.time - (float)startTime);
         }
         this.startTime = startTime;
         this.isLeft = isLeft;
