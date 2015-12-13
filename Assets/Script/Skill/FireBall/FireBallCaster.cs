@@ -98,7 +98,7 @@ public class FireBallCaster : SkillCasterBase{
 
     protected override void Init()
     {
-        chantTimer = GetTimerByType("Guide");
+        chantTimer = GetTimerByType("Chant");
         chantTimer.startEventName = "startChant";
         chantTimer.finishEventName = "finishChant";
         chantTimer.stopEventName = "stopChant";
