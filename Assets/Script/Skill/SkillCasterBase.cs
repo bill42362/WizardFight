@@ -10,6 +10,7 @@ abstract public class SkillCasterBase : Photon.PunBehaviour {
         SetSkillColor();
     }
     public int index { set; get; }
+    public bool isControllable = false;
     public readonly int skillID;
     public readonly string skillName;
     public readonly Color buttonColor;
@@ -34,7 +35,6 @@ abstract public class SkillCasterBase : Photon.PunBehaviour {
     {
         get { return this.owner.transform.position; }
     }
-
     protected abstract void SetSkillID();
     protected abstract void SetSkillName();
     protected abstract void SetSkillColor();
@@ -48,8 +48,9 @@ abstract public class SkillCasterBase : Photon.PunBehaviour {
         object[] instantiationData = GetComponent<PhotonView>().instantiationData;
         int ownerID = (int)instantiationData[0];
         index = (int)instantiationData[1];
+        isControllable = (bool)instantiationData[2];
         GameManager.Instance.SetSkillCaster(ownerID, index, gameObject);
-        if (ownerID == NetworkManager.Instance.PlayerID) 
+        if (isControllable) 
             RegisterEssentialListeners();
         Init();
     }
