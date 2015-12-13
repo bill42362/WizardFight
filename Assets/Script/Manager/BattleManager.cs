@@ -35,14 +35,15 @@ public class BattleManager : Photon.PunBehaviour {
         _instance = this;
         Debug.Log("OnPhotonInstantiation of BattleManager");
     }
-    private int readyCount = 0;
+    public int readyCount = 0;
     public override void OnPhotonCustomRoomPropertiesChanged(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
         foreach( string key in propertiesThatChanged.Keys )
         {
-            Debug.Log("Room PropertyChanged -> " + key + " : " + propertiesThatChanged[key]);
-            if ( PhotonNetwork.isMasterClient && propertiesThatChanged[key] == "ready" )
+            Debug.Log("Outer Room PropertyChanged -> " + key + " : " + propertiesThatChanged[key]);
+            if ( photonView.isMine && (string)propertiesThatChanged[key] == "ready" )
             {
+                Debug.Log("Inner Room PropertyChanged -> " + key + " : " + propertiesThatChanged[key]);
                 readyCount += 1;
                 if ( readyCount == GameManager.Instance.maxPlayer)
                 {
@@ -56,7 +57,7 @@ public class BattleManager : Photon.PunBehaviour {
         
     }
     [PunRPC]
-    public void BattleStart( float startTime)
+    public void BattleStart( double startTime)
     {
         // TODO
         Debug.Log("Battle Start at time -> " + startTime);

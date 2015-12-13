@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour {
     public static string gameVersion = "0.00001";
 
     // ***** Player Information *****
-    public string playerName = "username";
+    public string playerName = "usegrname";
     public int PlayerId { get { return NetworkManager.Instance.PlayerID; } }
     public int[] playerSkillIds = {0};
     private GameObject mainCamera = null;
