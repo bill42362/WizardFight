@@ -28,10 +28,6 @@ public class Timer : MonoBehaviour {
         this.startTime = startTime;
         this.finishTime = finishTime;
     }
-    public void FinishTiming() {
-        EventManager.Instance.CastEvent(this, finishEventName, null);
-        StopTiming();
-    }
     public void CancelTiming() {
         finishTime = startTime;
         StopTiming();
@@ -47,6 +43,10 @@ public class Timer : MonoBehaviour {
 		return (timestamp - startTime)/(finishTime - startTime);
 	}
 
+    private void FinishTiming() {
+        EventManager.Instance.CastEvent(this, finishEventName, null);
+        StopTiming();
+    }
 	private void StartTiming() {
         isTiming = true;
 		TimerEventData startData = new TimerEventData("start", owner, this);
