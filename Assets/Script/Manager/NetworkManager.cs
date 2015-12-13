@@ -161,6 +161,11 @@ public class NetworkManager : Photon.PunBehaviour
     }
 
     // ***** Public Photon CallBacks *****
+    public override void OnCreatedRoom()
+    {
+        base.OnCreatedRoom();
+        BattleManager.CreateInstance();
+    }
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
@@ -196,10 +201,6 @@ public class NetworkManager : Photon.PunBehaviour
         base.OnPhotonPlayerConnected(newPlayer);
         Debug.Log("OnPhotonPlayerConnected: " + newPlayer.name );
         GameManager.Instance.OnOtherPlayerJoinedRoom(newPlayer.ID, PhotonNetwork.playerList.Length);
-        if (PhotonNetwork.isMasterClient)
-        {
-            BattleManager.CreateInstance();
-        }
     }
     /*
     public override void OnPhotonPlayerPropertiesChanged(object[] playerAndUpdatedProps)

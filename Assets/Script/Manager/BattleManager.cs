@@ -27,9 +27,14 @@ public class BattleManager : Photon.PunBehaviour {
             return;
         }
         GameObject bm = NetworkManager.Instance.Instantiate("BattleManager", Vector3.zero, Quaternion.identity, 0, null);
-        _instance = bm.GetComponent<BattleManager>();
+        
     }
-
+    public override void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        base.OnPhotonInstantiate(info);
+        _instance = this;
+        Debug.Log("OnPhotonInstantiation of BattleManager");
+    }
     private int readyCount = 0;
     public override void OnPhotonCustomRoomPropertiesChanged(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
