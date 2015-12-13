@@ -74,6 +74,13 @@ public class GameManager : MonoBehaviour {
 		return true;
 	}
 	private void OnCharactersAndCastersReady() {
+		foreach(int charaterId in characters.Keys) {
+			GameObject skillHandler = new GameObject("SkillHandler");
+			skillHandler.transform.parent = characters[charaterId].transform;
+			foreach(int casterIndex in characterSkillCasters[charaterId].Keys) {
+				characterSkillCasters[charaterId][casterIndex].transform.parent = skillHandler.transform;
+			}
+		}
 		NetworkManager.Instance.Ready();
 	}
 
@@ -98,7 +105,7 @@ public class GameManager : MonoBehaviour {
 				Vector3.zero,
 				Quaternion.identity,
 				0,
-				CreateCasterInsiantiateData(PlayerId, i)
+				CreateCasterInsiantiateData(PlayerId, i, true)
 			);
 		}
     }
@@ -115,7 +122,7 @@ public class GameManager : MonoBehaviour {
     private object[] CreatePlayerInsiantiateData(int playerId) {
         return new object[] {(object)playerId};
     }
-    private object[] CreateCasterInsiantiateData(int charaterId, int skillIndex) {
-        return new object[] {(object)charaterId, (object)skillIndex};
+    private object[] CreateCasterInsiantiateData(int charaterId, int skillIndex, bool isPlayerControllable) {
+        return new object[] {(object)charaterId, (object)skillIndex, (object)isPlayerControllable};
     }
 }
