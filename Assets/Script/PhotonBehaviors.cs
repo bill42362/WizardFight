@@ -32,10 +32,10 @@ public class PhotonBehaviors : Photon.PunBehaviour
         {
             if (ID == 0)
                 this.gameObject.name = "NeutralRole";
-            GameManager.Instance.SetCharacter(ID, this.gameObject);
+            
             EventManager.Instance.CastEvent(this, "enemyChange", new PlayerChangeEventData(gameObject) );
         }
-
+        GameManager.Instance.SetCharacter(ID, this.gameObject);
         this.gameObject.GetComponent<Role>().playerId = ID;
         this.gameObject.GetComponent<Faction>().SetFaction(ID);
         
