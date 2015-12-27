@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isControllable: 0
-  skillID: 2
+  skillID: 1
   skillName: Blizzard
   buttonColor: {r: 0.2, g: 0.4, b: 0.8, a: 1}
 --- !u!114 &11491510
@@ -172,6 +172,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: type
       value: Cooldown
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: skillID
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

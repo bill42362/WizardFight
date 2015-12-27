@@ -1,7 +1,7 @@
 using UnityEngine;
 public class ThunderNova : MonoBehaviour {
 	private double damage = 30;
-	private double lifeTime = 1;
+	private double lifeTime = 1.5;
 	private double startTime;
 	private bool doneDamage = false;
 	private Faction faction;

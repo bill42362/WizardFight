@@ -54,4 +54,5 @@ MonoBehaviour:
   - StartChantRPC
   - StartGuideRPC
   - StopGuideRPC
+  - ThunderDashRPC
   DisableAutoOpenWizard: 1

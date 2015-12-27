@@ -83,7 +83,7 @@ public class Timer : MonoBehaviour {
     {
         get
         {
-            if (isEventShot)
+            if (isEventShot || !isTiming)
                 return false;
             return  PhotonNetwork.time > finishTime - buffer ;
         }

@@ -51,7 +51,7 @@ public class ThunderNovaCaster : SkillCasterBase
     private double cooldownTime = 12;
     private double emitTime = 0.5;
 
-    private float dashSpeed = 20;
+    private float dashSpeed = 50;
     private Timer cooldownTimer;
     private Timer emitTimer;
     protected override void SetSkillID() { skillID = 2; }
@@ -71,11 +71,17 @@ public class ThunderNovaCaster : SkillCasterBase
         EventManager eventManager = EventManager.Instance;
         if (isControllable)
         {
-            Debug.Log("OnThunderDash");
+            
             eventManager.RegisterListener(emitTimer, "onThunderDash", this, OnThunderDash);
         }
         eventManager.RegisterListener(emitTimer, "onNovaEmit", this, OnNovaEmit);
 
+    }
+    [PunRPC]
+    public void ThunderDashRPC( double createTime )
+    {
+        emitTimer.InitTiming(PhotonNetwork.time, PhotonNetwork.time + emitTime);
+        cooldownTimer.InitTiming(PhotonNetwork.time, PhotonNetwork.time + cooldownTime);
     }
     protected override void OnSkillButtonDown(SbiEvent e)
     {
@@ -85,8 +91,7 @@ public class ThunderNovaCaster : SkillCasterBase
             return;
         }
         if (!cooldownTimer.isTiming) {
-            emitTimer.InitTiming(PhotonNetwork.time, PhotonNetwork.time + emitTime);
-            cooldownTimer.InitTiming(PhotonNetwork.time, PhotonNetwork.time + cooldownTime);
+            this.photonView.RPC("ThunderDashRPC", PhotonTargets.All, PhotonNetwork.time);
         }
     }
     protected override void OnSkillButtonUp(SbiEvent e)
@@ -97,12 +102,11 @@ public class ThunderNovaCaster : SkillCasterBase
     }
 
     private void OnThunderDash(SbiEvent e) {
-
         owner.transform.GetComponent<Rigidbody>().velocity += dashSpeed * owner.transform.forward;
     }
     private void OnNovaEmit(SbiEvent e)
     {
-  
+        Debug.Log("OnNovaEmit");
         GameObject nova = ThunderNova.CreateInstance(PhotonNetwork.time, position, faction, this);
     }
 }
