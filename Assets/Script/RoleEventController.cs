@@ -19,9 +19,8 @@ public class RoleEventController : Photon.PunBehaviour {
 		}
 	}
 	public void Update () {
-        if ( isControllable ) {
-            UpdateVelocity();
-        }
+        UpdateVelocity();
+        
 
     }
     private void UpdateVelocity()

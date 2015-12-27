@@ -6,7 +6,7 @@ public class ThunderNovaCaster : SkillCasterBase
     private double cooldownTime = 12;
     private double emitTime = 0.5;
 
-    private float dashSpeed = 50;
+    private float dashSpeed = 35;
     private Timer cooldownTimer;
     private Timer emitTimer;
     protected override void SetSkillID() { skillID = 2; }
@@ -35,8 +35,12 @@ public class ThunderNovaCaster : SkillCasterBase
     [PunRPC]
     public void ThunderDashRPC( double createTime )
     {
-        emitTimer.InitTiming(PhotonNetwork.time, PhotonNetwork.time + emitTime);
-        cooldownTimer.InitTiming(PhotonNetwork.time, PhotonNetwork.time + cooldownTime);
+        if ( !isControllable)
+        {
+            NetworkManager.Instance.UpdateRPCDelay((float)(createTime - PhotonNetwork.time));
+        }
+        emitTimer.InitTiming(createTime, createTime + emitTime);
+        cooldownTimer.InitTiming(createTime, createTime + cooldownTime);
     }
     protected override void OnSkillButtonDown(SbiEvent e)
     {
@@ -46,7 +50,7 @@ public class ThunderNovaCaster : SkillCasterBase
             return;
         }
         if (!cooldownTimer.isTiming) {
-            this.photonView.RPC("ThunderDashRPC", PhotonTargets.All, PhotonNetwork.time);
+            this.photonView.RPC("ThunderDashRPC", PhotonTargets.All, PhotonNetwork.time + NetworkManager.Instance.RPCDelay );
         }
     }
     protected override void OnSkillButtonUp(SbiEvent e)
