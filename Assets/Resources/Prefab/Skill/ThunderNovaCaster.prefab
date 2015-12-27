@@ -11,8 +11,9 @@ GameObject:
   - 33: {fileID: 3306786}
   - 23: {fileID: 2324134}
   - 114: {fileID: 11440634}
-  - 114: {fileID: 11425464}
-  - 114: {fileID: 11466630}
+  - 114: {fileID: 11493062}
+  - 114: {fileID: 11437130}
+  - 114: {fileID: 11497088}
   m_Layer: 0
   m_Name: ThunderNovaCaster
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 172294}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -.5, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -50,8 +51,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -63,7 +66,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 172294}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &11425464
+--- !u!114 &11437130
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -71,12 +74,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 172294}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b758abf6bfe6f47f9bd73b390e735420, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f7722cf26941408aad3284dfbe093dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillId: 2
-  skillName: Thunder Nova
-  buttonColor: {r: .80392158, g: .603921592, b: .20784314, a: .501960814}
+  isTiming: 0
+  type: Cooldown
+  startEventName: 
+  finishEventName: 
+  stopEventName: 
 --- !u!114 &11440634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -88,10 +93,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84770c3f9d4a64b4fa0b33cfd5182df1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillIndex: 2
+  isControllable: 0
+  skillID: 2
   skillName: Thunder Nova
-  owner: {fileID: 0}
---- !u!114 &11466630
+  buttonColor: {r: 0.6, g: 0.6, b: 0.2, a: 1}
+--- !u!114 &11493062
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -99,10 +105,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 172294}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7738530b57fbc454480ff51621d887ef, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f7722cf26941408aad3284dfbe093dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coolDownTime: 5000
+  isTiming: 0
+  type: Emit
+  startEventName: 
+  finishEventName: 
+  stopEventName: 
+--- !u!114 &11497088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  prefixBackup: -1
+  observed: {fileID: 0}
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  isRuntimeInstantiated: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -113,6 +148,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: skillId
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: type
+      value: Cooldown
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

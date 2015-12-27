@@ -65,7 +65,10 @@ public class Timer : MonoBehaviour {
         isEventShot = false;
         TimerEventData startData = new TimerEventData("start", owner, this);
         if ( startEventName != null )
-		    EventManager.Instance.CastEvent(EventManager.Instance, startEventName, startData);
+        {
+            EventManager.Instance.CastEvent(this, startEventName, startData);
+        }
+
 	}
 	private void StopTiming() {
 		if(isTiming) {
@@ -73,7 +76,7 @@ public class Timer : MonoBehaviour {
             isEventShot = true;
 			TimerEventData stopData = new TimerEventData("stop", owner, this);
             if (stopEventName != null)
-                EventManager.Instance.CastEvent(EventManager.Instance, stopEventName, stopData);
+                EventManager.Instance.CastEvent(this, stopEventName, stopData);
 		}
 	}
     private bool canShootFinishEvent

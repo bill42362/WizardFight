@@ -29,7 +29,6 @@ public class FireBallBullet : MonoBehaviour {
     }
 	public void Start () {
 		faction = GetComponent<Faction>();
-        //GetComponent<Rigidbody>().velocity = transform.forward*(float)flyingSpeed;
 	}
 	public void Update() {
 		double timestamp = PhotonNetwork.time;

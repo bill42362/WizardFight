@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
     // ***** Player Information *****
     public string playerName = "usegrname";
     public int PlayerId { get { return NetworkManager.Instance.PlayerID; } }
-    public int[] playerSkillIds = {0, 1};
+    public int[] playerSkillIds = {0, 1 , 2};
     private GameObject mainCamera = null;
 
     // ***** Character Information *****
