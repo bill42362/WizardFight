@@ -21,7 +21,11 @@ public class Blizzard : MonoBehaviour {
 	public void OnTriggerStay(Collider other) {
 		Role role = other.gameObject.GetComponent<Role>();
 		Faction otherFaction = other.gameObject.GetComponent<Faction>();
-		if((null != role) && (true == otherFaction.IsRival(faction))) {
+		if(
+			(null != role)
+			&& (true == otherFaction.IsRival(faction))
+            && ( role.playerId == GameManager.Instance.PlayerId )
+		) {
             double timestamp = PhotonNetwork.time;
             if (damageCycle <= (timestamp - lastDamageTime)) {
 				role.TakeDamageRPC(damage);
