@@ -33,12 +33,17 @@ public class BlizzardCaster : SkillCasterBase {
     protected override void Init() {
         guideTimer = GetTimerByType("Guide");
         guideTimer.startEventName = "startGuide";
-        guideTimer.finishEventName = null;
+        guideTimer.finishEventName = "finishGuide";
         guideTimer.stopEventName = "stopGuide";
         cooldownTimer = GetTimerByType("Cooldown");
         cooldownTimer.startEventName = null;
         cooldownTimer.finishEventName = null;
         cooldownTimer.stopEventName = null;
+
+        if (isControllable) {
+            EventManager eventManager = EventManager.Instance;
+            eventManager.RegisterListener(guideTimer, "finishGuide", this, OnGuideFinish);
+        }
     }
     protected override void OnSkillButtonDown(SbiEvent e) {
         SkillButtonEventData data = e.data as SkillButtonEventData;
@@ -51,9 +56,13 @@ public class BlizzardCaster : SkillCasterBase {
     private void StartGuide() {
         photonView.RPC("StartGuideRPC", PhotonTargets.All, PhotonNetwork.time);
     }
+    private void OnGuideFinish(SbiEvent e) {
+		photonView.RPC("StopGuideRPC", PhotonTargets.All);
+    }
     private void StopGuide() {
-        if (guideTimer.isTiming)
-            photonView.RPC("StopGuideRPC",PhotonTargets.All);
+        if (guideTimer.isTiming) {
+            photonView.RPC("StopGuideRPC", PhotonTargets.All);
+		}
     }
     protected override void OnSkillButtonUp(SbiEvent e) {
         SkillButtonEventData data = e.data as SkillButtonEventData;
