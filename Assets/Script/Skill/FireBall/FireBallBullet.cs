@@ -38,6 +38,7 @@ public class FireBallBullet : MonoBehaviour {
         transform.position = createPosition + createForward * (float)(flyingSpeed * diffTime);
 	}
 	public void OnTriggerStay(Collider other) {
+        Debug.Log("FireBall OnTriggerStay");
 		Role role = other.gameObject.GetComponent<Role>();
 		Faction otherFaction = other.gameObject.GetComponent<Faction>();
 		if(
