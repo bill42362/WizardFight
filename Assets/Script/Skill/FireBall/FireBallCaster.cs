@@ -9,10 +9,16 @@ public class FireBallCaster : SkillCasterBase{
 	private Timer cooldownTimer;
 	private Timer chantTimer;
     private GameObject bullet = null;
-	
+    private bool isBackfired = true;
+    private float backfirePower = 15;
 	void Update () {
         if ((bullet != null) && (PhotonNetwork.time > createTime)) {
             bullet.SetActive(true);
+            if (!isBackfired)
+            {
+                isBackfired = true;
+                owner.GetComponent<Rigidbody>().velocity -= backfirePower * owner.transform.forward ;
+            }
         }
 	}
     public Vector3 direction {
@@ -40,6 +46,7 @@ public class FireBallCaster : SkillCasterBase{
     [PunRPC]
     public void StartChantRPC(double startTime) {
         chantTimer.InitTiming(startTime, startTime + chantTime, NetworkManager.Instance.RPCDelay );
+        isBackfired = false;
     }
     [PunRPC]
     public void FinishChantRPC(double createTime , Vector3 createPosition, Vector3 direction) {
@@ -55,7 +62,10 @@ public class FireBallCaster : SkillCasterBase{
 		}
     }
     [PunRPC]
-    public void CancelChantRPC() { chantTimer.CancelTiming(); }
+    public void CancelChantRPC() {
+        chantTimer.CancelTiming();
+        isBackfired = true;
+    }
     [PunRPC]
     public void OnBulletHitRPC() {
         GameObject explodeGameObject = (GameObject)GameObject.Instantiate(
