@@ -17,7 +17,7 @@ public class PhotonBehaviors : Photon.PunBehaviour
         base.OnPhotonInstantiate(info);
         object[] instantiationData = GetComponent<PhotonView>().instantiationData;
         int ID = (int)instantiationData[0];
-
+        Debug.Log("ID " + ID);
         if ( ID != 0 && photonView.isMine) // Case 1 : Player
         {
 
@@ -38,7 +38,7 @@ public class PhotonBehaviors : Photon.PunBehaviour
         GameManager.Instance.SetCharacter(ID, this.gameObject);
         this.gameObject.GetComponent<Role>().playerId = ID;
         this.gameObject.GetComponent<Faction>().SetFaction(ID);
-        
+        Debug.Log("GetComponent<Role>().playerId " + this.gameObject.GetComponent<Role>().playerId);
 
     }
 }

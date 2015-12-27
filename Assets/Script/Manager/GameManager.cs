@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour {
 		if(IsCharactersAndCastersReady()) { OnCharactersAndCastersReady(); }
 	}
 	private bool IsCharaterCastersReady(int charaterId) {
-		if(!characters.ContainsKey(charaterId)) { return false; }
+		if(!characterSkillCasters.ContainsKey(charaterId)) { return false; }
 		if(playerSkillIds.Length != characterSkillCasters[charaterId].Keys.Count) {
 			return false;
 		}
