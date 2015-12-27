@@ -24,7 +24,7 @@ public class FireBallCaster : SkillCasterBase{
 
 	private void StartChant() {
         if (target == null) return;
-        photonView.RPC("StartChantRPC", PhotonTargets.All, PhotonNetwork.time + 0.1);
+        photonView.RPC("StartChantRPC", PhotonTargets.All, PhotonNetwork.time);
     }
     private void FinishChant(SbiEvent e) {
         photonView.RPC(
@@ -39,10 +39,11 @@ public class FireBallCaster : SkillCasterBase{
 
     [PunRPC]
     public void StartChantRPC(double startTime) {
-        chantTimer.InitTiming(startTime, startTime + chantTime);
+        chantTimer.InitTiming(startTime, startTime + chantTime, NetworkManager.Instance.RPCDelay );
     }
     [PunRPC]
     public void FinishChantRPC(double createTime , Vector3 createPosition, Vector3 direction) {
+        NetworkManager.Instance.UpdateRPCDelay( (float)(PhotonNetwork.time - createTime) );
         cooldownTimer.InitTiming(PhotonNetwork.time, createTime + cooldownTime);
         bullet = FireBallBullet.CreateInstance(createTime, createPosition, direction, faction, this);
         this.createTime = createTime;

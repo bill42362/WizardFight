@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour {
 	public bool isTiming = false;
+    private bool isEventShot = true;
+    private double buffer = 0;
     public string type = "";
 	public string startEventName;
 	public string finishEventName;
@@ -24,15 +26,21 @@ public class Timer : MonoBehaviour {
             StartTiming();
             return;
         }
+        if ( finishEventName != null && canShootFinishEvent)
+        {
+            EventManager.Instance.CastEvent(this, finishEventName, null);
+            isEventShot = true;
+        }
         if ( isTiming && !shouldTiming ) {
             FinishTiming();
         }
     }
 	public double GetStartTime() { return startTime; }
 	public double GetFinishTime() { return finishTime; }
-    public void InitTiming(double startTime, double finishTime) {
+    public void InitTiming(double startTime, double finishTime ,double bufferTime = 0) {
         this.startTime = startTime;
         this.finishTime = finishTime;
+        this.buffer = bufferTime;
     }
     public void CancelTiming() {
         finishTime = startTime;
@@ -50,22 +58,31 @@ public class Timer : MonoBehaviour {
 	}
 
     private void FinishTiming() {
-        if (finishEventName != null)
-            EventManager.Instance.CastEvent(this, finishEventName, null);
         StopTiming();
     }
 	private void StartTiming() {
         isTiming = true;
-		TimerEventData startData = new TimerEventData("start", owner, this);
+        isEventShot = false;
+        TimerEventData startData = new TimerEventData("start", owner, this);
         if ( startEventName != null )
 		    EventManager.Instance.CastEvent(EventManager.Instance, startEventName, startData);
 	}
 	private void StopTiming() {
 		if(isTiming) {
 			isTiming = false;
+            isEventShot = true;
 			TimerEventData stopData = new TimerEventData("stop", owner, this);
             if (stopEventName != null)
                 EventManager.Instance.CastEvent(EventManager.Instance, stopEventName, stopData);
 		}
 	}
+    private bool canShootFinishEvent
+    {
+        get
+        {
+            if (isEventShot)
+                return false;
+            return  PhotonNetwork.time < finishTime - buffer ;
+        }
+    }
 }
