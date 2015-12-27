@@ -10,8 +10,8 @@ public class RoleGuidingBar : MonoBehaviour {
 	private Image fillImage;
 
 	public void Awake () {
-		EventManager.Instance.RegisterListener(EventManager.Instance, "startGuiding", gameObject, OnStartGuiding);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "stopGuiding", gameObject, OnStopGuiding);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "startGuide", gameObject, OnStartGuiding);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "stopGuide", gameObject, OnStopGuiding);
 		slider = GetComponent<Slider>();
 		Image[] images = GetComponentsInChildren<Image>();
 		for(int i = 0; i < images.Length; ++i) {
