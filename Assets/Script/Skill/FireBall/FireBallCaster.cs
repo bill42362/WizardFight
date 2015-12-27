@@ -43,7 +43,10 @@ public class FireBallCaster : SkillCasterBase{
     }
     [PunRPC]
     public void FinishChantRPC(double createTime , Vector3 createPosition, Vector3 direction) {
-        NetworkManager.Instance.UpdateRPCDelay( (float)(PhotonNetwork.time - createTime) );
+        if (!isControllable)
+        {
+            NetworkManager.Instance.UpdateRPCDelay((float)(PhotonNetwork.time - createTime));
+        }
         cooldownTimer.InitTiming(PhotonNetwork.time, createTime + cooldownTime);
         bullet = FireBallBullet.CreateInstance(createTime, createPosition, direction, faction, this);
         this.createTime = createTime;
