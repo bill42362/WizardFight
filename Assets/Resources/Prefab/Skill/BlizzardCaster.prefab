@@ -96,7 +96,7 @@ MonoBehaviour:
   isControllable: 0
   skillID: 2
   skillName: Blizzard
-  buttonColor: {r: 50, g: 150, b: 201, a: 1}
+  buttonColor: {r: 0.2, g: 0.4, b: 0.8, a: 1}
 --- !u!114 &11491510
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,7 +120,7 @@ MonoBehaviour:
   - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
-  instantiationId: 0
+  instantiationId: -1
   isRuntimeInstantiated: 0
 --- !u!114 &11492906
 MonoBehaviour:

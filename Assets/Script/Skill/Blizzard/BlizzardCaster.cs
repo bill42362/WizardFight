@@ -29,7 +29,7 @@ public class BlizzardCaster : SkillCasterBase {
 
     protected override void SetSkillID() { skillID = 2; }
     protected override void SetSkillName() { skillName = "Blizzard"; }
-    protected override void SetSkillColor() { buttonColor = new Color(50, 150, 201); } 
+    protected override void SetSkillColor() { buttonColor = new Color(0.2f, 0.4f, 0.8f); } 
     protected override void Init() {
         guideTimer = GetTimerByType("Guide");
         guideTimer.startEventName = "startGuide";
@@ -46,7 +46,7 @@ public class BlizzardCaster : SkillCasterBase {
             if (guideTimer.isTiming) { StopGuide(); }
             return;
         }
-        StartGuide();
+        if (!cooldownTimer.isTiming) { StartGuide(); }
     }
     private void StartGuide() {
         photonView.RPC("StartGuideRPC", PhotonTargets.All, PhotonNetwork.time);
