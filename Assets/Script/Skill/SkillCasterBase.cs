@@ -15,11 +15,11 @@ abstract public class SkillCasterBase : Photon.PunBehaviour {
     public string skillName;
     public Color buttonColor;
     private GameObject _owner = null;
-    public GameObject owner
-    {
+    public GameObject owner {
         get {
-            if ( _owner == null)
+            if ( _owner == null) {
                 _owner = this.gameObject.transform.parent.parent.gameObject;
+			}
             return _owner;
         }
     }

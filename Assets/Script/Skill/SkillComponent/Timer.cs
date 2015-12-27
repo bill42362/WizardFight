@@ -3,14 +3,16 @@ using UnityEngine;
 public class Timer : MonoBehaviour {
 	public bool isTiming = false;
     public string type = "";
-	public GameObject owner;
 	public string startEventName;
 	public string finishEventName;
 	public string stopEventName;
-    public double duration
-    {
-        get { return finishTime - startTime; }
-    }
+    public double duration { get { return finishTime - startTime; } }
+    public GameObject owner { get {
+		if ( _owner == null) { _owner = this.gameObject.transform.parent.parent.gameObject; }
+		return _owner;
+	}}
+
+    private GameObject _owner = null;
 	private double startTime = 0;
     private double finishTime = 0;
     private bool shouldTiming {

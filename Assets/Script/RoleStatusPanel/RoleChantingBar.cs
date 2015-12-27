@@ -10,8 +10,8 @@ public class RoleChantingBar : MonoBehaviour {
 	private Image fillImage;
 
 	public void Awake () {
-		EventManager.Instance.RegisterListener(EventManager.Instance, "startChanting", gameObject, OnStartChanting);
-		EventManager.Instance.RegisterListener(EventManager.Instance, "stopChanting", gameObject, OnStopChanting);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "startChant", gameObject, OnStartChanting);
+		EventManager.Instance.RegisterListener(EventManager.Instance, "stopChant", gameObject, OnStopChanting);
 		slider = GetComponent<Slider>();
 		Image[] images = GetComponentsInChildren<Image>();
 		for(int i = 0; i < images.Length; ++i) {
