@@ -59,7 +59,7 @@ abstract public class SkillCasterBase : Photon.PunBehaviour {
         object[] instantiationData = GetComponent<PhotonView>().instantiationData;
         int ownerID = (int)instantiationData[0];
         index = (int)instantiationData[1];
-        isControllable = (bool)instantiationData[2];
+        isControllable = ( ownerID == GameManager.Instance.PlayerId );
         GameManager.Instance.SetSkillCaster(ownerID, index, gameObject);
         if (isControllable) 
             RegisterEssentialListeners();
