@@ -41,7 +41,7 @@ public class BattleManager : Photon.PunBehaviour {
     public void BattleStart( double startTime) {
         // TODO
         Debug.Log("Battle Start at time -> " + startTime);
-        GameObject[] characters = GameManager.Instance.GetAllCharacter();
+        GameObject[] characters = GameManager.Instance.GetAllCharacters();
         // FIXME, this is weird lol
         characters[0].GetComponent<LookAt>().target = characters[1];
         characters[1].GetComponent<LookAt>().target = characters[0];

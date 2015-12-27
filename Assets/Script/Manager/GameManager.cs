@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour {
 		GameObject[] result = new GameObject[maxPlayer]; 
 		int pin = 0;
 		foreach(KeyValuePair<int, GameObject> character in characters) {
-			Debug.Log("Pin:" + pin);
 			result[pin] = character.Value;
 			pin++;
 		}

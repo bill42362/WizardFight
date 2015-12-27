@@ -365,7 +365,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22499588, guid: 463570921de50488c98bc46c7f0fd822, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 91
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 22499588, guid: 463570921de50488c98bc46c7f0fd822, type: 2}
       propertyPath: m_AnchorMin.x
@@ -539,7 +539,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22497646, guid: 9236e7f5b456f449984536f766182fea, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 91
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 22497646, guid: 9236e7f5b456f449984536f766182fea, type: 2}
       propertyPath: m_AnchorMin.x
@@ -927,23 +927,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22436438, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22436438, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22489288, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22430272, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22430272, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22447428, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_SizeDelta.x
@@ -1949,23 +1949,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22430272, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22430272, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22489288, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22436438, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22436438, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11431386, guid: 223fedd44524c40c6b949954c21cf274, type: 2}
       propertyPath: roleChangeEventName
