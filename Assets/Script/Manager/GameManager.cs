@@ -6,23 +6,17 @@ public class GameManager : MonoBehaviour {
     //  ***** Singleton Related *****
     private static GameManager _instance = null;
     protected GameManager() { }
-    public static GameManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = Object.FindObjectOfType(typeof(GameManager)) as GameManager;
-                if (_instance == null)
-                {
-                    GameObject gm = new GameObject("GameManager");
-                    DontDestroyOnLoad(gm);
-                    _instance = gm.AddComponent<GameManager>();
-                }
-            }
-            return _instance;
-        }
-    }
+    public static GameManager Instance { get {
+		if (_instance == null) {
+			_instance = Object.FindObjectOfType(typeof(GameManager)) as GameManager;
+			if (_instance == null) {
+				GameObject gm = new GameObject("GameManager");
+				DontDestroyOnLoad(gm);
+				_instance = gm.AddComponent<GameManager>();
+			}
+		}
+		return _instance;
+	} }
 
     // ***** Overall Game Constant *****
     public static string gameVersion = "0.00001";
@@ -44,6 +38,16 @@ public class GameManager : MonoBehaviour {
     public void InitializeGame() { }
     public GameObject GetPlayer() { return characters[PlayerId]; }
     public void SetOrder(int charaterId, int order) { characterOrder[charaterId] = order; }
+    public GameObject[] GetAllCharacters() {
+		GameObject[] result = new GameObject[maxPlayer]; 
+		int pin = 0;
+		foreach(KeyValuePair<int, GameObject> character in characters) {
+			Debug.Log("Pin:" + pin);
+			result[pin] = character.Value;
+			pin++;
+		}
+		return result;
+	}
     public void SetCharacter(int charaterId, GameObject character) {
 		characters[charaterId] = character;
 		PlayerChangeEventData data = new PlayerChangeEventData(character);
@@ -123,7 +127,7 @@ public class GameManager : MonoBehaviour {
 				Vector3.zero,
 				Quaternion.identity,
 				0,
-				CreateCasterInsiantiateData(PlayerId, i, true)
+				CreateCasterInsiantiateData(PlayerId, i)
 			);
 		}
     }
@@ -140,7 +144,7 @@ public class GameManager : MonoBehaviour {
     private object[] CreatePlayerInsiantiateData(int playerId) {
         return new object[] {(object)playerId};
     }
-    private object[] CreateCasterInsiantiateData(int charaterId, int skillIndex, bool isPlayerControllable) {
-        return new object[] {(object)charaterId, (object)skillIndex, (object)isPlayerControllable};
+    private object[] CreateCasterInsiantiateData(int charaterId, int skillIndex) {
+        return new object[] {(object)charaterId, (object)skillIndex};
     }
 }

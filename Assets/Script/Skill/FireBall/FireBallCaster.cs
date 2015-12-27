@@ -15,7 +15,6 @@ public class FireBallCaster : SkillCasterBase{
             bullet.SetActive(true);
         }
 	}
-    
     public Vector3 direction {
         get { return (target.transform.position - owner.transform.position).normalized; }
     }
